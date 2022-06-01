@@ -8,7 +8,6 @@ package com.vineyarg.demo.entidades;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,17 +18,18 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Productor implements Serializable {
 
-   @Id
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     private String nombre;
     private String razonSocial;
     private String domicilio;
     private String correo;
     private String clave;
     private String descripcion;
+    private String region;
     private boolean alta;
 
     public Productor() {
@@ -45,8 +45,6 @@ public class Productor implements Serializable {
         this.descripcion = descripcion;
         this.alta = alta;
     }
-    
-    
 
     public String getId() {
         return id;
@@ -84,7 +82,6 @@ public class Productor implements Serializable {
     /**
      * @return the serialVersionUID
      */
-    
     /**
      * @return the nombre
      */
@@ -165,7 +162,7 @@ public class Productor implements Serializable {
     /**
      * @param resenia the resenia to set
      */
-    public void setDesripcion(String descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -182,5 +179,5 @@ public class Productor implements Serializable {
     public void setAlta(boolean alta) {
         this.alta = alta;
     }
-    
+
 }
