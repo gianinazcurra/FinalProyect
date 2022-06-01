@@ -40,11 +40,13 @@ public class Usuario implements Serializable {
     private boolean alta;
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
-
+    private int totalComprasEfectuadas;
+    private Double totalDineroComprado;
+    
     public Usuario() {
     }
-
-    public Usuario(String id, String nombre, String apellido, String DNI, String correo, String clave, Date fechaNacimiento, boolean alta, TipoUsuario tipoUsuario) {
+    
+    public Usuario(String id, String nombre, String apellido, String DNI, String correo, String clave, Date fechaNacimiento, boolean alta, TipoUsuario tipoUsuario, int totalComprasEfectuadas, Double totalDineroComprado) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -54,7 +56,11 @@ public class Usuario implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.alta = alta;
         this.tipoUsuario = tipoUsuario;
+        this.totalComprasEfectuadas = totalComprasEfectuadas;
+        this.totalDineroComprado = totalDineroComprado;
     }
+
+    
     
     
     
@@ -206,6 +212,34 @@ public class Usuario implements Serializable {
      */
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    /**
+     * @return the totalComprasEfectuadas
+     */
+    public int getTotalComprasEfectuadas() {
+        return totalComprasEfectuadas;
+    }
+
+    /**
+     * @param totalComprasEfectuadas the totalComprasEfectuadas to set
+     */
+    public void setTotalComprasEfectuadas(int totalComprasEfectuadas) {
+        this.totalComprasEfectuadas = totalComprasEfectuadas;
+    }
+
+    /**
+     * @return the totalDineroComprado
+     */
+    public Double getTotalDineroComprado() {
+        return totalDineroComprado;
+    }
+
+    /**
+     * @param totalDineroComprado the totalDineroComprado to set
+     */
+    public void setTotalDineroComprado(Double totalDineroComprado) {
+        this.totalDineroComprado = totalDineroComprado;
     }
     
 }
