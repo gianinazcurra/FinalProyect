@@ -61,7 +61,7 @@ public class UsuarioServicio implements UserDetailsService {
             admin.setFechaNacimiento(fechaNacimiento);
             admin.setAlta(true);
             admin.setTipoUsuario(tipoUsuario);
-
+            
             usuarioRepositorio.save(admin);
 
         }
@@ -78,7 +78,9 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setFechaNacimiento(fechaNacimiento);
             usuario.setAlta(true);
             usuario.setTipoUsuario(tipoUsuario);
-
+            usuario.setTotalComprasEfectuadas(0);
+            usuario.setTotalDineroComprado(0.0);
+            
             usuarioRepositorio.save(usuario);
         }
 
