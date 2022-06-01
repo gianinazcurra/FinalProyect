@@ -27,11 +27,12 @@ public class Producto implements Serializable {
     private Productor productor;
     private String sku;
     private Double valoraciones;
+    private boolean alta;
 
     public Producto() {
     }
 
-    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, Double valoraciones) {
+    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, Double valoraciones, boolean alta) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -41,6 +42,7 @@ public class Producto implements Serializable {
         this.productor = productor;
         this.sku = sku;
         this.valoraciones = valoraciones;
+        this.alta=alta;
     }
             
     
@@ -192,6 +194,14 @@ public class Producto implements Serializable {
      */
     public void setValoraciones(Double valoraciones) {
         this.valoraciones = valoraciones;
+    }
+
+    public boolean isAlta() {
+        return alta;
+    }
+
+    public void setAlta(boolean alta) {
+        this.alta = alta;
     }
     
 }
