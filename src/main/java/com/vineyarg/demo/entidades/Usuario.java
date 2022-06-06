@@ -42,12 +42,11 @@ public class Usuario implements Serializable {
     private TipoUsuario tipoUsuario;
     private int totalComprasEfectuadas;
     private Double totalDineroComprado;
-    private Imagenes imagen;
     
     public Usuario() {
     }
-
-    public Usuario(String id, String nombre, String apellido, String DNI, String correo, String clave, Date fechaNacimiento, boolean alta, TipoUsuario tipoUsuario, int totalComprasEfectuadas, Double totalDineroComprado, Imagenes imagen) {
+    
+    public Usuario(String id, String nombre, String apellido, String DNI, String correo, String clave, Date fechaNacimiento, boolean alta, TipoUsuario tipoUsuario, int totalComprasEfectuadas, Double totalDineroComprado) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -59,10 +58,7 @@ public class Usuario implements Serializable {
         this.tipoUsuario = tipoUsuario;
         this.totalComprasEfectuadas = totalComprasEfectuadas;
         this.totalDineroComprado = totalDineroComprado;
-        this.imagen = imagen;
     }
-    
-   
 
     
     
@@ -244,14 +240,6 @@ public class Usuario implements Serializable {
      */
     public void setTotalDineroComprado(Double totalDineroComprado) {
         this.totalDineroComprado = totalDineroComprado;
-    }
-
-    public Imagenes getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(Imagenes imagen) {
-        this.imagen = imagen;
     }
     
 }
