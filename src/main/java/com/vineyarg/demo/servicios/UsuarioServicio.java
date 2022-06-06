@@ -5,13 +5,11 @@
  */
 package com.vineyarg.demo.servicios;
 
-import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import static com.vineyarg.demo.enumeraciones.TipoUsuario.ADMINISTRADOR;
 import static com.vineyarg.demo.enumeraciones.TipoUsuario.USUARIOCOMUN;
 import com.vineyarg.demo.errores.Excepcion;
-import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,13 +44,6 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
-    private ImagenesServicio imagenesServicio;
-    
-    @Autowired
-    private ImagenesRepositorio imagenesRepositorio;
-    
-    
     @Transactional
     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento, TipoUsuario tipoUsuario) throws Excepcion {
 
@@ -70,11 +61,6 @@ public class UsuarioServicio implements UserDetailsService {
             admin.setFechaNacimiento(fechaNacimiento);
             admin.setAlta(true);
             admin.setTipoUsuario(tipoUsuario);
-            
-            Imagenes imagen = new Imagenes();
-            imagenesServicio.guardarNueva(archivo);
-            
-            admin.setImagen(imagen);
             
             usuarioRepositorio.save(admin);
 
@@ -94,11 +80,6 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setTipoUsuario(tipoUsuario);
             usuario.setTotalComprasEfectuadas(0);
             usuario.setTotalDineroComprado(0.0);
-            
-            Imagenes imagen = new Imagenes();
-            imagenesServicio.guardarNueva(archivo);
-            
-            usuario.setImagen(imagen);
             
             usuarioRepositorio.save(usuario);
         }
@@ -133,13 +114,6 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setAlta(true);
             usuario.setTipoUsuario(tipoUsuario);
 
-             Imagenes imagen = new Imagenes();
-            imagenesServicio.guardarNueva(archivo);
-            
-            usuario.setImagen(imagen);
-            
-            Imagenes foto = new Imagenes();    
-            
             usuarioRepositorio.save(usuario);
         } else {
 
