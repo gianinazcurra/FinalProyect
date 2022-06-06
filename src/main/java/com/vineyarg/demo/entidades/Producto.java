@@ -2,10 +2,14 @@
 package com.vineyarg.demo.entidades;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,11 +32,13 @@ public class Producto implements Serializable {
     private String sku;
     private Double valoraciones;
     private boolean alta;
-
+    
+    private List<Imagenes> imagenes;
+    
     public Producto() {
     }
 
-    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, Double valoraciones, boolean alta) {
+    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, Double valoraciones, boolean alta, List<Imagenes> imagenes) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -42,8 +48,13 @@ public class Producto implements Serializable {
         this.productor = productor;
         this.sku = sku;
         this.valoraciones = valoraciones;
-        this.alta=alta;
+        this.alta = alta;
+        this.imagenes = imagenes;
     }
+
+
+
+    
             
     
     public String getId() {
@@ -203,5 +214,16 @@ public class Producto implements Serializable {
     public void setAlta(boolean alta) {
         this.alta = alta;
     }
+
+    public List<Imagenes> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Imagenes> imagenes) {
+        this.imagenes = imagenes;
+    }
+
+
+    
     
 }
