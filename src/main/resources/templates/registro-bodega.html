@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +9,8 @@
 
     <!-- Links -->
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/CSS/registros.css">
     <!-- JavaScript -->
     <script src="/JS/script.js"></script>
     <!-- Google Fonts -->
@@ -20,12 +20,9 @@
     <!-- Iconos -->
     <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
     <!-- Links -->
-
-
 </head>
 
 <body>
-
     <!-- Header -->
 
 
@@ -72,37 +69,38 @@
 <!-- Fin del header -->
 
 
-    <div class="container">
-        <div class="row">
-            <div class="row-2">
-                <div class="col">
-                    <h1>Envios Gratis a Todo el Pais!</h1>
-                </div>
-                <br>
-                <div class="col">
-                    <p>Tus vinos llegan a donde quieras.<br>Indica tu codigo postal para mas informacion!</p>
+    <!-- FORMULARIO -->
 
-                </div>
-                <br>
-                <div class="col">
-                    <a href="" class="btn">Compra Ahora &#8594;</a>
-                </div>
-            </div>
-        </div>
+    <div class="formulario">
+
+        <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
+
+        <section class="form-registro">
+            <h4>Registra tu bodega!</h4>
+            <form action="">
+                <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="">
+                <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="">
+                <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="">
+                <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="">
+                <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una contraseña" required="">
+                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                <input class="boton" type="submit" value="Registrarme">
+            </form>
+        </section>
+
     </div>
-    <!-- Fin del Header -->
-    <div class="separador"></div>
+    <!-- FIN DEL FORMULARIO -->
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-    <div class="separador"></div>
+    <hr>
+
 
     <!-- Footer -->
 
     <div class="footer">
         <div class="footer-a">
             <div class="footer-columna-1">
-                <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
                 <h3>
                     ¡Comprá los mejores vinos Aquí!
                 </h3>
@@ -110,7 +108,7 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="">Home</a></li>
+                    <li><a href="/index.html">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="">Tienda</a></li>
