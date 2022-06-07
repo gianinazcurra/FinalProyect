@@ -1,7 +1,9 @@
-
 package com.vineyarg.demo.servicios;
+
+import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.errores.Excepcion;
+import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductorServicio {
@@ -17,13 +19,19 @@ public class ProductorServicio {
     @Autowired
     private ProductorRepositorio productorRepositorio;
 
+    @Autowired
+    private ImagenesServicio imagenesServicio;
+
+    @Autowired
+    private ImagenesRepositorio imagenesRepositorio;
+
     //GUARDAR UN PRODUCTOR:creación
     @Transactional(propagation = Propagation.NESTED)
     public Productor guardar(String nombre, String razonSocial, String domicilio, String correo,
-            String clave, String descripcion, String region, Boolean alta) throws Exception {
+            String clave, String descripcion, String region, MultipartFile archivo, Boolean alta) throws Exception {
 
         //VALIDACIONES   
-        validar(nombre, razonSocial, domicilio, correo, clave, descripcion,region);
+        validar(nombre, razonSocial, domicilio, correo, clave, descripcion, region);
         Productor productor = new Productor();
 
         //SETEO DE ATRIBUTOS    
@@ -35,6 +43,11 @@ public class ProductorServicio {
         productor.setDescripcion(descripcion);
         productor.setAlta(true);
 
+        Imagenes imagen = new Imagenes();
+        imagenesServicio.guardarNueva(archivo);
+
+        productor.setImagen(imagen);
+
         //PERSISTENCIA DEL OBJETO
         return productorRepositorio.save(productor);
 
@@ -43,12 +56,18 @@ public class ProductorServicio {
     //MODIFICAR DATOS
     @Transactional(propagation = Propagation.NESTED)
     public void modificar(String id, String nombre, String razonSocial, String domicilio, String correo,
-            String clave, String descripcion, String region, boolean alta) throws Exception {
-        validar(nombre, razonSocial, domicilio, correo, clave, descripcion,region);
+            String clave, String descripcion, String region, MultipartFile archivo, boolean alta) throws Exception {
+        validar(nombre, razonSocial, domicilio, correo, clave, descripcion, region);
         Optional<Productor> respuesta = productorRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Productor productor = respuesta.get();
             productor.setNombre(nombre);
+
+            Imagenes imagen = new Imagenes();
+            imagenesServicio.guardarNueva(archivo);
+
+            productor.setImagen(imagen);
+            Imagenes foto = new Imagenes();
 
             productorRepositorio.save(productor);
         } else {
