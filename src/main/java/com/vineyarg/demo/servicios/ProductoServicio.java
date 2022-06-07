@@ -69,21 +69,21 @@ public class ProductoServicio {
     }
     
     @Transactional
-    public void darDeBaja (String Id)throws Excepcion{
-        if (Id==null||Id.isEmpty()){
+    public void darDeBaja (String id)throws Excepcion{
+        if (id==null||id.isEmpty()){
             throw new Excepcion("Debe ingresar el ID del producto");
         }
-        Optional <Producto> respuesta= productoRepositorio.findById(Id);
+        Optional <Producto> respuesta= productoRepositorio.findById(id);
          if(respuesta.isPresent()){
         Producto producto = respuesta.get();
         producto.setAlta(false);
         productoRepositorio.save(producto);
          }
     }
-    public void modificar (String Id, String nombre, Integer cantidad, Double precio, String descripcion,
+    public void modificar (String id, String nombre, Integer cantidad, Double precio, String descripcion,
             String varietal, Productor productor, String SKU, Double valoraciones)throws Excepcion {
         
-        Optional <Producto> respuesta= productoRepositorio.findById(Id);
+        Optional <Producto> respuesta= productoRepositorio.findById(id);
          if(respuesta.isPresent()){
         Producto producto = respuesta.get();
         producto.setNombre(nombre);
@@ -103,11 +103,11 @@ public class ProductoServicio {
         
             return productos;
         }
-    public Producto buscarPorId (String Id) throws Excepcion{
+    public Producto buscarPorId (String id) throws Excepcion{
        
-        if (Id==null){
+        if (id==null){
             throw new Excepcion ("Debe indicar Id");}
-         Producto producto = productoRepositorio.buscarPorId(Id);
+         Producto producto = productoRepositorio.buscarPorId(id);
             return producto;
     }
     public Producto buscarPorNombre (String nombre) throws Excepcion{

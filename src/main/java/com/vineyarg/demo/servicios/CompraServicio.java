@@ -6,6 +6,7 @@ import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
+import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,10 @@ import org.springframework.stereotype.Service;
 public class CompraServicio {
     @Autowired
     private CompraRepositorio compraRepositorio;
+    @Autowired
+    private ProductoServicio productoServicio;
+    @Autowired
+    private ProductoRepositorio productoRepositorio;
     
     @Transactional
     public void crearCompra(Integer cantidad, Usuario usuario, List<Producto> listaProductos, Date fechaCompra, Double montoFinal, String direccionEnvio) throws Excepcion{
@@ -30,20 +35,28 @@ public class CompraServicio {
         compra.setListaProductos(listaProductos);
         compra.setMontoFinal(montoFinal);
         compra.setUsuario(usuario);
+
         compraRepositorio.save(compra);
     }
     
     @Transactional
     public void quitarProducto(List<Producto> listaProductos, String id) throws Excepcion{
         
-        
+        Optional<Producto> optional = productoRepositorio.findById(id);
+        if (optional.isPresent()) {
+
+            listaProductos.remove(optional.get());
+        }
     }
-    @Transactional
+   @Transactional
     public void agregarProducto(List<Producto> listaProductos, String id) throws Excepcion{
         
-        
+        Optional<Producto> optional = productoRepositorio.findById(id);
+        if (optional.isPresent()) {
+
+            listaProductos.add(optional.get());
+        }
     }
-    
     @Transactional
     public void eliminarCompra(String id)throws Excepcion{
         Optional<Compra> optional = compraRepositorio.findById(id);
