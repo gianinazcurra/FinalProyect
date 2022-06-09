@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +10,7 @@
     <!-- Links -->
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="CSS/registros.css">
     <!-- JavaScript -->
     <script src="JS/script.js"></script>
     <!-- Google Fonts -->
@@ -20,12 +20,9 @@
     <!-- Iconos -->
     <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
     <!-- Links -->
-
-
 </head>
 
 <body>
-
     <!-- Header -->
 
 
@@ -34,13 +31,13 @@
         <div class="nav__container">
 
             <div class="nav__logo">
-                <a href="/index.html"><img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                <a href="index.html"><img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                         width="200px"></a>
             </div>
 
 
             <label for="menuId" class="nav__label">
-                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                <img src="Menu-responsive/menu.svg" alt="nav__img" width="40px">
             </label>
             <input type="checkbox" id="menuId" class="nav__input">
 
@@ -48,7 +45,7 @@
 
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/index.html">Home</a></li>
+                    <li class="nav__item"><a href="index.html">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
                     <li class="nav__item"><a href="">Tienda</a></li>
@@ -62,7 +59,7 @@
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
 
-                    <a href="/HTML/registro.html">
+                    <a href="HTML/registro.html">
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
@@ -72,30 +69,33 @@
 <!-- Fin del header -->
 
 
-    <div class="container">
-        <div class="row">
-            <div class="row-2">
-                <div class="col">
-                    <h1>Envios Gratis a Todo el Pais!</h1>
-                </div>
-                <br>
-                <div class="col">
-                    <p>Tus vinos llegan a donde quieras.<br>Indica tu codigo postal para mas informacion!</p>
 
-                </div>
-                <br>
-                <div class="col">
-                    <a href="" class="btn">Compra Ahora &#8594;</a>
-                </div>
-            </div>
-        </div>
+    <!-- FORMULARIO -->
+
+    <div class="formulario">
+
+        <div class="imagen"> <img src="imagenes/bottles-final.jpg" alt="" width="100%"></div>
+
+        <section class="form-registro">
+            <h4>Registrate como administrador!</h4>
+            <form action="">
+                <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" >
+                <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" >
+                <input class="control" type="number" name="DNI" id="" placeholder="Ingresar su DNI" required="" >
+                <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" >
+                <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="">
+                <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar su Contraseña" required="">
+                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                <input class="boton" type="submit" value="Enviar peticion">
+            </form>
+        </section>
+
     </div>
-    <!-- Fin del Header -->
-    <div class="separador"></div>
+    <!-- FIN DEL FORMULARIO -->
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-    <div class="separador"></div>
+    <hr>
+
 
     <!-- Footer -->
 
@@ -110,7 +110,7 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="">Tienda</a></li>
