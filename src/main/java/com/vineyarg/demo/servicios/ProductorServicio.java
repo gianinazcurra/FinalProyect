@@ -128,7 +128,7 @@ public class ProductorServicio {
             String clave, String descripcion, String region) throws Exception {
 
         if (nombre == null || nombre.trim().isEmpty()) {
-            throw new Excepcion("EL NOMBRE NO PUEDE SER NULO");
+            throw new Excepcion("Debe indicar el nombre del productor");
         }
 
         if (razonSocial == null || razonSocial.trim().isEmpty()) {

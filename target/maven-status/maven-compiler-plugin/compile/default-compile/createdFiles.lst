@@ -1,7 +1,7 @@
-com\vineyarg\demo\DemoApplication.class
+com\vineyarg\demo\enumeraciones\TipoUsuario.class
 com\vineyarg\demo\entidades\Productor.class
+com\vineyarg\demo\entidades\Compra.class
+com\vineyarg\demo\DemoApplication.class
 com\vineyarg\demo\entidades\Producto.class
 com\vineyarg\demo\entidades\Usuario.class
 com\vineyarg\demo\ServletInitializer.class
-com\vineyarg\demo\entidades\Compra.class
-com\vineyarg\demo\enumeraciones\TipoUsuario.class
