@@ -37,12 +37,12 @@ public class UsuarioControlador {
     public String registro() {
         return "registroa.html";
     }
-    
+
     @GetMapping("/registro-admin")
     public String registroAdmin() {
         return "registroa-admin.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/registrarAdministrador")
     public String registroAdmin(ModelMap modelo, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String DNI, @RequestParam String correo, @RequestParam Date fechaNacimiento, @RequestParam TipoUsuario tipoUsuario, @RequestParam String clave1, @RequestParam String clave2) throws Excepcion {
@@ -70,14 +70,14 @@ public class UsuarioControlador {
         return "index.html";
     }
     //FALTA MÉTODO MODIFICAR ADMINSITRADOR - SUGIERO ACEPTAR SOLO MODIFICACIÓN DE MAIL Y CLAVE
-    
+
     @GetMapping("/registro-usuario")
     public String registroUsuario() {
         return "registro-usuario.html";
     }
-    
+
     @PostMapping("/registrarUsuarioComun")
-    public String registroUsuarioComun(ModelMap modelo, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String DNI, @RequestParam String correo, @RequestParam Date fechaNacimiento, @RequestParam TipoUsuario tipoUsuario, @RequestParam String clave1, @RequestParam String clave2)throws Excepcion {
+    public String registroUsuarioComun(ModelMap modelo, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String DNI, @RequestParam String correo, @RequestParam Date fechaNacimiento, @RequestParam TipoUsuario tipoUsuario, @RequestParam String clave1, @RequestParam String clave2) throws Excepcion {
 
         try {
 
@@ -104,36 +104,34 @@ public class UsuarioControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/editar-usuario")
-    public String editarUsuario(ModelMap modelo, HttpSession sesSion, @RequestParam String id) throws Excepcion  {
+    public String editarUsuario(ModelMap modelo, HttpSession sesSion, @RequestParam String id) throws Excepcion {
 
 //        Agregar esto a HTML editar usuario  <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/>
-
         Usuario login = (Usuario) sesSion.getAttribute("UsuarioSession");
-        if(login == null || !login.getId().equalsIgnoreCase(id)) {
+        if (login == null || !login.getId().equalsIgnoreCase(id)) {
             return "redirect:/index.html";
         }
-        
+
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
-        
-        if(respuesta.isPresent()) {
+
+        if (respuesta.isPresent()) {
             Usuario usuario = new Usuario();
             usuario = respuesta.get();
             modelo.put("perfil", usuario);
         } else {
-            
+
             throw new Excepcion("Usuario no reconocido");
         }
         return "editar-usuario.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @PostMapping("/editarUsuario")
     public String editarUsuario(ModelMap modelo, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String DNI, @RequestParam String correo, @RequestParam Date fechaNacimiento, @RequestParam TipoUsuario tipoUsuario, @RequestParam String clave1, @RequestParam String clave2) throws Excepcion {
 
-
         try {
 
-           usuarioServicio.modificarUsuario(archivo, nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento, tipoUsuario);
+            usuarioServicio.modificarUsuario(archivo, nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento, tipoUsuario);
 
         } catch (Excepcion ex) {
             modelo.put("error", ex.getMessage());
@@ -153,32 +151,48 @@ public class UsuarioControlador {
         modelo.put("registrado", "Usuario registrado con éxito");
         return "index.html";
     }
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
-    @GetMapping("/borrar-usuario")
-    public String borrarUsuario() {
-        return "registro-usuario.html";
+    @GetMapping("/eliminar-usuario")
+    public String eliminarUsuario(ModelMap modelo, HttpSession sesSion, @RequestParam String id) throws Excepcion {
+
+        Usuario login = (Usuario) sesSion.getAttribute("UsuarioSession");
+        if (login == null || !login.getId().equalsIgnoreCase(id)) {
+            return "redirect:/index.html";
+        }
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+            Usuario usuario = new Usuario();
+            usuario = respuesta.get();
+            modelo.put("perfil", usuario);
+        } else {
+
+            throw new Excepcion("Usuario no reconocido");
+        }
+
+        return "eliminar-usuario.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @PostMapping("/borrarUsuario")
-    public String borrarAdmin(ModelMap modelo, @RequestParam String mail, @RequestParam String clave) throws Excepcion {
- 
-             try {
-            
-                 usuarioServicio.eliminarUsuario(clave, clave);
-            
+    public String eliminarUsuario(ModelMap modelo, @RequestParam String correo, @RequestParam String clave) throws Excepcion {
+
+        try {
+
+            usuarioServicio.eliminarUsuario(correo, clave);
+
         } catch (Excepcion ex) {
             modelo.put("error", ex.getMessage());
 
-         
-            
-            modelo.put("mail", mail);
+            modelo.put("mail", correo);
             modelo.put("clave1", clave);
-          
-              return "borrar-usuario.html";
+
+            return "borrar-usuario.html";
         }
-        
+
         modelo.put("borrado", "Administrador eliminado con éxito");
         return "index.html";
-}
+    }
 }
