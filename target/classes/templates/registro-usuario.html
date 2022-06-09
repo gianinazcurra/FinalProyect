@@ -77,14 +77,21 @@
         <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
 
         <section class="form-registro">
-            <h4>¡Regístrate!</h4>
-            <form action="">
-                <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" >
-                <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" >
-                <input class="control" type="number" name="DNI" id="" placeholder="Ingresar su DNI" required="" >
-                <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" >
-                <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="">
-                <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar su Contraseña" required="">
+            <h4>Registrate!</h4>
+            <form action="/registrarUsuarioComun" method="POST" enctype="multipart/form-data">
+                
+                  <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                  
+                  
+               <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" th:value="${nombre}">
+                <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" th:value="${apellido}">
+                <input class="control" type="number" name="DNI" id="" placeholder="Ingresar su DNI" required="" th:value="${DNI}">
+                <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" th:value="${fechaNacimiento}">
+                <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="" th:value="${correo}">
+                <input class="control" type="password" name="clave1" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave1}">
+                <input class="control" type="password" name="clave2" id="" placeholder="Vuelva a ingresra su Contraseña" required="" th:value="${clave2}">
+                <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto de perfil" required=""">
+                <input class="control" type="hidden" name="tipoUsuario" id="" placeholder="Podés cargar una foto de perfil" required="" th:value="${USUARIOCOMUN}">
                 <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
                 <input class="boton" type="submit" value="Registrarme">
                 </form>
@@ -139,3 +146,15 @@
 </body>
 
 </html>
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
