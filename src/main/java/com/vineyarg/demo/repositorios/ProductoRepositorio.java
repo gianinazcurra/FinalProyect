@@ -24,7 +24,7 @@ public interface ProductoRepositorio extends JpaRepository<Producto, String> {
       @Query("SELECT p from Producto p WHERE p.varietal Like % :varietal%")
       public Producto buscarPorVarietal(@Param("varietal") String varietal);
       
-      @Query ("SELECT p FROM Producto p WHERE p.Id= :Id")
-      public Producto buscarPorId (@Param ("Id") String Id);
+      @Query ("SELECT p FROM Producto p WHERE p.id= :id")
+      public Producto buscarPorId (@Param ("id") String id);
     
 }
