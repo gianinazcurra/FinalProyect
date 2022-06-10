@@ -165,7 +165,7 @@ public class Productor implements Serializable {
     /**
      * @param resenia the resenia to set
      */
-    public void setDesripcion(String descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 

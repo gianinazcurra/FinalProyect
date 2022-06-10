@@ -32,7 +32,7 @@ public class ProductoServicio {
     // private ProductorRepositorio productorRepositorio;
 
     @Transactional
-    public void crearProducto(List<MultipartFile> imagenes /*si no funciona probar así: MutiplepartFile[] imagenes*/, String nombre, Integer cantidad, Double precio, String descripcion,
+    public void agregarProducto(List<MultipartFile> imagenes /*si no funciona probar así: MutiplepartFile[] imagenes*/, String nombre, Integer cantidad, Double precio, String descripcion,
             String varietal, Productor productor, String SKU, Double valoraciones) throws Excepcion {
         /*Antes de persistir el objeto tenemos que validar que los atributos lleguen*/
         validar(nombre, cantidad, precio, descripcion,
