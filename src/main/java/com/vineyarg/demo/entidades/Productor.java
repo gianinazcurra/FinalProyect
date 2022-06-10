@@ -30,12 +30,15 @@ public class Productor implements Serializable {
     private String clave;
     private String descripcion;
     private String region;
+    private Imagenes imagen;
+
     private boolean alta;
 
     public Productor() {
     }
 
-    public Productor(String id, String nombre, String razonSocial, String domicilio, String correo, String clave, String descripcion, boolean alta) {
+    public Productor(String id, String nombre, String razonSocial, String domicilio,
+            String correo, String clave, String descripcion, String region,Imagenes imagen, boolean alta) {
         this.id = id;
         this.nombre = nombre;
         this.razonSocial = razonSocial;
@@ -43,8 +46,12 @@ public class Productor implements Serializable {
         this.correo = correo;
         this.clave = clave;
         this.descripcion = descripcion;
+        this.region = region;
+        this.imagen=imagen;
         this.alta = alta;
     }
+
+ 
 
     public String getId() {
         return id;
@@ -178,6 +185,34 @@ public class Productor implements Serializable {
      */
     public void setAlta(boolean alta) {
         this.alta = alta;
+    }
+
+    /**
+     * @return the region
+     */
+    public String getRegion() {
+        return region;
+    }
+
+    /**
+     * @param region the region to set
+     */
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public Imagenes getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(Imagenes imagen) {
+        this.imagen = imagen;
     }
 
 }
