@@ -74,7 +74,11 @@
     <div class="contenedor__grande">
         <div class="producto__container">
             <div class="titulo">Agregá tu Vino!</div>
-            <form action="/agregarProducto" method="post">
+            <form action="/agregarProducto" method="POST" enctype="multipart/form-data">
+                
+                 <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                  <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                 
                 <div class="detalles__usuario">
                     <div class="input__caja">
                         <span class="detalles">Nombre</span>
@@ -101,11 +105,10 @@
                         <input type="text" placeholder="Ingresa el SKU" required>
                     </div>
 
-
                 </div>
                 <div class="imag">
                     <span class="detalles">Imagenes:</span>
-                    <input class="btn__imagen" type="file" placeholder="Ingresa fotos del producto" required>
+                    <input class="btn__imagen" type="files" placeholder="Ingresa fotos del producto" required>
                 </div>
                 <input class="boton" type="submit" value="Guardar">
 

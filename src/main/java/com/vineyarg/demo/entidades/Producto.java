@@ -30,7 +30,10 @@ public class Producto implements Serializable {
     @ManyToOne
     private Productor productor;
     private String sku;
-    private Double valoraciones;
+    private int cantidadVecesValorado;
+    private int cantidadValoraciones;
+    private int promedioValoraciones;
+    
     private boolean alta;
     
     private List<Imagenes> imagenes;
@@ -38,7 +41,7 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, Double valoraciones, boolean alta, List<Imagenes> imagenes) {
+    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, int promedioValoraciones, boolean alta, List<Imagenes> imagenes) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -47,14 +50,14 @@ public class Producto implements Serializable {
         this.varietal = varietal;
         this.productor = productor;
         this.sku = sku;
-        this.valoraciones = valoraciones;
+        this.cantidadVecesValorado = cantidadVecesValorado;
+        this.cantidadValoraciones = cantidadValoraciones;
+        this.promedioValoraciones = promedioValoraciones;
         this.alta = alta;
         this.imagenes = imagenes;
     }
 
-
-
-    
+       
             
     
     public String getId() {
@@ -193,19 +196,7 @@ public class Producto implements Serializable {
         this.sku = sku;
     }
 
-    /**
-     * @return the valoraciones
-     */
-    public Double getValoraciones() {
-        return valoraciones;
-    }
-
-    /**
-     * @param valoraciones the valoraciones to set
-     */
-    public void setValoraciones(Double valoraciones) {
-        this.valoraciones = valoraciones;
-    }
+    
 
     public boolean isAlta() {
         return alta;
@@ -221,6 +212,48 @@ public class Producto implements Serializable {
 
     public void setImagenes(List<Imagenes> imagenes) {
         this.imagenes = imagenes;
+    }
+
+    /**
+     * @return the cantidadVecesValorado
+     */
+    public int getCantidadVecesValorado() {
+        return cantidadVecesValorado;
+    }
+
+    /**
+     * @param cantidadVecesValorado the cantidadVecesValorado to set
+     */
+    public void setCantidadVecesValorado(int cantidadVecesValorado) {
+        this.cantidadVecesValorado = cantidadVecesValorado;
+    }
+
+    /**
+     * @return the cantidadValoraciones
+     */
+    public int getCantidadValoraciones() {
+        return cantidadValoraciones;
+    }
+
+    /**
+     * @param cantidadValoraciones the cantidadValoraciones to set
+     */
+    public void setCantidadValoraciones(int cantidadValoraciones) {
+        this.cantidadValoraciones = cantidadValoraciones;
+    }
+
+    /**
+     * @return the promedioValoraciones
+     */
+    public int getPromedioValoraciones() {
+        return promedioValoraciones;
+    }
+
+    /**
+     * @param promedioValoraciones the promedioValoraciones to set
+     */
+    public void setPromedioValoraciones(int promedioValoraciones) {
+        this.promedioValoraciones = promedioValoraciones;
     }
 
 

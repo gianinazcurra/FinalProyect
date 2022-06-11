@@ -73,12 +73,22 @@
 
     <div class="contenedor__grande">
         <div class="producto__container">
-            <div class="titulo">Agregá tu Vino!</div>
-            <form action="/agregarProducto" method="POST" enctype="multipart/form-data">
+            <div class="titulo">Editá tu producto</div>
+            <form action="/editarProducto" method="POST" enctype="multipart/form-data">
                 
                  <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
-                  <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                 <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
                  
+                 <label> Selecione el producto que desea editar o eliminar</label>
+                <select class="" name="id"> 
+                  <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option> 
+                  </select>
+
+                    <label> Selecione qué desea hacer</label>
+                <select class="" name="id"> 
+                  <option th:each="eleccion : ${opciones}" th:value="${eleccion}" th:text="${eleccion}"></option> 
+                  </select>
+                    
                 <div class="detalles__usuario">
                     <div class="input__caja">
                         <span class="detalles">Nombre</span>
@@ -86,7 +96,7 @@
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Cantidad</span>
-                        <input type="number" placeholder="Ingresa la Cantidad" required>
+                        <input type="number" placeholder="Ingresa la nueva cantidad total de producto" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Precio</span>
@@ -96,14 +106,14 @@
                         <span class="detalles">Descripcion</span>
                         <input type="text" placeholder="Ingresa la Descripcion" required>
                     </div>
-                    <div class="input__caja">
+<!--                    <div class="input__caja">
                         <span class="detalles">Varietal</span>
                         <input type="text" placeholder="Ingresa su Varietal" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">SKU</span>
                         <input type="text" placeholder="Ingresa el SKU" required>
-                    </div>
+                    </div>-->
 
                 </div>
                 <div class="imag">
