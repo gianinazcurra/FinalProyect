@@ -33,10 +33,10 @@ public class ProductoServicio {
 
     @Transactional
     public void agregarProducto(List<MultipartFile> imagenes /*si no funciona probar así: MutiplepartFile[] imagenes*/, String nombre, Integer cantidad, Double precio, String descripcion,
-            String varietal, Productor productor, String SKU, Double valoraciones) throws Excepcion {
+            String varietal, Productor productor, String SKU) throws Excepcion {
         /*Antes de persistir el objeto tenemos que validar que los atributos lleguen*/
         validar(nombre, cantidad, precio, descripcion,
-                varietal, productor, SKU, valoraciones);
+                varietal, productor, SKU);
 
         //Creamos un nuevo producto y le seteamos los datos
         Producto producto = new Producto();
@@ -47,7 +47,11 @@ public class ProductoServicio {
         producto.setVarietal(varietal);
         producto.setProductor(productor);
         producto.setSku(SKU);
-        producto.setValoraciones(valoraciones);
+        producto.setAlta(true);
+        producto.setCantidadValoraciones(0);
+        producto.setCantidadVecesValorado(0);
+        producto.setPromedioValoraciones(0);
+//        producto.setValoraciones(valoraciones);
         producto.setAlta(true);
         
          List<Imagenes> listaFotos = new ArrayList();
@@ -68,36 +72,65 @@ public class ProductoServicio {
 
     }
     
-    @Transactional
-    public void darDeBaja (String id)throws Excepcion{
-        if (id==null||id.isEmpty()){
-            throw new Excepcion("Debe ingresar el ID del producto");
-        }
-        Optional <Producto> respuesta= productoRepositorio.findById(id);
-         if(respuesta.isPresent()){
-        Producto producto = respuesta.get();
-        producto.setAlta(false);
-        productoRepositorio.save(producto);
-         }
-    }
-    public void modificar (String id, String nombre, Integer cantidad, Double precio, String descripcion,
-            String varietal, Productor productor, String SKU, Double valoraciones)throws Excepcion {
+
+    public void modificarProducto (String id, String nombre, Integer cantidad, Double precio, String descripcion)throws Excepcion {
         
         Optional <Producto> respuesta= productoRepositorio.findById(id);
          if(respuesta.isPresent()){
+             
+            
+             
         Producto producto = respuesta.get();
+        
+         validar(nombre, cantidad, precio, descripcion,
+                producto.getVarietal(), producto.getProductor(), producto.getSku());
+         
         producto.setNombre(nombre);
         producto.setCantidad(cantidad);
         producto.setPrecio(precio);
         producto.setDescripcion(descripcion);
-        producto.setVarietal(varietal);
-        producto.setProductor(productor);
-        producto.setSku(SKU);
-        producto.setValoraciones(valoraciones);
+//        producto.setVarietal(varietal);
+//        producto.setProductor(productor);
+//        producto.setSku(SKU);
+//        producto.setValoraciones(valoraciones);
         productoRepositorio.save(producto);
         
          }
+    }   
+    
+    @Transactional
+    public void bajaProducto (String id)throws Excepcion{
+         
+        Optional <Producto> respuesta= productoRepositorio.findById(id);
+         if(respuesta.isPresent()){
+                        
+             
+        Producto producto = respuesta.get();
+         
+        producto.setAlta(false);
+        producto.setCantidad(0); //le seteamos la cantidad de stock en cero porque retiró el producto
+        
+        productoRepositorio.save(producto);
+         }
     }
+    
+    @Transactional
+    public void valorarProducto (String id, int valoracion)throws Excepcion{
+         
+        Optional <Producto> respuesta= productoRepositorio.findById(id);
+         if(respuesta.isPresent()){
+             
+        Producto producto = respuesta.get();
+         
+        producto.setCantidadVecesValorado(producto.getCantidadVecesValorado()+1);
+        producto.setCantidadValoraciones(producto.getCantidadValoraciones()+valoracion);
+        producto.setPromedioValoraciones(producto.getCantidadValoraciones() / producto.getCantidadVecesValorado());
+        
+        productoRepositorio.save(producto);
+         }
+    }
+    
+    
     public List <Producto> listarProductos (){
         List<Producto> productos=  productoRepositorio.findAll();
         
@@ -141,7 +174,7 @@ public class ProductoServicio {
     
 
     public void validar(String nombre, Integer cantidad, Double precio, String descripcion,
-            String varietal, Productor productor, String SKU, Double valoraciones) throws Excepcion {
+            String varietal, Productor productor, String SKU) throws Excepcion {
 
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Excepcion("El nombre no puede estar vacío");
@@ -164,9 +197,9 @@ public class ProductoServicio {
         if (SKU == null) {
             throw new Excepcion("Debe ingresar SKU del producto");
         }
-        if (valoraciones == null || valoraciones.isNaN()) {//PREGUNTAR
-            throw new Excepcion("Debe valorar el producto");
-        }
+//        if (valoraciones == null || valoraciones.isNaN()) {//PREGUNTAR
+//            throw new Excepcion("Debe valorar el producto");
+//        }
 
     }
 }
