@@ -10,5 +10,5 @@ package com.vineyarg.demo.enumeraciones;
  * @author joaqu
  */
 public enum TipoUsuario {
-    USUARIOCOMUN, ADMINISTRADOR;
+    USUARIOCOMUN, ADMINISTRADOR, PRODUCTOR;
 }

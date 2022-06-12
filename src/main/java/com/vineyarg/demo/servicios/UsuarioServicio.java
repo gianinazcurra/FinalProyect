@@ -9,6 +9,7 @@ import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import static com.vineyarg.demo.enumeraciones.TipoUsuario.ADMINISTRADOR;
+import static com.vineyarg.demo.enumeraciones.TipoUsuario.PRODUCTOR;
 import static com.vineyarg.demo.enumeraciones.TipoUsuario.USUARIOCOMUN;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.ImagenesRepositorio;
@@ -48,18 +49,20 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private ImagenesServicio imagenesServicio;
-    
+
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
-    
-    
+
     @Transactional
     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento, TipoUsuario tipoUsuario) throws Excepcion {
 
-        validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
-
         if (tipoUsuario.equals(ADMINISTRADOR)) {
+
+            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
+
             Usuario admin = new Usuario();
+
+            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
 
             admin.setNombre(nombre);
             admin.setApellido(apellido);
@@ -70,37 +73,61 @@ public class UsuarioServicio implements UserDetailsService {
             admin.setFechaNacimiento(fechaNacimiento);
             admin.setAlta(true);
             admin.setTipoUsuario(tipoUsuario);
-            
+
             Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
-            
+
             admin.setImagen(imagen);
-            
+
             usuarioRepositorio.save(admin);
 
         }
 
         if (tipoUsuario.equals(USUARIOCOMUN)) {
-            Usuario usuario = new Usuario();
 
-            usuario.setNombre(nombre);
-            usuario.setApellido(apellido);
-            usuario.setDNI(DNI);
-            usuario.setCorreo(correo);
+            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
+
+            Usuario usuarioCliente = new Usuario();
+
+            usuarioCliente.setNombre(nombre);
+            usuarioCliente.setApellido(apellido);
+            usuarioCliente.setDNI(DNI);
+            usuarioCliente.setCorreo(correo);
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
-            usuario.setClave(encriptada);
-            usuario.setFechaNacimiento(fechaNacimiento);
-            usuario.setAlta(true);
-            usuario.setTipoUsuario(tipoUsuario);
-            usuario.setTotalComprasEfectuadas(0);
-            usuario.setTotalDineroComprado(0.0);
-            
+            usuarioCliente.setClave(encriptada);
+            usuarioCliente.setFechaNacimiento(fechaNacimiento);
+            usuarioCliente.setAlta(true);
+            usuarioCliente.setTipoUsuario(tipoUsuario);
+            usuarioCliente.setTotalComprasEfectuadas(0);
+            usuarioCliente.setTotalDineroComprado(0.0);
+
             Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
-            
-            usuario.setImagen(imagen);
-            
-            usuarioRepositorio.save(usuario);
+
+            usuarioCliente.setImagen(imagen);
+
+            usuarioRepositorio.save(usuarioCliente);
+        }
+
+        if (tipoUsuario.equals(PRODUCTOR)) {
+            Usuario usuarioProductor = new Usuario();
+
+            usuarioProductor.setNombre(nombre);
+//            usuarioProductor.setApellido(apellido);
+//            usuarioProductor.setDNI(DNI);
+            usuarioProductor.setCorreo(correo);
+            String encriptada = new BCryptPasswordEncoder().encode(clave1);
+            usuarioProductor.setClave(encriptada);
+//            usuarioProductor.setFechaNacimiento(fechaNacimiento);
+            usuarioProductor.setAlta(true);
+            usuarioProductor.setTipoUsuario(tipoUsuario);
+
+//            Imagenes imagen = new Imagenes();
+//            imagenesServicio.guardarNueva(archivo);
+//            
+//            usuarioProductor.setImagen(imagen);
+            usuarioRepositorio.save(usuarioProductor);
+
         }
 
     }
@@ -133,13 +160,13 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setAlta(true);
             usuario.setTipoUsuario(tipoUsuario);
 
-             Imagenes imagen = new Imagenes();
+            Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
-            
+
             usuario.setImagen(imagen);
-            
-            Imagenes foto = new Imagenes();    
-            
+
+            Imagenes foto = new Imagenes();
+
             usuarioRepositorio.save(usuario);
         } else {
 
@@ -174,6 +201,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     public void validar(String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento) throws Excepcion {
 
+        //Validaciones nombre, apellido y DNI
         if (nombre.trim() == null || nombre.trim().isEmpty()) {
             throw new Excepcion("nombre inválido");
         }
@@ -185,10 +213,23 @@ public class UsuarioServicio implements UserDetailsService {
 
             throw new Excepcion("DNI inválido. Debe tener 8 dígitos. Si tiene menos, por favor inicie con 0");
 
+            // Validación correo ok y no repetido
         }
         if (!correo.contains("@") || !correo.contains(".") || correo.trim() == null || correo.trim().isEmpty()) {
             throw new Excepcion("E-mail inválido");
         }
+
+        List<Usuario> correoNoRepetido = usuarioRepositorio.findAll();
+
+        for (Usuario usuario : correoNoRepetido) {
+
+            if (usuario.getCorreo().equalsIgnoreCase(correo) && usuario.isAlta()) {
+
+                throw new Excepcion("Ya existe un usuario regisrado con este correo");
+            }
+        }
+        //Validación clave contiene requisitos
+
         if (clave1.trim() == null || clave1.trim().isEmpty() || clave1.trim().length() < 5) {
             throw new Excepcion("La contraseña no puede ser nula");
         }
@@ -222,6 +263,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new Excepcion("Las contraseñas ingresadas no son iguales");
         }
 
+        //Validación mayor de edad
         int edad;
         Date fechaActual = new Date();
         Calendar calendario = new GregorianCalendar();
@@ -251,9 +293,11 @@ public class UsuarioServicio implements UserDetailsService {
 
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_ADMINISTRADOR");
                 GrantedAuthority p2 = new SimpleGrantedAuthority("ROLE_USUARIO_COMUN");
+                GrantedAuthority p3 = new SimpleGrantedAuthority("ROLE_PRODUCTOR");
 
                 permisosAdministrador.add(p1);
                 permisosAdministrador.add(p2);
+                permisosAdministrador.add(p3);
 
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
@@ -280,10 +324,27 @@ public class UsuarioServicio implements UserDetailsService {
 
                 return user;
             }
+            
+            if (usuario.getTipoUsuario() == PRODUCTOR) {
+
+                List<GrantedAuthority> permisosProductor = new ArrayList<>();
+
+                GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_PRODUCTOR");
+               
+                permisosProductor.add(p1);
+
+                ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+                HttpSession session = attr.getRequest().getSession(true);
+                session.setAttribute("AdminSession", usuario);
+
+                User user = new User(usuario.getCorreo(), usuario.getClave(), permisosProductor);
+
+                return user;
+            }
 
         } else {
 
-            throw new UsernameNotFoundException("ADMIN USER NOT FOUND");
+            throw new UsernameNotFoundException("USER NOT FOUND");
         }
         User user = null;
         return user;

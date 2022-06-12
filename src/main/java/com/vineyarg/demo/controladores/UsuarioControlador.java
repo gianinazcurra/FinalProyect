@@ -104,10 +104,10 @@ public class UsuarioControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/editar-usuario")
-    public String editarUsuario(ModelMap modelo, HttpSession sesSion, @RequestParam String id) throws Excepcion {
+    public String editarUsuario(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
 
 //        Agregar esto a HTML editar usuario  <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/>
-        Usuario login = (Usuario) sesSion.getAttribute("UsuarioSession");
+        Usuario login = (Usuario) session.getAttribute("UsuarioSession");
         if (login == null || !login.getId().equalsIgnoreCase(id)) {
             return "redirect:/index.html";
         }
@@ -154,9 +154,9 @@ public class UsuarioControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/eliminar-usuario")
-    public String eliminarUsuario(ModelMap modelo, HttpSession sesSion, @RequestParam String id) throws Excepcion {
+    public String eliminarUsuario(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
 
-        Usuario login = (Usuario) sesSion.getAttribute("UsuarioSession");
+        Usuario login = (Usuario) session.getAttribute("UsuarioSession");
         if (login == null || !login.getId().equalsIgnoreCase(id)) {
             return "redirect:/index.html";
         }
