@@ -29,15 +29,15 @@
                  <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
                   
                  <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
-               <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" th:value="${perfil.nombre}">
-                <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" th:value="${perfil.apellido}">
-                <input class="control" type="number" name="DNI" id="" placeholder="Ingresar su DNI" required="" th:value="${perfil.DNI}">
-                <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" th:value="${perfil.fechaNacimiento}">
-                <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="" th:value="${perfil.correo}">
-                <input class="control" type="password" name="clave1" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave1}">
-                <input class="control" type="password" name="clave2" id="" placeholder="Vuelva a ingresra su Contraseña" required="" th:value="${clave2}">
-                <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto de perfil" required=""">
-                <input class="control" type="hidden" name="tipoUsuario" id="" placeholder="Podés cargar una foto de perfil" required="" th:value="${perfil.tipoUsuario}">
+               <input class="control" type="text" name="nombre" id="" required="" th:value="${perfil.nombre}">
+                <input class="control" type="text" name="apellido" id="" required="" th:value="${perfil.apellido}">
+                <input class="control" type="number" name="DNI" id="" th:value="${perfil.DNI}">
+                <input class="control" type="date" name="fechaNacimiento" id="" required="" th:value="${perfil.fechaNacimiento}">
+                <input class="control" type="email" name="correo" id="" th:value="${perfil.correo}">
+                <input class="control" type="password" name="clave1" id="" th:value="${clave1}">
+                <input class="control" type="password" name="clave2" id="" required="" th:value="${clave2}">
+                <input class="control" type="file" name="archivo" id="" required=""">
+                <input class="control" type="hidden" name="tipoUsuario" id="" required="" th:value="${perfil.tipoUsuario}">
                 <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
                 <input class="boton" type="submit" value="Actualizar perfil">
                 </form>
