@@ -1,8 +1,11 @@
-<<<<<<< HEAD
-com\vineyarg\demo\repositorios\CompraRepositorio.class
 com\vineyarg\demo\repositorios\ProductoRepositorio.class
-com\vineyarg\demo\servicios\UsuarioServicio.class
 com\vineyarg\demo\controladores\CompraControlador.class
+com\vineyarg\demo\repositorios\UsuarioRepositorio.class
+com\vineyarg\demo\servicios\ProductoServicio.class
+com\vineyarg\demo\repositorios\ImagenesRepositorio.class
+com\vineyarg\demo\ServletInitializer.class
+com\vineyarg\demo\repositorios\CompraRepositorio.class
+com\vineyarg\demo\servicios\UsuarioServicio.class
 com\vineyarg\demo\servicios\ProductorServicio.class
 com\vineyarg\demo\servicios\ImagenesServicio.class
 com\vineyarg\demo\entidades\Imagenes.class
@@ -12,18 +15,9 @@ com\vineyarg\demo\ConfiguracionSeguridad.class
 com\vineyarg\demo\controladores\ControladorPrincipal.class
 com\vineyarg\demo\errores\Excepcion.class
 com\vineyarg\demo\entidades\Productor.class
-com\vineyarg\demo\repositorios\UsuarioRepositorio.class
-com\vineyarg\demo\servicios\ProductoServicio.class
-com\vineyarg\demo\repositorios\ImagenesRepositorio.class
 com\vineyarg\demo\entidades\Compra.class
 com\vineyarg\demo\repositorios\ProductorRepositorio.class
-=======
-com\vineyarg\demo\enumeraciones\TipoUsuario.class
-com\vineyarg\demo\entidades\Productor.class
-com\vineyarg\demo\entidades\Compra.class
->>>>>>> developGiani
 com\vineyarg\demo\DemoApplication.class
 com\vineyarg\demo\entidades\Producto.class
 com\vineyarg\demo\enumeraciones\Regiones.class
 com\vineyarg\demo\entidades\Usuario.class
-com\vineyarg\demo\ServletInitializer.class
