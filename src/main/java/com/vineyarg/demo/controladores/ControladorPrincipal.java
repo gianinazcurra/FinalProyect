@@ -7,6 +7,7 @@ package com.vineyarg.demo.controladores;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author joaqu
  */
 @Controller
+@RequestMapping
 public class ControladorPrincipal {
     
     @RequestMapping("/index")
@@ -21,5 +23,11 @@ public class ControladorPrincipal {
         model.addAttribute("attribute", "value");
         return "index.html";
     }
+    
+    @GetMapping("/terminos-condiciones")
+    public String terminosCondiciones() {
+        return "terminos-condiciones.html";
+    }
+    
     
 }

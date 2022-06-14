@@ -3,6 +3,7 @@ package com.vineyarg.demo.repositorios;
 
 
 import com.vineyarg.demo.entidades.Productor;
+import com.vineyarg.demo.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,5 +18,8 @@ public interface ProductorRepositorio extends JpaRepository<Productor, String>{
     
      @Query("SELECT p from Productor p WHERE p.region Like % :region%")
       public Productor buscarPorRegion(@Param("varietal") String region);
+      
+      @Query("SELECT p from Productor p where p.correo = :correo")
+    public Productor BuscarProductorPorCorreo(@Param("correo") String correo);
     
 }

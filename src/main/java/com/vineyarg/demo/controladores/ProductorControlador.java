@@ -1,6 +1,9 @@
 package com.vineyarg.demo.controladores;
 
+import com.vineyarg.demo.enumeraciones.TipoUsuario;
+import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductorServicio;
+import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,10 @@ public class ProductorControlador {
     @Autowired
     ProductorServicio productorServicio;
 
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+    
+        
     @GetMapping("/guardar")
     public String guardarProductor() {
         return "registro-bodega"; //me devuelve la vista
@@ -30,6 +37,8 @@ public class ProductorControlador {
 
             productorServicio.guardar(nombre, razonSocial, domicilio, correo, clave, descripcion, region,
             archivo, alta);
+            
+            usuarioServicio.registrarUsuario(null, nombre, null, null, correo, clave, clave, null, TipoUsuario.PRODUCTOR);
 
             System.out.println("Productor " + nombre);
             modelo.put("Bien hecho", "Productor ingresado de manera correcta");

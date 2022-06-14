@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.vineyarg.demo.entidades.Productor;
 import org.springframework.stereotype.Repository;
 import com.vineyarg.demo.entidades.Producto;
+import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,8 +16,11 @@ public interface ProductoRepositorio extends JpaRepository<Producto, String> {
     @Query ("SELECT p FROM Producto p WHERE p.nombre= :nombre")
       public Producto buscarPorNombre (@Param ("nombre") String nombre);
 
-      @Query("SELECT p from Producto p WHERE p.productor.nombre= :nombre")
-      public Producto buscarPorProductor(@Param("nombre") Productor productor);
+      @Query("SELECT p from Producto p WHERE p.productor.id= :idProductor")
+      public Producto buscarPorProductor(@Param("idProductor") String idProductor);
+      
+      @Query("SELECT p from Producto p WHERE p.productor.id= :idProductor")
+      public List<Producto> buscarTodosPorProductor(@Param("idProductor") String idProductor);
 
       @Query ("SELECT * FROM Producto p WHERE p.precio ORDER BY p.precio ASC= :precio")
       public Producto buscarPorPrecio (@Param ("precio") Double precio);
@@ -24,7 +28,7 @@ public interface ProductoRepositorio extends JpaRepository<Producto, String> {
       @Query("SELECT p from Producto p WHERE p.varietal Like % :varietal%")
       public Producto buscarPorVarietal(@Param("varietal") String varietal);
       
-      @Query ("SELECT p FROM Producto p WHERE p.Id= :Id")
-      public Producto buscarPorId (@Param ("Id") String Id);
+      @Query ("SELECT p FROM Producto p WHERE p.id= :id")
+      public Producto buscarPorId (@Param ("id") String id);
     
 }
