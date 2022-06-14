@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+
+    <!-- Links -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- JavaScript -->
+    <script src="/JS/script.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" <!-- Iconos -->
+    <script src="https://kit.fontawesome.com/c3d241543d.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+
+
+<body>
+    <!-- Header -->
+    <nav class="etiqueta__nav">
+
+        <div class="nav__container">
+
+            <div class="nav__logo">
+                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                        width="200px"></a>
+            </div>
+
+
+            <label for="menuId" class="nav__label">
+                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+            </label>
+            <input type="checkbox" id="menuId" class="nav__input">
+
+            <div class="hamburguesa">
+                <ul class="nav__ul">
+
+                    <li class="nav__item"><a href="/index.html">Home</a></li>
+                    <li class="nav__item"><a href="">Regiones</a></li>
+                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="">Tienda</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
+                </ul>
+
+                <ul class="nav__iconos">
+                    <a href="">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
+                    <a href="">
+                        <li class="fa-solid fa-heart nav__item"></li>
+                    </a>
+                    <a href="/HTML/registro.html">
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Fin del header -->
+
+    <!-- Titulo carrito -->
+    <section id="carrito" class="">
+        <div class="container mt-5 py-1">
+            <h2 clas="font-weight-bold">Carrito de Compras</h2>
+            <hr>
+        </div>
+    </section>
+
+    <!-- carrito -->
+    <section id="cart-container" class="container my-2">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Eliminar</td>
+                    <td>Imagen</td>
+                    <td>Producto</td>
+                    <td>Precio<d>
+                    <td>Cantidad</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
+                    <td>
+                        <h5>Lorem, ipsum dolor</h5>
+                    </td>
+                    <td>
+                        <h5>$ 100,00</h5>
+                    </td>
+                    <td><input class="w-25 pl-1" value="1" type="number"></td>
+                    <td>
+                        <h5>$ 130.00</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
+                    <td>
+                        <h5>Lorem, ipsum dolor</h5>
+                    </td>
+                    <td>
+                        <h5>$ 100,00</h5>
+                    </td>
+                    <td><input class="w-25 pl-1" value="1" type="number"></td>
+                    <td>
+                        <h5>$ 130.00</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
+                    <td>
+                        <h5>Lorem, ipsum dolor</h5>
+                    </td>
+                    <td>
+                        <h5>$ 100,00</h5>
+                    </td>
+                    <td><input class="w-25 pl-1" value="1" type="number"></td>
+                    <td>
+                        <h5>$ 130.00</h5>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Cupo de Descuento -->
+    <section id="cart-bottom" class="container">
+        <div class="row">
+            <div class="cuponDescuento col-lg-6 col-md-6 col-12 mb-4">
+                <div>
+                    <h5>CUPON DE DESCUENTO</h5>
+                    <P>Si tienes un codigo de cupón ahora puedes agregarlo.</P>
+                    <input type="text" placeholder="Ingresar cupón">
+                    <button>APLICAR CUPÓN</button>
+                </div>
+            </div>
+            <div class="total col-lg-6 col-md-6 col-12 mb-4">
+                <div>
+                    <h5>TOTAL DE LA COMPRA</h5>
+                    <div class="d-flex justify-content-between">
+                        <h6>Subtotal</h6>
+                        <p>$ 130,00</p>
+                    </div>
+                    <hr class="second-hr">
+                    <div class="d-flex justify-content-between">
+                        <h6>Envío</h6>
+                        <p>$ 850,00</p>
+                    </div>
+                    <hr class="second-hr">
+                    <div class="d-flex justify-content-between">
+                        <h6>Total</h6>
+                        <p>$ 980,00</p>
+                    </div>
+                    <button id="botonCompra" class="ml-auto">PROCEDER A LA COMPRA</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-a">
+            <div class="footer-columna-1">
+                <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width=<h3>
+                ¡Comprá los mejores vinos Aquí!
+                </h3>
+            </div>
+            <div class="footer-columna-2">
+                <h3>Navegacion</h3>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Regiones</a></li>
+                    <li><a href="">Bodegas</a></li>
+                    <li><a href="">Tienda</a></li>
+                    <li><a href="">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-columna-3">
+                <h3>Nuestras Redes</h3>
+                <div class="redes">
+                    <a href="" class="fa fa-instagram"></a>
+                    <a href="" class="fa fa-linkedin"></a>
+                    <a href="" class="fa-solid fa-at"></a>
+                    <a href="" class="fa fa-twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-b">
+            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+        </div>
+    </div>
+
+    <!-- Fin del Footer -->
+
+    <div class="separador"></div>
+
+</body>
+
+</html>
