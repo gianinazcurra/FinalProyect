@@ -50,7 +50,7 @@ public class ProductoServicio {
         producto.setCantidadVecesValorado(0);
         producto.setPromedioValoraciones(0);
 //        producto.setValoraciones(valoraciones);
-        producto.setAlta(true);
+        //producto.setAlta(true);
 
         List<Imagenes> listaFotos = new ArrayList();
         for (int i = 0; i < imagenes.size(); i++) {
