@@ -92,8 +92,10 @@
     <section class="container producto my-5 pt-5">
         <div class="row mt-5">
             <div class="col-lg-5 col-md-12 col-12">
-                <img class="img-fluid w-100 pb-1" th:src="${producto.imagenes[0]}" alt="" id="main">
-
+                <img th:if="${producto.foto != null}" class="img-fluid w-100 pb-1" th:src="${'/imagen/producto' + producto.id}" alt="">
+                   <img th:if="${producto.foto == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">
+              
+                  
                 <div class="small-img-group">
                     <div class="small-img-col">
                         <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
@@ -111,14 +113,14 @@
             </div>
 
             <div class="col-lg-5 col-md-12 col-12">
-                <form action="/mostrarProducto" method="GET" enctype="multipart/form-data">
-                    <h6 th:text="{producto.productor.nombre}"</h6>
-                <h3 class="py-4"th:text="{producto.nombre}"</h3>
-                <h2 th:text="{producto.precio}"</h2>
+                <form action="/mostrarProducto" method="POST" enctype="multipart/form-data">
+                   <h6 th:text="${producto.productor.nombre}"</h6>
+                <h3 class="py-4"th:text="${producto.nombre}"</h3>
+                <h2 th:text="${producto.precio}"</h2>
                 <input type="number" name="cantidad" th:value="$(cantidad)">
                 <button class="buy-btn" type="submit">Agregar al carrito</button>
                 <h4 classs="mt-5 mb-5">Descripcion</h4>
-                <span th:text="{producto.descripcion}></span>
+                <span th:text="${producto.descripcion}"></span>
             </div>
         </div>
     </section>
@@ -131,7 +133,7 @@
         </div>
         <div class="row mx-auto container-fluid">
             <div class="producto text-center cl-lg-3 col-md-4 col-12" th:each="{producto : ${productosSimilares}">
-                <img class="img-fluid mb-3" th:src="${producto.imagenes[0]}" alt="">
+                <img class="img-fluid mb-3" th:src="${'/imagen/producto' + producto.id}" alt="">
                 <div class="estrella">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -139,9 +141,9 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <h5 class="p-nombre" th:text="{producto.nombre}"></h5>
-                <h4 class="p-precio" th:text="{producto.precio}">$ </h4>
-                <button class="buy-btn" th:href="@{/producto.html//(id=${producto.id})}">Comprar ahora</button>
+                <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
+                <h4 class="p-precio" th:text="${producto.precio}"> </h4>
+                <button class="buy-btn" th:href="@{/producto.html/(id=${producto.id})}">Comprar ahora</button>
             </div>
 <!--            <div class="producto text-center cl-lg-3 col-md-4 col-12">
                 <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">

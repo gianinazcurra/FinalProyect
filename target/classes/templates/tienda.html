@@ -93,7 +93,9 @@
         </div>
         <div class="row mx-auto container">
             <div class="producto text-center cl-lg-3 col-md-4 col-12" th:each="{producto : ${productos}">
-                <img class="img-fluid mb-3" th:src="${producto.imagenes[0]}" alt="">
+                <img th:if="${producto.foto != null}" class="img-fluid mb-3" th:src="${'/imagen/producto' + producto.id}" alt="">
+                 <img th:if="${producto.foto == null}" class="img-fluid mb-3" th:text="${Producto sin imágen">
+               
                 <div class="estrella">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -101,9 +103,9 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <h5 class="p-nombre" th:text="{producto.nombre}"></h5>
-                <h4 class="p-precio" th:text="{producto.precio}">$ </h4>
-                <button class="buy-btn" th:href="@{/producto.html//(idProducto=${producto.id})}">Comprar ahora</button>
+                <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
+                <h4 class="p-precio" th:text="${producto.precio}">$ </h4>
+                <button class="buy-btn" th:href="@{/producto.html/(idProducto=${producto.id})}">Comprar ahora</button>
             </div>
 <!--            <div class="producto text-center cl-lg-3 col-md-4 col-12">
                 <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">

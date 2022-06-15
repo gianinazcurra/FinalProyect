@@ -35,12 +35,12 @@ public class UsuarioControlador {
 
     @GetMapping("/registro")
     public String registro() {
-        return "registroa.html";
+        return "registro.html";
     }
 
     @GetMapping("/registro-admin")
     public String registroAdmin() {
-        return "registroa-admin.html";
+        return "registro-admin.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")

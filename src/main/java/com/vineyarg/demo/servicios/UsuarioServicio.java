@@ -285,7 +285,7 @@ public class UsuarioServicio implements UserDetailsService {
 
         Usuario usuario = usuarioRepositorio.BuscarUsuarioPorCorreo(correo);
 
-        if (usuario != null) {
+        if (usuario != null && usuario.isAlta()) {
 
             if (usuario.getTipoUsuario() == ADMINISTRADOR) {
 
@@ -342,10 +342,15 @@ public class UsuarioServicio implements UserDetailsService {
                 return user;
             }
 
-        } else {
+        } else if (usuario != null && !usuario.isAlta()) {
+
+            throw new UsernameNotFoundException("USUARIO DADO DE BAJA");
+        }
+        else {
 
             throw new UsernameNotFoundException("USER NOT FOUND");
         }
+        
         User user = null;
         return user;
     }

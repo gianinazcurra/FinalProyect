@@ -16,14 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping
-public class ControladorPrincipal {
+public class TerminosCondicionesControlador {
     
-    @RequestMapping("/index")
-    public String page(Model model) {
-        model.addAttribute("attribute", "value");
-        return "index.html";
+    @GetMapping("/terminos-condiciones")
+    public String terminosCondiciones() {
+        return "terminos-condiciones.html";
     }
-    
-    
-    
+        
 }
