@@ -18,17 +18,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping
 public class TiendaControlador {
-     @Autowired
+   
+    
+    @Autowired
+    ProductoServicio productoServicio;
+    
+    @Autowired
     ProductoRepositorio productoRepositorio;
-     @Autowired
-     ProductoServicio productoServicio;
     
-    
+    @GetMapping("/tienda")
+    public String tienda(ModelMap modelo) {
+        
+       
+        List<Producto> productos = productoRepositorio.findAll();
+
+        modelo.put("productos", productos);
+        
+        
+        
+        return "tienda";
+
+    }
+
+      
+            
+        
+        
+  
     
     @GetMapping("/mostrarProducto")
     public String mostrarproducto(ModelMap modelo,@RequestParam String idProducto) {
+        
         Producto producto = productoRepositorio.buscarPorId(idProducto);
+        
         modelo.addAttribute("producto", producto);
+        
+       List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoRepositorio.findById(idProducto).get().getVarietal());
+              
+        modelo.put("productosSimilares", productosSimilares);
+        
         return "producto";
     }
 }
