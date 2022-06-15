@@ -23,6 +23,7 @@ public class CompraServicio {
     private ProductoServicio productoServicio;
     @Autowired
     private ProductoRepositorio productoRepositorio;
+  
     
     @Transactional
     public void crearCompra(Integer cantidad, Usuario usuario, List<Producto> listaProductos, Date fechaCompra, Double montoFinal, String direccionEnvio) throws Excepcion{
@@ -37,6 +38,19 @@ public class CompraServicio {
         compra.setUsuario(usuario);
 
         compraRepositorio.save(compra);
+    }
+    
+    @Transactional
+    public void compraCarrito (List<Producto> listaProductos, String id, Integer cantidad, Double montoFinal){
+        Optional<Producto> optional = productoRepositorio.findById(id);
+        if (optional.isPresent()) {
+            montoFinal = 0.0;
+            cantidad = 0;
+            for (int i = 0; i < listaProductos.size(); i++) {
+                montoFinal = montoFinal + listaProductos.get(i).getCantidad()+listaProductos.get(i).getPrecio();
+                listaProductos.add(optional.get());
+            }
+        }
     }
     
     @Transactional

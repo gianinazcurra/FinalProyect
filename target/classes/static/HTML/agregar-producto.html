@@ -74,43 +74,38 @@
     <div class="contenedor__grande">
         <div class="producto__container">
             <div class="titulo">Agregá tu Vino!</div>
-            <form action="/agregarProducto" method="POST" enctype="multipart/form-data">
-                
-                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                  <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
-                 
-                  <input type="hidden" class="form-control" name="id" th:value="${perfil-productor.id}"/> 
-<!--                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
+            <form action="#">
                 <div class="detalles__usuario">
                     <div class="input__caja">
                         <span class="detalles">Nombre</span>
-                        <input type="text" name="nombre" th:value="${nombre}" placeholder="Ingresa tu nombre" required>
+                        <input type="text" placeholder="Ingresa tu nombre" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Cantidad</span>
-                        <input type="number" name="cantidad" th:value="${cantidad}" placeholder="Ingresa la Cantidad" required>
+                        <input type="number" placeholder="Ingresa la Cantidad" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Precio</span>
-                        <input type="number" name="precio" th:value="${precio}" placeholder="Ingresa el Precio" required>
+                        <input type="number" placeholder="Ingresa el Precio" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Descripcion</span>
-                        <input type="text" name="descripcion" th:value="${descripcion}" placeholder="Ingresa la Descripcion" required>
+                        <input type="text" placeholder="Ingresa la Descripcion" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Varietal</span>
-                        <input type="text" name="varietal" th:value="${varietal}" placeholder="Ingresa su Varietal" required>
+                        <input type="text" placeholder="Ingresa su Varietal" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">SKU</span>
-                        <input type="text" name="SKU" th:value="${SKU}" placeholder="Ingresa el SKU" required>
+                        <input type="text" placeholder="Ingresa el SKU" required>
                     </div>
+
 
                 </div>
                 <div class="imag">
                     <span class="detalles">Imagenes:</span>
-                    <input class="btn__imagen" type="files" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto" required>
+                    <input class="btn__imagen" type="file" placeholder="Ingresa fotos del producto" required>
                 </div>
                 <input class="boton" type="submit" value="Guardar">
 

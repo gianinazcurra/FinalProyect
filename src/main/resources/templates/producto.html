@@ -111,10 +111,11 @@
             </div>
 
             <div class="col-lg-5 col-md-12 col-12">
-                <h6>Lorem ipsum dolor</h6>
-                <h3 class="py-4">Lorem ipsum dolor sit amet</h3>
-                <h2>$ 1.850,00</h2>
-                <input type="number" value="1">
+                <form action="/mostrarProducto" method="GET" enctype="multipart/form-data">
+                    <h6 type="text" name="productor" th:value="${productor}"</h6>
+                <h3 class="py-4"type="text" name="producto" id="" th:text= "${producto}"</h3>
+                <h2 type="value" name="precio" th:value= "${precio}"</h2>
+                <input type="number" name="cantidad" th:value="$(cantidad)">
                 <button class="buy-btn">Agregar al carrito</button>
                 <h4 classs="mt-5 mb-5">Descripcion</h4>
                 <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo recusandae dolorum voluptatem,
