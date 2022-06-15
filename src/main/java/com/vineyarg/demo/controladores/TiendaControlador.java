@@ -48,7 +48,9 @@ public class TiendaControlador {
     
     @GetMapping("/mostrarProducto")
     public String mostrarproducto(ModelMap modelo,@RequestParam String idProducto) {
+        
         Producto producto = productoRepositorio.buscarPorId(idProducto);
+        
         modelo.addAttribute("producto", producto);
         
        List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoRepositorio.findById(idProducto).get().getVarietal());

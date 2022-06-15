@@ -103,7 +103,7 @@
                 </div>
                 <h5 class="p-nombre" th:text="{producto.nombre}"></h5>
                 <h4 class="p-precio" th:text="{producto.precio}">$ </h4>
-                <button class="buy-btn" th:href="@{/producto.html//(id=${producto.id})}">Comprar ahora</button>
+                <button class="buy-btn" th:href="@{/producto.html//(idProducto=${producto.id})}">Comprar ahora</button>
             </div>
 <!--            <div class="producto text-center cl-lg-3 col-md-4 col-12">
                 <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
