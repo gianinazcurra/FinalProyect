@@ -15,13 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductorServicio {
-
+    
     @Autowired
     private ProductorRepositorio productorRepositorio;
-
+    
     @Autowired
     private ImagenesServicio imagenesServicio;
-
+    
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
@@ -42,15 +42,15 @@ public class ProductorServicio {
         productor.setClave(clave);
         productor.setDescripcion(descripcion);
         productor.setAlta(true);
-
+        
         Imagenes imagen = new Imagenes();
         imagenesServicio.guardarNueva(archivo);
-
+        
         productor.setImagen(imagen);
 
         //PERSISTENCIA DEL OBJETO
         return productorRepositorio.save(productor);
-
+        
     }
 
     //MODIFICAR DATOS
@@ -62,25 +62,30 @@ public class ProductorServicio {
         if (respuesta.isPresent()) {
             Productor productor = respuesta.get();
             productor.setNombre(nombre);
-
+            productor.setRazonSocial(razonSocial);
+            productor.setDomicilio(domicilio);
+            productor.setCorreo(correo);
+            productor.setClave(clave);
+            productor.setRegion(region);
+            
             Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
-
+            
             productor.setImagen(imagen);
             Imagenes foto = new Imagenes();
-
+            
             productorRepositorio.save(productor);
         } else {
             throw new Excepcion("No se pueden modificar los datos");
         }
-
+        
     }
 
     //ELIMINAR UN PRODUCTOR
     @Transactional(propagation = Propagation.NESTED)
     public void borrarPorId(String id) {
         Optional<Productor> optional = productorRepositorio.findById(id);
-
+        
         if (optional.isPresent()) {
             productorRepositorio.delete(optional.get());
         }
@@ -90,7 +95,7 @@ public class ProductorServicio {
     public void darDeBaja(String id) throws Exception {
         Optional<Productor> optional = productorRepositorio.findById(id);
         if (optional.isPresent()) {
-
+            
             Productor productor = optional.get();
             productor.setAlta(false);
         } else {
@@ -102,7 +107,7 @@ public class ProductorServicio {
     @Transactional(readOnly = true)
     public void buscarPorId(String id) {
         Optional<Productor> optional = productorRepositorio.findById(id);
-
+        
         if (optional.isPresent()) {
             productorRepositorio.findById(id);
         }
@@ -126,15 +131,15 @@ public class ProductorServicio {
     //VALIDAR
     public void validar(String nombre, String razonSocial, String domicilio, String correo,
             String clave, String descripcion, String region) throws Exception {
-
+        
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Excepcion("Debe indicar el nombre del productor");
         }
-
+        
         if (razonSocial == null || razonSocial.trim().isEmpty()) {
             throw new Excepcion("Debe indicar la razón social del productor");
         }
-
+        
         if (domicilio == null || domicilio.trim().isEmpty()) {
             throw new Excepcion("Debe indicar el domicilio del productor");
         }
@@ -145,7 +150,7 @@ public class ProductorServicio {
             throw new Excepcion("Debe indicar la clave del productor");
         }
         if (region == null || region.trim().isEmpty()) {
-            throw new Excepcion("Debe indicar la clave del productor");
+            throw new Excepcion("Debe indicar la región del productor");
         }
     }
 }

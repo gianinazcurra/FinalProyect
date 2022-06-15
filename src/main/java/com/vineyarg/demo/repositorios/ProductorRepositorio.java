@@ -23,3 +23,4 @@ public interface ProductorRepositorio extends JpaRepository<Productor, String>{
     public Productor BuscarProductorPorCorreo(@Param("correo") String correo);
     
 }
+
