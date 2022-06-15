@@ -38,6 +38,7 @@ public class Compra implements Serializable {
     private Date fechaCompra;
     private Double montoFinal;
     private String direccionEnvio;
+  
     
     
     
@@ -163,5 +164,6 @@ public class Compra implements Serializable {
     public void setDireccionEnvio(String direccionEnvio) {
         this.direccionEnvio = direccionEnvio;
     }
+    
     
 }
