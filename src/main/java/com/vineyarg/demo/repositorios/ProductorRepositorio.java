@@ -22,5 +22,8 @@ public interface ProductorRepositorio extends JpaRepository<Productor, String>{
       @Query("SELECT p from Productor p where p.correo = :correo")
     public Productor BuscarProductorPorCorreo(@Param("correo") String correo);
     
+    @Query("SELECT a from Productor a where p.correo = :correo AND p.clave = :clave")
+    public Productor BuscarProductorPorCorreoYClave(@Param("correo") String correo, @Param("clave") String clave);
+    
 }
 

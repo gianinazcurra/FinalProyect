@@ -77,17 +77,23 @@
 
             <section class="form-registro">
                 <h4>Registrá tu bodega</h4>
-                <form action="/agregar-productor" method="POST" enctype="multipart/form-data">
+                <form action="/registro-bodega" method="POST" enctype="multipart/form-data">
+                    
                     <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
 
 
                     <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${nombre}">
                     <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${razonSocial}">
                     <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${domicilio}">
-                    <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${email}">
-                    <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una contraseña" required="" th:value="${contraseña}">
-                    <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una descripción" required="" th:value="${descripcion}">
-                    <input class="control" type="text" name="region" id="" placeholder="Ingresar una región" required="" th:value="${region}">
+                    <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${correo}">
+                    <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una contraseña" required="" th:value="${clave1}">
+                    <input class="control" type="password" name="contraseña" id="" placeholder="Repita la contraseña ingresada" required="" th:value="${clave2}">
+                    <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una descripción de su bodega" required="" th:value="${descripcion}">
+                    
+                    <select class="control" name="region"> 
+                  <option th:each="region : ${regiones}" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${region}"></option> 
+                  </select>
+                   
                     <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
                     <input class="boton" type="submit" value="Registrarme">
                 </form>

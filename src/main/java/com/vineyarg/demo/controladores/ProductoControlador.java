@@ -102,7 +102,7 @@ public class ProductoControlador {
     @GetMapping("/editar-producto")
     public String editarproducto(ModelMap modelo, HttpSession session, @RequestParam String idProductorSesion) {
         
-         Usuario login = (Usuario) session.getAttribute("UsuarioSession");
+       Usuario login = (Usuario) session.getAttribute("UsuarioSession");
         if (login == null || !login.getId().equalsIgnoreCase(idProductorSesion)) {
             return "redirect:/index.html";
         }
@@ -113,10 +113,13 @@ public class ProductoControlador {
             Usuario usuario = new Usuario();
             usuario = respuesta.get();
             modelo.put("perfil-productor", usuario);
+                    
+            List<Producto> productos = productoRepositorio.buscarTodosPorCorreoProductor(usuario.getCorreo());
+            modelo.put("productos", productos);        
         } 
         
-        List<Producto> productos = productoRepositorio.buscarTodosPorProductor(idProductorSesion);
-        modelo.put("productos", productos);
+        
+        
         
         List<String> opciones = new ArrayList();
         opciones.add("editar");

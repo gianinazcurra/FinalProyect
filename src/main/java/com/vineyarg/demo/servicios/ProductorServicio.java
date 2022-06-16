@@ -2,36 +2,41 @@ package com.vineyarg.demo.servicios;
 
 import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Productor;
+import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductorServicio {
-    
+
     @Autowired
     private ProductorRepositorio productorRepositorio;
-    
+
     @Autowired
     private ImagenesServicio imagenesServicio;
-    
+
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
     //GUARDAR UN PRODUCTOR:creación
     @Transactional(propagation = Propagation.NESTED)
     public Productor guardar(String nombre, String razonSocial, String domicilio, String correo,
-            String clave, String descripcion, String region, MultipartFile archivo, Boolean alta) throws Exception {
+            String clave1, String clave2, String descripcion, String region, MultipartFile archivo) throws Exception {
 
         //VALIDACIONES   
-        validar(nombre, razonSocial, domicilio, correo, clave, descripcion, region);
+        validar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region);
         Productor productor = new Productor();
 
         //SETEO DE ATRIBUTOS    
@@ -39,75 +44,109 @@ public class ProductorServicio {
         productor.setRazonSocial(razonSocial);
         productor.setDomicilio(domicilio);
         productor.setCorreo(correo);
-        productor.setClave(clave);
+
+        String encriptada = new BCryptPasswordEncoder().encode(clave1);
+        productor.setClave(encriptada);
+
         productor.setDescripcion(descripcion);
         productor.setAlta(true);
-        
+
         Imagenes imagen = new Imagenes();
         imagenesServicio.guardarNueva(archivo);
-        
+
         productor.setImagen(imagen);
 
         //PERSISTENCIA DEL OBJETO
         return productorRepositorio.save(productor);
-        
+
     }
 
     //MODIFICAR DATOS
     @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String id, String nombre, String razonSocial, String domicilio, String correo,
-            String clave, String descripcion, String region, MultipartFile archivo, boolean alta) throws Exception {
-        validar(nombre, razonSocial, domicilio, correo, clave, descripcion, region);
-        Optional<Productor> respuesta = productorRepositorio.findById(id);
+    public void modificar(String nombre, String razonSocial, String domicilio, String correo,
+            String clave1, String clave2, String descripcion, String region, MultipartFile archivo) throws Exception {
+
+        Productor verificacionProductor = productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave1);
+
+        if (verificacionProductor == null) {
+            throw new Excepcion("Usuario no encontrado");
+
+        }
+
+        Optional<Productor> respuesta = productorRepositorio.findById(productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave1).getId());
+
         if (respuesta.isPresent()) {
+
+            validar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region);
+
             Productor productor = respuesta.get();
             productor.setNombre(nombre);
             productor.setRazonSocial(razonSocial);
             productor.setDomicilio(domicilio);
             productor.setCorreo(correo);
-            productor.setClave(clave);
+
+            String encriptada = new BCryptPasswordEncoder().encode(clave1);
+            productor.setClave(encriptada);
+
             productor.setRegion(region);
-            
+
             Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
-            
+
             productor.setImagen(imagen);
-            Imagenes foto = new Imagenes();
             
+           
+
             productorRepositorio.save(productor);
+
         } else {
-            throw new Excepcion("No se pueden modificar los datos");
+            throw new Excepcion("Usuario o clave no hallada");
         }
-        
+
     }
 
     //ELIMINAR UN PRODUCTOR
     @Transactional(propagation = Propagation.NESTED)
     public void borrarPorId(String id) {
         Optional<Productor> optional = productorRepositorio.findById(id);
-        
+
         if (optional.isPresent()) {
             productorRepositorio.delete(optional.get());
         }
     }
 
     //DAR DE BAJA
-    public void darDeBaja(String id) throws Exception {
-        Optional<Productor> optional = productorRepositorio.findById(id);
-        if (optional.isPresent()) {
-            
-            Productor productor = optional.get();
-            productor.setAlta(false);
-        } else {
-            throw new Excepcion("No se pueden modificar los datos");
+    public void darDeBaja(@RequestParam String correo, @RequestParam String clave) throws Exception {
+        
+        Productor verificacionProductor = productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave);
+
+        if (verificacionProductor == null) {
+            throw new Excepcion("Usuario no encontrado");
+
         }
+
+        Optional<Productor> respuesta = productorRepositorio.findById(productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave).getId());
+
+        if (respuesta.isPresent()){
+
+            Productor productor = respuesta.get();
+
+            productor.setAlta(false);
+            
+            productorRepositorio.save(productor);
+            
+        } else {
+
+            throw new Excepcion("Usuario o clave no hallada");
+        }
+
     }
 
     //CONSULTA
     @Transactional(readOnly = true)
     public void buscarPorId(String id) {
         Optional<Productor> optional = productorRepositorio.findById(id);
-        
+
         if (optional.isPresent()) {
             productorRepositorio.findById(id);
         }
@@ -116,7 +155,7 @@ public class ProductorServicio {
     //CONSULTA POR NOMBRE
     @Transactional(readOnly = true)
     public Productor buscarPorNombre(String nombre) throws Exception {
-        validar(nombre, nombre, nombre, nombre, nombre, nombre, nombre);
+        
         Productor productor = productorRepositorio.buscarPorNombre(nombre);
         return productor;
     }
@@ -130,25 +169,72 @@ public class ProductorServicio {
 
     //VALIDAR
     public void validar(String nombre, String razonSocial, String domicilio, String correo,
-            String clave, String descripcion, String region) throws Exception {
-        
+            String clave1, String clave2, String descripcion, String region) throws Exception {
+
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Excepcion("Debe indicar el nombre del productor");
         }
-        
+
         if (razonSocial == null || razonSocial.trim().isEmpty()) {
             throw new Excepcion("Debe indicar la razón social del productor");
         }
-        
+
         if (domicilio == null || domicilio.trim().isEmpty()) {
             throw new Excepcion("Debe indicar el domicilio del productor");
         }
-        if (correo == null || correo.trim().isEmpty()) {
-            throw new Excepcion("Debe indicar el correo del productor");
-        }
-        if (clave == null || clave.trim().isEmpty()) {
+
+        if (clave1 == null || clave1.trim().isEmpty()) {
             throw new Excepcion("Debe indicar la clave del productor");
         }
+
+        if (!correo.contains("@") || !correo.contains(".") || correo.trim() == null || correo.trim().isEmpty()) {
+            throw new Excepcion("E-mail inválido");
+        }
+
+        List<Productor> correoNoRepetido = productorRepositorio.findAll();
+
+        for (Productor productor : correoNoRepetido) {
+
+            if (productor.getCorreo().equalsIgnoreCase(correo) && productor.isAlta()) {
+
+                throw new Excepcion("Ya existe un usuario regisrado con este correo");
+            }
+        }
+        //Validación clave contiene requisitos
+
+        if (clave1.trim() == null || clave1.trim().isEmpty() || clave1.trim().length() < 5) {
+            throw new Excepcion("La contraseña no puede ser nula");
+        }
+
+        char ch;
+        boolean verificacionClaveMayuscula = false;
+        boolean verificacionClaveNumero = false;
+
+        for (int i = 0; i < clave1.length(); i++) {
+
+            ch = (char) i;
+            if (Character.isUpperCase(ch)) {
+                verificacionClaveMayuscula = true;
+                break;
+            };
+        }
+        for (int i = 0; i < clave1.length(); i++) {
+
+            ch = (char) i;
+            if (Character.isDigit(ch)) {
+                verificacionClaveNumero = true;
+                break;
+            };
+        }
+
+        if (verificacionClaveMayuscula == false || verificacionClaveNumero == false || clave1.trim().length() < 5) {
+            throw new Excepcion("La contraseña no cumple con los requisitos especificados");
+        }
+
+        if (!clave2.trim().equalsIgnoreCase(clave1.trim())) {
+            throw new Excepcion("Las contraseñas ingresadas no son iguales");
+        }
+
         if (region == null || region.trim().isEmpty()) {
             throw new Excepcion("Debe indicar la región del productor");
         }

@@ -2,11 +2,16 @@ package com.vineyarg.demo.controladores;
 
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.entidades.Usuario;
+import com.vineyarg.demo.enumeraciones.Regiones;
+import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import com.vineyarg.demo.errores.Excepcion;
+import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductorServicio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +35,9 @@ public class ProductorControlador {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private ProductorRepositorio productorRepositorio;
 
     @GetMapping("/registro")
     public String registro() {
@@ -37,31 +45,41 @@ public class ProductorControlador {
     }
 
     @GetMapping("/registro-bodega")
-    public String guardarProductor() {
+    public String guardarProductor(ModelMap modelo) {
+
+        modelo.put("regiones", Regiones.values());
         return "registro-bodega"; //me devuelve la vista
     }
 
     @PostMapping("/registro-bodega")
     public String guardarProductor(ModelMap modelo, @RequestParam String nombre, @RequestParam String razonSocial, @RequestParam String domicilio, @RequestParam String correo,
-            @RequestParam String clave, @RequestParam String descripcion, @RequestParam String region, @RequestParam MultipartFile archivo, @RequestParam Boolean alta) throws Exception {
+            @RequestParam String clave1, @RequestParam String clave2, @RequestParam String descripcion, @RequestParam String region, @RequestParam MultipartFile archivo) throws Exception {
         try {
 
-            productorServicio.guardar(nombre, razonSocial, domicilio, correo, clave, descripcion, region,
-                    archivo, alta);
+            productorServicio.guardar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
+
+            usuarioServicio.registrarUsuario(null, nombre, null, null, correo, clave1, clave2, null, TipoUsuario.PRODUCTOR);
 
             System.out.println("Productor " + nombre);
-            modelo.put("Atención", "Productor ingresado de manera satisfactoria");
+
         } catch (Exception e) {
-            e.getMessage();
+
+            modelo.put("error", e.getMessage());
+
             modelo.put("Ha ocurrido un error", "No se ha podido ingresar el Productor");
             modelo.put("nombre", nombre);
             modelo.put("razonSocial", razonSocial);
             modelo.put("domicilio", domicilio);
             modelo.put("correo", correo);
-            modelo.put("clave", clave);
+            modelo.put("clave", clave1);
+            modelo.put("clave", clave2);
             modelo.put("descripcion", descripcion);
             modelo.put("region", region);
+
+            return "registro-bodega";
         }
+
+        modelo.put("Atención", "Productor ingresado de manera satisfactoria");
         return "registro-bodega";
     }
 
@@ -77,9 +95,13 @@ public class ProductorControlador {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
+            
             Usuario usuario = new Usuario();
             usuario = respuesta.get();
-            modelo.put("perfil", usuario);
+            
+            Productor productor = productorRepositorio.BuscarProductorPorCorreo(usuario.getCorreo());
+            modelo.put("regiones", Regiones.values());
+            modelo.put("productor", productor);
         } else {
 
             throw new Excepcion("Usuario no reconocido");
@@ -91,11 +113,13 @@ public class ProductorControlador {
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
     @PostMapping("/editar-productor")
     public String editarProductor(ModelMap modelo, @RequestParam String nombre, @RequestParam String razonSocial, @RequestParam String domicilio, @RequestParam String correo,
-            @RequestParam String clave, @RequestParam String descripcion, @RequestParam String region, @RequestParam MultipartFile archivo, Boolean alta) throws Excepcion {
+            @RequestParam String clave1, @RequestParam String clave2, @RequestParam String descripcion, @RequestParam String region, @RequestParam MultipartFile archivo) throws Excepcion {
 
         try {
 
-            productorServicio.modificar(region, nombre, razonSocial, domicilio, correo, clave, descripcion, region, archivo, true);
+            productorServicio.modificar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
+
+            usuarioServicio.modificarUsuario(null, nombre, null, null, correo, clave1, clave2, null, TipoUsuario.PRODUCTOR);
 
         } catch (Exception ex) {
             modelo.put("error", ex.getMessage());
@@ -103,14 +127,15 @@ public class ProductorControlador {
             modelo.put("razonSocial", razonSocial);
             modelo.put("domicilio", domicilio);
             modelo.put("correo", correo);
-            modelo.put("clave", clave);
+            modelo.put("clave", clave1);
+            modelo.put("clave", clave2);
             modelo.put("descripcion", descripcion);
             modelo.put("region", region);
 
             return "editar-productor";
 
         }
-        modelo.put("Atención", "Productor ingresado de manera satisfactoria");
+        modelo.put("Atención", "Productor modificado de manera satisfactoria");
         return "index.html";
     }
 
@@ -139,11 +164,22 @@ public class ProductorControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
     @PostMapping("/eliminar-productor")
-    public String darDeBaja(ModelMap modelo, @RequestParam String id) throws Excepcion {
+    public String darDeBaja(ModelMap modelo, @RequestParam String correo, @RequestParam String clave) throws Excepcion {
 
-        productorServicio.borrarPorId(id);
+        try {
 
-        modelo.put("Atención", "El Productor ha sido dado de baja con éxito");
+            usuarioServicio.eliminarUsuario(correo, clave);
+
+        } catch (Excepcion ex) {
+            modelo.put("error", ex.getMessage());
+
+            modelo.put("mail", correo);
+            modelo.put("clave1", clave);
+
+            return "eliminar-productor.html";
+        }
+
+        modelo.put("borrado", "Productor eliminado con éxito");
         return "index.html";
     }
 

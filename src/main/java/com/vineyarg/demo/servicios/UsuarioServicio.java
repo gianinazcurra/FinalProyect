@@ -191,7 +191,9 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario usuarioOAdmin = respuesta.get();
 
-            usuarioRepositorio.delete(usuarioOAdmin);
+            usuarioOAdmin.setAlta(false);
+            
+            usuarioRepositorio.save(usuarioOAdmin);
         } else {
 
             throw new Excepcion("Usuario o clave no hallada");

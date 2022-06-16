@@ -27,13 +27,16 @@
 
             <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
 
-            <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${nombre}">
-            <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${razonSocial}">
-            <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${domicilio}">
-            <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${email}">
-            <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una Contraseña" required="" th:value="${contraseña}">
-            <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción" required="" th:value="${descripcion}">
-            <input class="control" type="text" name="region" id="" placeholder="Ingresar una Región" required="" th:value="${region}">
+            <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${productor.nombre}">
+            <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${productor.razonSocial}">
+            <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${productor.domicilio}">
+            <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${productor.correo}">
+            <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una Contraseña" required="" th:value="${productor.clave1}">
+            <input class="control" type="password" name="contraseña" id="" placeholder="Repita la contraseña" required="" th:value="${productor.clave1}">
+            <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${productor.descripcion}">
+            <select class="control" name="region"> 
+                  <option th:each="region : ${regiones}" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${productor.region}"></option> 
+                  </select>
             <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
             <input class="boton" type="submit" value="Actualizar perfil">
         </form>
