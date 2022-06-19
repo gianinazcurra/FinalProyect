@@ -34,7 +34,7 @@
             <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una Contraseña" required="" th:value="${productor.clave1}">
             <input class="control" type="password" name="contraseña" id="" placeholder="Repita la contraseña" required="" th:value="${productor.clave1}">
             <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${productor.descripcion}">
-            <select class="control" name="region"> 
+            <select class="control" name="regiones"> 
                   <option th:each="region : ${regiones}" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${productor.region}"></option> 
                   </select>
             <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>

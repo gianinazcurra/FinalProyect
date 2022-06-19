@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VineyArg</title>
+
+    <!-- Links -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/CSS/registros.css">
+    <!-- JavaScript -->
+    <script src="/JS/script.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
+    <!-- Links -->
+</head>
+
+<body>
+
+            <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
+                
+                 <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                  
+                 <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
+               <input class="control" type="text" name="nombre" id="" required="" th:value="${perfil.nombre}">
+                <input class="control" type="text" name="apellido" id="" required="" th:value="${perfil.apellido}">
+                <input class="control" type="number" name="DNI" id="" th:value="${perfil.DNI}">
+                <input class="control" type="date" name="fechaNacimiento" id="" required="" th:value="${perfil.fechaNacimiento}">
+                <input class="control" type="email" name="correo" id="" th:value="${perfil.correo}">
+                <input class="control" type="password" name="clave1" id="" th:value="${clave1}">
+                <input class="control" type="password" name="clave2" id="" required="" th:value="${clave2}">
+                <input class="control" type="file" name="archivo" id="" required=""">
+                <input class="control" type="hidden" name="tipoUsuario" id="" required="" th:value="${perfil.tipoUsuario}">
+                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                <input class="boton" type="submit" value="Actualizar perfil">
+                </form>
+       
+</body>
+
+</html>

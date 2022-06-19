@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +22,16 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author joaqu
  */
+
+
 @Service
 public class ImagenesServicio {
 
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
+    
+    
+    
 
     @Transactional
     public Imagenes guardarNueva(MultipartFile archivo) throws Excepcion {

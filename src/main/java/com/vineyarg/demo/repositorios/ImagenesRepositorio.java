@@ -7,11 +7,14 @@ package com.vineyarg.demo.repositorios;
 
 import com.vineyarg.demo.entidades.Imagenes;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author joaqu
  */
+
+@Repository 
 public interface ImagenesRepositorio extends JpaRepository<Imagenes, String> {
     
 }

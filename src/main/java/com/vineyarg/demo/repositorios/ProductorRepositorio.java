@@ -10,19 +10,19 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProductorRepositorio extends JpaRepository<Productor, String>{
     
-     @Query("SELECT b FROM Productor b WHERE b.id=:id" )
+     @Query("SELECT p FROM Productor p WHERE p.id=:id" )
     public Productor buscarPorId(@Param("id")String id);  
     
-    @Query("SELECT a FROM Productor a WHERE a.nombre=:nombre" )
+    @Query("SELECT p FROM Productor p WHERE p.nombre=:nombre" )
     public Productor buscarPorNombre(@Param("nombre")String nombre);
     
-     @Query("SELECT p from Productor p WHERE p.region Like % :region%")
-      public Productor buscarPorRegion(@Param("varietal") String region);
+     @Query("SELECT p from Productor p WHERE p.region = :region")
+      public Productor buscarPorRegion(@Param("region") String region);
       
       @Query("SELECT p from Productor p where p.correo = :correo")
     public Productor BuscarProductorPorCorreo(@Param("correo") String correo);
     
-    @Query("SELECT a from Productor a where p.correo = :correo AND p.clave = :clave")
+    @Query("SELECT p from Productor p where p.correo = :correo AND p.clave = :clave")
     public Productor BuscarProductorPorCorreoYClave(@Param("correo") String correo, @Param("clave") String clave);
     
 }

@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -35,7 +36,10 @@ public class Usuario implements Serializable {
     private String DNI;
     private String correo;
     private String clave;
-    @Temporal(TemporalType.TIMESTAMP)
+    
+    
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaNacimiento;
     private boolean alta;
     @Enumerated(EnumType.STRING)

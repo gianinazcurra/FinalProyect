@@ -5,10 +5,14 @@
  */
 package com.vineyarg.demo.entidades;
 
+import com.vineyarg.demo.enumeraciones.EstadoCompra;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -29,15 +33,107 @@ public class Compra implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private Integer cantidad;
+   
+    @ElementCollection(targetClass=Integer.class)
+    private List<Integer> cantidades;
     @OneToOne
     private Usuario usuario;
     @OneToMany
     private List<Producto> listaProductos;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
+    @ElementCollection(targetClass=Double.class)
+    private List<Double> subtotales;
     private Double montoFinal;
     private String direccionEnvio;
+    private String formaDePago;
+    private boolean compraEnviadaParaAceptacion;
+    @Enumerated(EnumType.STRING)
+    private EstadoCompra estadoCompra;
+    private String observacionesCompra;
+
+    public Compra(String id, List<Integer> cantidades, Usuario usuario, List<Producto> listaProductos, Date fechaCompra, List<Double> subtotales, Double montoFinal, String direccionEnvio, String formaDePago, boolean compraEnviadaParaAceptacion, EstadoCompra estadoCompra, String observacionesCompra) {
+        this.id = id;
+        this.cantidades = cantidades;
+        this.usuario = usuario;
+        this.listaProductos = listaProductos;
+        this.fechaCompra = fechaCompra;
+        this.subtotales = subtotales;
+        this.montoFinal = montoFinal;
+        this.direccionEnvio = direccionEnvio;
+        this.formaDePago = formaDePago;
+        this.compraEnviadaParaAceptacion = compraEnviadaParaAceptacion;
+        this.estadoCompra = estadoCompra;
+        this.observacionesCompra = observacionesCompra;
+    }
+
+    
+
+    
+
+    
+
+   
+    
+
+    public Compra() {
+    }
+
+    public List<Double> getSubtotales() {
+        return subtotales;
+    }
+
+    public void setSubtotales(List<Double> subtotales) {
+        this.subtotales = subtotales;
+    }
+
+    public String getFormaDePago() {
+        return formaDePago;
+    }
+
+    public void setFormaDePago(String formaDePago) {
+        this.formaDePago = formaDePago;
+    }
+
+    public EstadoCompra getEstadoCompra() {
+        return estadoCompra;
+    }
+
+    public void setEstadoCompra(EstadoCompra estadoCompra) {
+        this.estadoCompra = estadoCompra;
+    }
+
+    
+
+    
+
+    public boolean isCompraEnviadaParaAceptacion() {
+        return compraEnviadaParaAceptacion;
+    }
+
+    public void setCompraEnviadaParaAceptacion(boolean compraEnviadaParaAceptacion) {
+        this.compraEnviadaParaAceptacion = compraEnviadaParaAceptacion;
+    }
+
+    public String getObservacionesCompra() {
+        return observacionesCompra;
+    }
+
+    public void setObservacionesCompra(String observacionesCompra) {
+        this.observacionesCompra = observacionesCompra;
+    }
+
+    
+
+    
+
+    public List<Integer> getCantidades() {
+        return cantidades;
+    }
+
+    public void setCantidades(List<Integer> cantidades) {
+        this.cantidades = cantidades;
+    }
   
     
     
@@ -71,6 +167,7 @@ public class Compra implements Serializable {
         return true;
     }
 
+    
     @Override
     public String toString() {
         return "com.vineyarg.demo.entidades.Compra[ id=" + getId() + " ]";
@@ -84,17 +181,7 @@ public class Compra implements Serializable {
     /**
      * @return the cantidad
      */
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    /**
-     * @param cantidad the cantidad to set
-     */
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
+   
     /**
      * @return the usuario
      */

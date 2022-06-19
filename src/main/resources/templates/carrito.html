@@ -72,6 +72,10 @@
     <section id="carrito" class="">
         <div class="container mt-5 py-1">
             <h2 clas="font-weight-bold">Carrito de Compras</h2>
+            
+            <p th:if="${logout == null}" th:text="${'Cerrar sesión'}" th:ref="@{/checkout}" style="color:red"></p>
+                <p th:if="${login == null}" th:text="${'Iniciar sesión'}" th:ref="@{/login}" style="color:red"></p>
+                
             <hr>
         </div>
     </section>
@@ -89,9 +93,38 @@
                     <td>Total</td>
                 </tr>
             </thead>
-
+                <p th:if="${compraEnCurso!= null}" th:text="${compraEnCurso}" style="color:red"></p>
             <tbody>
-                <tr>
+                <tr th:if="${carrito != null}" th:each="compraAntesDePago : ${carrito}">
+                    <td><a th:href="@{/carrito/eliminar-producto(idProductoEliminar=${compraAntesDePago.producto.id}, CantEliminar=${compraAntesDePago.cantidades}, idCompraEnCurso=${compraEnCurso.id} )}"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
+                    <td>
+                        <h5 th:text="${compraAntesDePago.producto.nombre}"></h5>
+                    </td>
+                    <td>
+                        <h5  th:text="${compraAntesDePago.producto.precio}"></h5>
+                    </td>
+                    <td><input th:value="${compraAntesDePago.cantidades" type="number"></td>
+                    <td>
+                        <h5 th:value="${compraAntesDePago.producto.precio * {compraAntesDePago.cantidades}"></h5>
+                    </td>
+                </tr>
+                
+<!--                <tr>
+                    <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
+                    <td>
+                        <h5 th:text="${producto.nombre}"> </h5>
+                    </td>
+                    <td>
+                        <h5 th:text="${producto.precio}"></h5>
+                    </td>
+                    <td><input class="w-25 pl-1" th:value=${cantidad}" type="number"></td>
+                    <td>
+                        <h5 th:text="${producto.precio * cantidad}"></h5>
+                    </td>
+                </tr>-->
+<!--                <tr>
                     <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
                     <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
                     <td>
@@ -104,35 +137,7 @@
                     <td>
                         <h5>$ 130.00</h5>
                     </td>
-                </tr>
-                <tr>
-                    <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
-                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
-                    <td>
-                        <h5>Lorem, ipsum dolor</h5>
-                    </td>
-                    <td>
-                        <h5>$ 100,00</h5>
-                    </td>
-                    <td><input class="w-25 pl-1" value="1" type="number"></td>
-                    <td>
-                        <h5>$ 130.00</h5>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="#"><i class="fas fa-trash-alt"></i></a></td>
-                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
-                    <td>
-                        <h5>Lorem, ipsum dolor</h5>
-                    </td>
-                    <td>
-                        <h5>$ 100,00</h5>
-                    </td>
-                    <td><input class="w-25 pl-1" value="1" type="number"></td>
-                    <td>
-                        <h5>$ 130.00</h5>
-                    </td>
-                </tr>
+                </tr>-->
             </tbody>
         </table>
     </section>
@@ -152,20 +157,21 @@
                 <div>
                     <h5>TOTAL DE LA COMPRA</h5>
                     <div class="d-flex justify-content-between">
-                        <h6>Subtotal</h6>
-                        <p>$ 130,00</p>
+                        <h6>Subtotal antes de envío</h6>
+                        <p th:if="${subtotal != null}" th:text="${subtotal}"></p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
-                        <h6>Envío</h6>
+                        <h6>Envío fijo a todo el país </h6>
                         <p>$ 850,00</p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Total</h6>
-                        <p>$ 980,00</p>
+                        <p th:if="${totalCompra != null}" th:text="${totalCompra}"> </p>
                     </div>
-                    <button id="botonCompra" class="ml-auto">PROCEDER A LA COMPRA</button>
+                    <button id="botonCompra" class="ml-auto" th:href="@{/anularCompra/(idCompra=${compraAntesDePago.id})}">ANULAR COMPRA</button>
+                    <button id="botonCompra" class="ml-auto" th:href="@{/checkout/(idCompra=${compraAntesDePago.id})}">PROCEDER A LA COMPRA</button>
                 </div>
             </div>
         </div>

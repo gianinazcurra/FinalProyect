@@ -90,6 +90,14 @@
             <h2 clas="font-weight-bold">Nuestros productos</h3>
                 <hr>
                 <p>De parte de nuestros productores para todo el país.</p>
+                
+                <p th:if="${compraEnCurso!= null}" th:text="${compraEnCurso}" style="color:red"></p>
+               
+                <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
+                   <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
+                    <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
+                <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
+                </form>
         </div>
         <div class="row mx-auto container">
             <div class="producto text-center cl-lg-3 col-md-4 col-12" th:each="{producto : ${productos}">

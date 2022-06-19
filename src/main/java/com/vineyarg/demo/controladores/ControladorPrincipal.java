@@ -20,7 +20,7 @@ public class ControladorPrincipal {
     
     @RequestMapping("/index")
     public String page(Model model) {
-        model.addAttribute("attribute", "value");
+        
         return "index.html";
     }
     

@@ -100,15 +100,15 @@
                     <span class="text-muted">Tu carrito</span>
                     <span class="badge badge-secondary badge-pill">3</span>
                 </h4>
-                <ul class="list-group mb-3">
+                <ul th:if="${compra != null}" th:each="producto : ${compra}" class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Nombre del Producto</h6>
+                            <h6 class="my-0" th:text="${compra.producto.nombre}"></h6>
                             <small class="text-muted">Nombre Bodega</small>
                         </div>
-                        <span class="text-muted">$ 1.890,30</span>
+                        <span class="text-muted" th:value="${compra.producto.precio * {compra.cantidades}"></span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+<!--                    <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0">Nombre del Producto</h6>
                             <small class="text-muted">Nombre Bodega</small>
@@ -121,36 +121,36 @@
                             <small class="text-muted">Nombre Bodega</small>
                         </div>
                         <span class="text-muted">$ 500,00</span>
-                    </li>
+                    </li>-->
                     <li class="list-group-item d-flex justify-content-between bg-light">
                         <div class="text-success">
                             <h6 class="my-0">Cupón de Descuento</h6>
                             <small>CODIGO_PROMO</small>
                         </div>
-                        <span class="text-success">-$ 300,00</span>
+                        <span class="text-success">-$0,00</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (ARS)</span>
-                        <strong>$ 2890,30</strong>
+                        <span>Total con envío incluído (ARS)</span>
+                        <strong th:text="${totalCompra}"></strong>
                     </li>
                 </ul>
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Direccion de Envío</h4>
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" novalidate action="/enviarPedido" method="POST" >
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="firstName">Nombre</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                            <label for="nombre"></label>
+                            <input type="text" class="form-control" id="firstName" name="nombre" placeholder="" th:value="${usuario.nombre}" required>
                             <div class="invalid-feedback">
                                 Este campo es obligatorio.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="lastName">Apellido</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                            <label for="apellido">Apellido</label>
+                            <input type="text" class="form-control" id="lastName" name="apellido" placeholder="" th:value="${usuario.apellido}" required>
                             <div class="invalid-feedback">
-                                Este campo es obliga.
+                                Este campo es obligatorio.
                             </div>
                         </div>
                     </div>
@@ -159,63 +159,80 @@
                     <div class="mb-3">
                         <label for="username">Usuario</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" id="password" placeholder="Username">                        </div>
-                        <label for="password">Contraseña</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="" th:value="${usuario.correo}">                        </div>
+                        <label for="clave">Contraseña</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="password" placeholder="Contraseña">
+                            <input type="password" class="form-control" id="password" name="clave" placeholder="" th:value="${usuario.clave}">
                         </div>
 
                     </div>
 
                     <div class="mb-3">
-                        <label for="email">Email <span class="text-muted">(Requerido)</span></label>
-                        <input type="email" class="form-control" id="email" placeholder="tuemail@ejemplo.com">
+                        <label for="correo">Email <span class="text-muted">(Requerido)</span></label>
+                        <input type="email" class="form-control" id="email" name="correo" placeholder="" th:value="${usuario.correo}">
                         <div class="invalid-feedback">
                             Ingrese una dirección de correo electrónico válida para actualizaciones de envío.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address">Dirección</label>
-                        <input type="text" class="form-control" id="address" placeholder="Ingrese calle y numero" required>
+                        <label for="direccion">Dirección</label>
+                        <input type="text" class="form-control" id="address" name="direccion" placeholder="Ingrese calle y numero" required>
                         <div class="invalid-feedback">
                             Por favor ingrese una dirección válida.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address2">Detalles de la ubicación <span class="text-muted">(Opcional)</span></label>
-                        <input type="text" class="form-control" id="direccion2" placeholder="Descripción de la ubicación">
+                        <label for="detalles">Detalles de la ubicación <span class="text-muted">(Opcional)</span></label>
+                        <input type="text" class="form-control" id="direccion2" name="detalles" placeholder="Descripción de la ubicación">
                     </div>
 
                     <div class="row">
                         <div class="col-md-5 mb-3">
-                            <label for="country">Provincia</label>
-                            <select class="custom-select d-block w-100" id="country" required>
+                            <label for="provincia">Provincia</label>
+                            <select class="custom-select d-block w-100" id="country" name="provincia" required>
                                 <option value="">Seleccionar...</option>
                                 <option>Chubut</option>
                                 <option>Mendoza</option>
-                                <option>San Juan</option>
+                                <option>Salta</option>
+                                <option>Tucumán</option>
+                                <option>Buenos Aires</option>
+                                <option>Ciudad de Buenos Aires</option>
+                                <option>Jujuy</option>
+                                <option>La Pampa</option>
+                                <option>Corrientes</option>
+                                <option>Entre Ríos</option>
+                                <option>Chaco</option>
+                                <option>La Rioja</option>
+                                <option>Catamarca</option>
+                                <option>Santa Fe</option>
+                                <option>Córdoba</option>
+                                <option>San Luis</option>
+                                <option>Santa Cruz</option>
+                                <option>Tierra del Fuego</option>
+                                 <option>Río Negro</option>
+                                  <option>Neuquén</option>
+                                
                             </select>
                             <div class="invalid-feedback">
                                 Por favor seleccione un estado válido.
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="state">País</label>
-                            <select class="custom-select d-block w-100" id="state" required>
+                            <label for="país">País</label>
+                            <select class="custom-select d-block w-100" id="state" name="pais" required>
                                 <option value="">Seleccionar...</option>
                                 <option>Argentina</option>
-                                <option>Chile</option>
-                                <option>Uruguay</option>
+                                
                             </select>
                             <div class="invalid-feedback">
-                                Por favor seleccione un País válido.
+                                Por favor seleccione un País válido (pronto entregas internaciones).
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="zip">Código Postal</label>
-                            <input type="text" class="form-control" id="zip" placeholder="" required>
+                            <label for="CP">Código Postal</label>
+                            <input type="text" class="form-control" id="zip" name="CP" placeholder="" required>
                             <div class="invalid-feedback">
                                 Este campo es obligatorio.
                             </div>
@@ -236,7 +253,7 @@
 
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked
+                            <input id="modoPago" name="modoPago" type="radio" class="custom-control-input" checked
                                 required>
                             <label class="custom-control-label" for="credit">Tarjeta de Crédito</label>
                         </div>
@@ -251,17 +268,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="cc-name">Titular de la tarjeta</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                            <label for="titTarjeta">Titular de la tarjeta</label>
+                            <input type="text" class="form-control" id="cc-name" name="titTarjeta" placeholder="" required>
                             <small class="text-musted">Nombre completo como se muestra en la tarjeta.</small>
                             <div class="invalid-feedback">
                                 El nombre completo del titular es obligatorio.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="cc-number">Número de la tarjeta
+                            <label for="numTarjeta">Número de la tarjeta
                             </label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="Ingresar número sin espacios" required>
+                            <input type="text" class="form-control" id="cc-number" name="numTarjeta" placeholder="Ingresar número sin espacios" required>
                             <div class="invalid-feedback">
                                 El número de la tarjeta es obligatorio.
                             </div>
@@ -269,22 +286,31 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">Fecha de Expiración</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="MM/AA" required>
+                            <label for="vencimiento">Fecha de Expiración</label>
+                            <input type="text" class="form-control" name="vencimiento" id="cc-expiration" placeholder="MM/AA" required>
                             <div class="invalid-feedback">
                                 La fecha de expiración es obligatoria.
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="cc-cvv">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="123" required>
+                            <label for="CVV">CVV</label>
+                            <input type="text" class="form-control" id="cc-cvv" name="CVV" placeholder="123" required>
                             <div class="invalid-feedback">
                                 Código de seguridad obligatorio.
+                            </div>
+                        </div> 
+                        <div class="col-md-3 mb-3">
+                            <label for="DNI">DNI del titular de la tarjeta</label>
+                            <input type="text" class="form-control" id="cc-cvv" name="DNI" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Ingrese DNI del titular de la tarjeta.
                             </div>
                         </div>
                     </div>
                     <hr class="mb-4">
+                     <button id="botonCompra" class="ml-auto" th:href="@{/anularCompra/(idCompra=${compraAntesDePago.id})}">ANULAR COMPRA</button>
                     <button id="botonCompra" type="submit" class="ml-auto mb-3">FINALIZAR COMPRA</button>
+                   
                 </form>
             </div>
         </div>

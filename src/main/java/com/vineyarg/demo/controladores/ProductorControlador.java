@@ -1,14 +1,19 @@
 package com.vineyarg.demo.controladores;
 
+import com.vineyarg.demo.entidades.Compra;
+import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.enumeraciones.Regiones;
 import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import com.vineyarg.demo.errores.Excepcion;
+import com.vineyarg.demo.repositorios.CompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductorServicio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/registro-bodega")
+@RequestMapping
 public class ProductorControlador {
 
     @Autowired
@@ -35,6 +40,9 @@ public class ProductorControlador {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private CompraRepositorio compraRepositorio;
     
     @Autowired
     private ProductorRepositorio productorRepositorio;
@@ -80,7 +88,7 @@ public class ProductorControlador {
         }
 
         modelo.put("Atención", "Productor ingresado de manera satisfactoria");
-        return "registro-bodega";
+        return "login.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")//está bien este role?
@@ -136,7 +144,7 @@ public class ProductorControlador {
 
         }
         modelo.put("Atención", "Productor modificado de manera satisfactoria");
-        return "index.html";
+        return "productorweb.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
@@ -180,7 +188,51 @@ public class ProductorControlador {
         }
 
         modelo.put("borrado", "Productor eliminado con éxito");
-        return "index.html";
+        return "registro.html";
+    }
+    
+    @GetMapping("/productorweb")
+    public String productorWeb(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
+
+        Usuario login = (Usuario) session.getAttribute("UsuarioSession");
+        if (login == null || !login.getId().equalsIgnoreCase(id)) {
+            return "redirect:/index.html";
+        }
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+            Usuario usuario = new Usuario();
+            usuario = respuesta.get();
+            
+            Productor productor = productorRepositorio.BuscarProductorPorCorreo(usuario.getCorreo());
+            
+            
+            modelo.put("productor", productor);
+            
+        } else {
+
+            throw new Excepcion("Productor no reconocido");
+        }
+
+        return "productorweb.html";
+    }
+
+    @GetMapping("/verVentas") //FALTA DESARROLLAR PARA QUE EL PRODUCTOR PUEDA VER SUS VENTAS
+    public String verVentas(ModelMap modelo, HttpSession session, @RequestParam String id) {
+//
+//        List<Compra> comprasTotales = compraRepositorio.findAll();
+//        
+//        List<Producto> productosVendidos = new ArrayList();
+//        
+//        for (Compra comprasTotale : comprasTotales) {
+//            
+//            if(comprasTotale.getListaProductos().contains())
+//        }
+//
+//        modelo.put("compras", comprasUsuario);
+
+        return null;
     }
 
 }

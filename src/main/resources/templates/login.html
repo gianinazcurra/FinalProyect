@@ -44,11 +44,11 @@
             <div class="hamburguesa">
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/index.html">Home</a></li>
+                     <li class="nav__item"><a href="/index">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
-                    <li class="nav__item"><a href="">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
 
                 <ul class="nav__iconos">
@@ -58,7 +58,8 @@
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
-                    <a href="/HTML/registro.html">
+                     <a href="/logueo">
+                    
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
                 </ul>
@@ -72,27 +73,27 @@
     <div class="claseLogin">
 
         <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
-
+        
         <section class="login">
             <div class="login-2">
-                
+            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
             <img class="avatar" src="/imagenes/logoCuadrado.jpeg" alt="">
             <h2>
                 Inicia Sesion!
             </h2>
             <form>
                 <!-- nombre -->
-                <label for="nombreusuario">Usuario</label>
-                <input type="text" placeholder="Nombre de Usuario" required>
+                <label for="correo">Usuario (correo electrónico con el que te registraste)</label>
+                <input type="text" name="correo" placeholder="Nombre de Usuario" required>
 
                 <!-- contraseña -->
-                <label for="contraseña">Contraseña</label>
-                <input type="password" placeholder="Ingresa tu contraseña" required>
+                <label for="clave">Contraseña</label>
+                <input type="password" name="clave" placeholder="Ingresa tu contraseña" required>
 
                 <input type="submit" value="Ingresá">
             </form>
             <h5>
-                Todavia no tenes una cuenta? <a href="/HTML/registro.html"> Click aqui! </a>
+                Todavia no tenes una cuenta? <a href="/registro"> Click aqui! </a>
             </h5>
         </div>
         </section>
@@ -116,11 +117,11 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/index">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Contacto</a></li>
+                    <li><a href="/tienda">Tienda</a></li>
+                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-columna-3">

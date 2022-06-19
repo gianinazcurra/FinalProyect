@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VineyArg</title>
+
+    <!-- Links -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/login.css">
+    <!-- JavaScript -->
+    <script src="/JS/script.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
+    <!-- Links -->
+</head>
+
+<body>
+    <!-- Header -->
+
+
+    <nav class="etiqueta__nav">
+
+        <div class="nav__container">
+
+            <div class="nav__logo">
+                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                        width="200px"></a>
+            </div>
+
+
+            <label for="menuId" class="nav__label">
+                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+            </label>
+            <input type="checkbox" id="menuId" class="nav__input">
+
+            <div class="hamburguesa">
+                <ul class="nav__ul">
+
+                    <li class="nav__item"><a href="/index.html">Home</a></li>
+                    <li class="nav__item"><a href="">Regiones</a></li>
+                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="">Tienda</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
+                </ul>
+
+                <ul class="nav__iconos">
+                    <a href="">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
+                    <a href="">
+                        <li class="fa-solid fa-heart nav__item"></li>
+                    </a>
+                    <a href="/HTML/registro.html">
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Fin del header -->
+    
+     <img th:if="${perfil.foto != null}" class="img-fluid mb-3" th:src="${'/imagen/usuario' + perfil.id}" alt="">
+                 <img th:if="${perfil.foto == null}" class="img-fluid mb-3" th:text="${Usuario sin imágen">
+
+    <a href="/editar-usuario">ACTUALIR DATOS DEL ADMINISTRADOR</a>
+    
+   <a href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
+    <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
+        <p th:text="${compra.id}" </p>
+         <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.nombre}" th:text="${producto.precio}" </p>
+         <p th:value="${compra.montoFinal}" </p>
+         <p th:value="${compra.fechaCompra}" </p>
+         <p th:text="${compra.usuario.apellido}" </p>
+         <form action="/aceptarCompra" method="POST" >
+             <label th:text="El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso">  </label>
+              <input type="hidden" class="" name="id" th:value="${compra.id}"/> 
+                <select class="" name="decision" value="decision" required> 
+                  <option th:text="ACEPTAR"></option> 
+                  <option h:text="RECHAZAR"></option> 
+                  </select>
+                   <input type="text" name="observaciones" th:value="observaciones" placeholder="Indique si la compra fue aprobada o causas del rechazo" required>
+                  <input class="boton" type="submit" value="Aceptar/Rechazar">
+         </form>
+         
+        </div>
+    <a href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS          
+                           </a>
+    <div th:if="${comprasHistoricas != null}" th:each="compraOk : ${comprasHistóricas}">
+        <p th:text="${compra.id}" </p>
+         <p th:each="producto : ${comprasHistóricas.productos}" th:text="${comprasHistóricas.nombre}" th:text="${comprasHistóricas.precio}" </p>
+         <p th:value="${comprasHistóricas.montoFinal}" </p>
+         <p th:value="${comprasHistóricas.fechaCompra}" </p>
+         <p th:text="${compra.usuario.apellido}" </p>
+         <p th:text="${estadoCompra}" </p>
+         <p th:text="${compra.observacionesCompra}" </p>
+         
+         
+        </div>
+
+
+    <!-- Footer -->
+
+    <div class="footer">
+        <div class="footer-a">
+            <div class="footer-columna-1">
+                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                <h3>
+                    ¡Comprá los mejores vinos Aquí!
+                </h3>
+            </div>
+            <div class="footer-columna-2">
+                <h3>Navegacion</h3>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="">Regiones</a></li>
+                    <li><a href="">Bodegas</a></li>
+                    <li><a href="">Tienda</a></li>
+                    <li><a href="">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-columna-3">
+                <h3>Nuestras Redes</h3>
+                <div class="redes">
+                    <a href="" class="fa fa-instagram"></a>
+                    <a href="" class="fa fa-linkedin"></a>
+                    <a href="" class="fa-solid fa-at"></a>
+                    <a href="" class="fa fa-twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-b">
+            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+        </div>
+    </div>
+
+    <!-- Fin del Footer -->
+
+    <div class="separador"></div>
+
+</body>
+
+</html>

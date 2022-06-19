@@ -84,14 +84,21 @@
                 <a href="/HTML/registro.html">
                     <li class="fa-solid fa-user nav__item"></li>
                 </a>
+                
+                <p th:if="${logout != null}" th:text="${'Cerrar sesión'}" th:ref="@{/checkout}" style="color:red"></p>
+                <p th:if="${login != null}" th:text="${'Iniciar sesión'}" th:ref="@{/login}" style="color:red"></p>
+                
             </ul>
         </div>
     </nav>
     <!-- Fin del header -->
 
     <section class="container producto my-5 pt-5">
+        
+        
         <div class="row mt-5">
             <div class="col-lg-5 col-md-12 col-12">
+               
                 <img th:if="${producto.foto != null}" class="img-fluid w-100 pb-1" th:src="${'/imagen/producto' + producto.id}" alt="">
                    <img th:if="${producto.foto == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">
               
@@ -111,14 +118,27 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="col-lg-5 col-md-12 col-12">
-                <form action="/mostrarProducto" method="POST" enctype="multipart/form-data">
+                
+                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                
+                <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
+                   <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
+                   <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
+                <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
+                </form>
+                
+                <form action="/agregaCarrito" method="POST" enctype="multipart/form-data">
                    <h6 th:text="${producto.productor.nombre}"</h6>
                 <h3 class="py-4"th:text="${producto.nombre}"</h3>
                 <h2 th:text="${producto.precio}"</h2>
-                <input type="number" name="cantidad" th:value="$(cantidad)">
+                 <input th:if="${perfil != null)}" type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
+                 <input type="number" name="cantidad" th:value="$(cantidad)">
+                <input type="hidden" name="idProducto" th:value="$(idProducto)">
+               
                 <button class="buy-btn" type="submit">Agregar al carrito</button>
+                 <form>
                 <h4 classs="mt-5 mb-5">Descripcion</h4>
                 <span th:text="${producto.descripcion}"></span>
             </div>

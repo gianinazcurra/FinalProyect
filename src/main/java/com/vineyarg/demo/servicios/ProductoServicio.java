@@ -1,25 +1,27 @@
 package com.vineyarg.demo.servicios;
 
-import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
-import java.util.ArrayList;
+import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import java.util.List;
 import java.util.Optional;
 //import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 
 @Service
 public class ProductoServicio {
 
-    @Autowired
-    private ImagenesServicio imagenesServicio;
+//    @Autowired
+//    private ImagenesServicio imagenesServicio;
+    
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
@@ -27,10 +29,10 @@ public class ProductoServicio {
     private ProductoRepositorio productoRepositorio;
 
     @Autowired
-    // private ProductorRepositorio productorRepositorio;
+     private ProductorRepositorio productorRepositorio;
 
     @Transactional
-    public void agregarProducto(List<MultipartFile> imagenes /*si no funciona probar así: MutiplepartFile[] imagenes*/, String nombre, Integer cantidad, Double precio, String descripcion,
+    public void agregarProducto(List<MultipartFile> imagenes, /*si no funciona probar así: MutiplepartFile[] imagenes*/String nombre, Integer cantidad, Double precio, String descripcion,
             String varietal, Productor productor, String SKU) throws Excepcion {
         /*Antes de persistir el objeto tenemos que validar que los atributos lleguen*/
         validar(nombre, cantidad, precio, descripcion,
@@ -52,17 +54,17 @@ public class ProductoServicio {
 //        producto.setValoraciones(valoraciones);
         //producto.setAlta(true);
 
-        List<Imagenes> listaFotos = new ArrayList();
-        for (int i = 0; i < imagenes.size(); i++) {
-
-            Imagenes imagen = new Imagenes();
-
-            imagenesServicio.guardarNueva(imagenes.get(i));
-
-            listaFotos.add(imagen);
-
-        }
-        producto.setImagenes(listaFotos);
+//        List<Imagenes> listaFotos = new ArrayList();
+//        for (int i = 0; i < imagenes.size(); i++) {
+//
+//            Imagenes imagen = new Imagenes();
+//
+//            imagenesServicio.guardarNueva(imagenes.get(i));
+//
+//            listaFotos.add(imagen);
+//
+//        }
+//        producto.setImagenes(listaFotos);
 
         productoRepositorio.save(producto);//el repositorio guarda el objeto creado en la base de datos, lo transforma en una tabla
 
