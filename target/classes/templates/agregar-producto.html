@@ -88,7 +88,7 @@
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Cantidad</span>
-                        <input type="number" name="cantidad" th:value="${cantidad}" placeholder="Ingresa la Cantidad disponible para vender" required>
+                        <input type="number" name="cantidad" min="0" max="1000000" th:value="${cantidad}" placeholder="Ingresa la Cantidad disponible para vender" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Precio</span>
