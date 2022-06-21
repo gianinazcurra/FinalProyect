@@ -31,7 +31,7 @@
         <div class="nav__container">
 
             <div class="nav__logo">
-                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                         width="200px"></a>
             </div>
 
@@ -44,7 +44,7 @@
             <div class="hamburguesa">
                 <ul class="nav__ul">
 
-                     <li class="nav__item"><a href="/index">Home</a></li>
+                     <li class="nav__item"><a href="/">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
@@ -77,19 +77,22 @@
         <section class="login">
             <div class="login-2">
             <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+            
             <img class="avatar" src="/imagenes/logoCuadrado.jpeg" alt="">
             <h2>
                 Inicia Sesion!
             </h2>
-            <form>
+            <form action="/logincheck" method="POST">
                 <!-- nombre -->
                 <label for="correo">Usuario (correo electrónico con el que te registraste)</label>
                 <input type="text" name="correo" placeholder="Nombre de Usuario" required>
-
+                
                 <!-- contraseña -->
                 <label for="clave">Contraseña</label>
                 <input type="password" name="clave" placeholder="Ingresa tu contraseña" required>
-
+                
+               
                 <input type="submit" value="Ingresá">
             </form>
             <h5>
@@ -117,7 +120,7 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="/index">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>

@@ -48,7 +48,7 @@
         <div class="nav__container">
 
             <div class="nav__logo">
-                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                         width="200px"></a>
             </div>
 
@@ -61,12 +61,15 @@
             <div class="hamburguesa">
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/index.html">Home</a></li>
+                    <li class="nav__item"><a href="/">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
                     <li class="nav__item"><a href="">Tienda</a></li>
                     <li class="nav__item"><a href="">Contacto</a></li>
                 </ul>
+                
+                  <a href="/logout"> Cerrar sesión </a><br>
+     <a href="/"> Volver al menú principal</a>
 
                 <ul class="nav__iconos">
                     <a href="">
@@ -75,8 +78,24 @@
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
-                    <a href="/HTML/registro.html">
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
+                    
                         <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession != null}"> 
+                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                       
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
                     </a>
                 </ul>
             </div>
@@ -85,8 +104,14 @@
     <!-- Fin del header -->
 
     <!-- productos destacados -->
+    
+    
     <section id="destacados" class="my-5 pb-5">
         <div class="container mt-5 py-5">
+            
+            
+            
+        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>   
             <h2 clas="font-weight-bold">Nuestros productos</h3>
                 <hr>
                 <p>De parte de nuestros productores para todo el país.</p>
@@ -100,9 +125,9 @@
                 </form>
         </div>
         <div class="row mx-auto container">
-            <div class="producto text-center cl-lg-3 col-md-4 col-12" th:each="{producto : ${productos}">
+            <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productos != null}" th:each="producto : ${productos}">
                 <img th:if="${producto.foto != null}" class="img-fluid mb-3" th:src="${'/imagen/producto' + producto.id}" alt="">
-                 <img th:if="${producto.foto == null}" class="img-fluid mb-3" th:text="${Producto sin imágen">
+                 <img th:if="${producto.foto == null}" class="img-fluid mb-3" th:text="${Producto sin imágen}">
                
                 <div class="estrella">
                     <i class="fas fa-star"></i>

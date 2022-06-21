@@ -22,21 +22,30 @@
         <!-- Links -->
     </head>
     <body>
-
+<a href="/logout"> Cerrar sesion </a><br>
+     <a href="/"> Volver al menú principal</a>
+     
+      <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+      
         <form action="/editar-productor" method="POST" enctype="multipart/form-data">
 
-            <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+           
 
-            <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${productor.nombre}">
-            <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${productor.razonSocial}">
-            <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${productor.domicilio}">
-            <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${productor.correo}">
-            <input class="control" type="password" name="contraseña" id="" placeholder="Ingresar una Contraseña" required="" th:value="${productor.clave1}">
-            <input class="control" type="password" name="contraseña" id="" placeholder="Repita la contraseña" required="" th:value="${productor.clave1}">
-            <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${productor.descripcion}">
-            <select class="control" name="regiones"> 
-                  <option th:each="region : ${regiones}" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${productor.region}"></option> 
+            <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id="" th:value="${session.usuarioSession.id}">
+            
+            <input class="control" type="hidden" name="idProductor" id="" th:value="${perfil.id}">
+            
+            <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${perfil.nombre}">
+            <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${perfil.razonSocial}">
+            <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${perfil.domicilio}">
+            <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${perfil.correo}">
+            <input class="control" type="password" name="clave1" id="" placeholder="Ingresar una Contraseña" required="" th:value="${perfil.clave}">
+            <input class="control" type="password" name="clave2" id="" placeholder="Repita la contraseña" required="" th:value="${perfil.clave}">
+            <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${perfil.descripcion}">
+<select class="control" name="region"> 
+                  <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${region}"></option> 
                   </select>
+             <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca">
             <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
             <input class="boton" type="submit" value="Actualizar perfil">
         </form>

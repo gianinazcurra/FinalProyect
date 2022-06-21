@@ -34,7 +34,7 @@
         <div class="nav__container">
 
             <div class="nav__logo">
-                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                         width="200px"></a>
             </div>
 
@@ -44,11 +44,12 @@
             </label>
             <input type="checkbox" id="menuId" class="nav__input">
 
-
+            <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br>
+     
 
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/index">Home</a></li>
+                    <li class="nav__item"><a href="/">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
@@ -62,9 +63,24 @@
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
 
-                    <a href="/logueo">
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                     
                         <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession != null}"> 
+                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                       
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
                     </a>
 
                 </ul>
@@ -72,6 +88,8 @@
     </nav>
 <!-- Fin del header -->
 
+<p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+   <p th:if="${logout != null}" th:text="${logout}" style="color:red"></p>
 
     <div class="container">
         <div class="row">
@@ -108,10 +126,13 @@
                     ¡Comprá los mejores vinos aquí!
                 </h3>
             </div>
+            
+            
+   
             <div class="footer-columna-2">
                 <h3>Navegación</h3>
                 <ul>
-                    <li><a href="/index">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>

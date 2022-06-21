@@ -23,21 +23,21 @@
 </head>
 
 <body>
-
+<a href="/logout"> Cerrar sesion </a><br>
+     <a href="/"> Volver al menú principal</a>
+     
+      <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
             <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
                 
-                 <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                
                   
                  <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
-               <input class="control" type="text" name="nombre" id="" required="" th:value="${perfil.nombre}">
-                <input class="control" type="text" name="apellido" id="" required="" th:value="${perfil.apellido}">
-                <input class="control" type="number" name="DNI" id="" th:value="${perfil.DNI}">
-                <input class="control" type="date" name="fechaNacimiento" id="" required="" th:value="${perfil.fechaNacimiento}">
-                <input class="control" type="email" name="correo" id="" th:value="${perfil.correo}">
-                <input class="control" type="password" name="clave1" id="" th:value="${clave1}">
-                <input class="control" type="password" name="clave2" id="" required="" th:value="${clave2}">
-                <input class="control" type="file" name="archivo" id="" required=""">
-                <input class="control" type="hidden" name="tipoUsuario" id="" required="" th:value="${perfil.tipoUsuario}">
+               
+                <input class="control" type="email" name="correo" placeholder="Podés cargar tu correo de registro"  id="" th:value="${perfil.correo}">
+                <input class="control" type="password" name="clave1" placeholder="Podés cambiar tu clave"  id="" th:value="${perfil.clave}">
+                <input class="control" type="password" name="clave2" placeholder="Si cambiaste tu clave, por favor ingresala nuevamente" id="" required="" th:value="${perfil.clave}">
+                <input class="control" type="file" name="archivo" placeholder="Podés cambiar tu foto de perfil"  id="">
+                
                 <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
                 <input class="boton" type="submit" value="Actualizar perfil">
                 </form>

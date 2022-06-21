@@ -133,39 +133,49 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarUsuario(MultipartFile archivo, String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento, TipoUsuario tipoUsuario) throws Excepcion {
+    public void modificarUsuario(String id, MultipartFile archivo, String correo, String clave1, String clave2) throws Excepcion {
 
-        Usuario verificacionUsuario = usuarioRepositorio.BuscarUsuarioPorCorreoYClave(correo, clave1);
+       
 
-        if (verificacionUsuario == null) {
-            throw new Excepcion("Usuario no encontrado");
-
-        }
-
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(usuarioRepositorio.BuscarUsuarioPorCorreoYClave(correo, clave1).getId());
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
 
-            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
-
             Usuario usuario = respuesta.get();
+            
+            if(usuario.getCorreo().equalsIgnoreCase(correo)) {
+                
+                String correoEstaOk = "estaok@estaok.com";
+                
+                validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correoEstaOk, clave1, clave2, usuario.getFechaNacimiento());
+                
+            } else {
+                 validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correo, clave1, clave2, usuario.getFechaNacimiento());
+            }
+            
 
-            usuario.setNombre(nombre);
-            usuario.setApellido(apellido);
-            usuario.setDNI(DNI);
+            
+
+//            usuario.setNombre(nombre);
+//            usuario.setApellido(apellido);
+//            usuario.setDNI(DNI);
             usuario.setCorreo(correo);
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(encriptada);
-            usuario.setFechaNacimiento(fechaNacimiento);
+//            usuario.setFechaNacimiento(fechaNacimiento);
             usuario.setAlta(true);
-            usuario.setTipoUsuario(tipoUsuario);
+//            usuario.setTipoUsuario(tipoUsuario);
 
-            Imagenes imagen = new Imagenes();
+            if(archivo != null) {
+                Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
 
             usuario.setImagen(imagen);
+            
+            }
+            
 
-            Imagenes foto = new Imagenes();
+            
 
             usuarioRepositorio.save(usuario);
         } else {
@@ -232,33 +242,34 @@ public class UsuarioServicio implements UserDetailsService {
         }
         //Validación clave contiene requisitos
 
-        if (clave1.trim() == null || clave1.trim().isEmpty() || clave1.trim().length() < 5) {
+        if (clave1.trim() == null || clave1.trim().isEmpty()) {
             throw new Excepcion("La contraseña no puede ser nula");
         }
 
         char ch;
-        boolean verificacionClaveMayuscula = false;
-        boolean verificacionClaveNumero = false;
-
+        
+        int verificacionClaveNumero = 0;
+        int verificacionClaveMayuscula = 0;
+        
         for (int i = 0; i < clave1.length(); i++) {
 
-            ch = (char) i;
-            if (Character.isUpperCase(ch)) {
-                verificacionClaveMayuscula = true;
-                break;
+//            ch = (char) i;
+            if (Character.isUpperCase(clave1.charAt(i))) {
+                verificacionClaveMayuscula++;
+               
             };
         }
         for (int i = 0; i < clave1.length(); i++) {
 
-            ch = (char) i;
-            if (Character.isDigit(ch)) {
-                verificacionClaveNumero = true;
-                break;
+//            ch = (char) i;
+            if (Character.isDigit(clave1.charAt(i))) {
+                verificacionClaveNumero++;
+
             };
         }
-
-        if (verificacionClaveMayuscula == false || verificacionClaveNumero == false || clave1.trim().length() < 5) {
-            throw new Excepcion("La contraseña no cumple con los requisitos especificados");
+//        System.out.println(verificacionClaveMayuscula + " " + verificacionClaveNumero);
+        if (verificacionClaveMayuscula < 1 || verificacionClaveNumero < 1 || clave1.trim().length() < 6) {
+            throw new Excepcion("La contraseña no cumple con los requisitos especificados (debe contener una mayúscula, un número y por lo menos 6 caractéres");
         }
 
         if (!clave2.trim().equalsIgnoreCase(clave1.trim())) {
@@ -303,7 +314,7 @@ public class UsuarioServicio implements UserDetailsService {
 
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
-                session.setAttribute("AdminSession", usuario);
+                session.setAttribute("usuarioSession", usuario);
 
                 User user = new User(usuario.getCorreo(), usuario.getClave(), permisosAdministrador);
 
@@ -320,7 +331,7 @@ public class UsuarioServicio implements UserDetailsService {
 
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
-                session.setAttribute("UsuarioSession", usuario);
+                session.setAttribute("usuarioSession", usuario);
 
                 User user = new User(usuario.getCorreo(), usuario.getClave(), permisosUsuarioComun);
 
@@ -337,7 +348,7 @@ public class UsuarioServicio implements UserDetailsService {
 
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
-                session.setAttribute("AdminSession", usuario);
+                session.setAttribute("usuarioSession", usuario);
 
                 User user = new User(usuario.getCorreo(), usuario.getClave(), permisosProductor);
 

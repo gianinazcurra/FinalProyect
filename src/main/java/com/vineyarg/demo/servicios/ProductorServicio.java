@@ -31,7 +31,7 @@ public class ProductorServicio {
     private ImagenesRepositorio imagenesRepositorio;
 
     //GUARDAR UN PRODUCTOR:creación
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional
     public Productor guardar(String nombre, String razonSocial, String domicilio, String correo,
             String clave1, String clave2, String descripcion, String region, MultipartFile archivo) throws Exception {
 
@@ -62,24 +62,30 @@ public class ProductorServicio {
     }
 
     //MODIFICAR DATOS
-    @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String nombre, String razonSocial, String domicilio, String correo,
+    @Transactional
+    public void modificar(String idProductor, String nombre, String razonSocial, String domicilio, String correo,
             String clave1, String clave2, String descripcion, String region, MultipartFile archivo) throws Exception {
 
-        Productor verificacionProductor = productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave1);
+       
 
-        if (verificacionProductor == null) {
-            throw new Excepcion("Usuario no encontrado");
-
-        }
-
-        Optional<Productor> respuesta = productorRepositorio.findById(productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave1).getId());
+        Optional<Productor> respuesta = productorRepositorio.findById(idProductor);
 
         if (respuesta.isPresent()) {
-
-            validar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region);
-
+            
             Productor productor = respuesta.get();
+            
+            if(productor.getCorreo().equalsIgnoreCase(correo)) {
+                
+                String correoEstaOk = "estaok@estaok.com";
+                
+                validar(nombre, razonSocial, domicilio, correoEstaOk, clave1, clave2, descripcion, region);
+                
+            } else {
+                validar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region);
+            }
+            
+
+            
             productor.setNombre(nombre);
             productor.setRazonSocial(razonSocial);
             productor.setDomicilio(domicilio);
@@ -184,7 +190,7 @@ public class ProductorServicio {
         }
 
         if (clave1 == null || clave1.trim().isEmpty()) {
-            throw new Excepcion("Debe indicar la clave del productor");
+            throw new Excepcion("Debe indicar la clave de su cuenta");
         }
 
         if (!correo.contains("@") || !correo.contains(".") || correo.trim() == null || correo.trim().isEmpty()) {
@@ -202,35 +208,41 @@ public class ProductorServicio {
         }
         //Validación clave contiene requisitos
 
-        if (clave1.trim() == null || clave1.trim().isEmpty() || clave1.trim().length() < 5) {
+        
+
+       if (clave1.trim() == null || clave1.trim().isEmpty()) {
             throw new Excepcion("La contraseña no puede ser nula");
         }
 
         char ch;
-        boolean verificacionClaveMayuscula = false;
-        boolean verificacionClaveNumero = false;
-
+        
+        int verificacionClaveNumero = 0;
+        int verificacionClaveMayuscula = 0;
+        
         for (int i = 0; i < clave1.length(); i++) {
 
-            ch = (char) i;
-            if (Character.isUpperCase(ch)) {
-                verificacionClaveMayuscula = true;
-                break;
+//            ch = (char) i;
+            if (Character.isUpperCase(clave1.charAt(i))) {
+                verificacionClaveMayuscula++;
+               
             };
         }
         for (int i = 0; i < clave1.length(); i++) {
 
-            ch = (char) i;
-            if (Character.isDigit(ch)) {
-                verificacionClaveNumero = true;
-                break;
+//            ch = (char) i;
+            if (Character.isDigit(clave1.charAt(i))) {
+                verificacionClaveNumero++;
+
             };
         }
-
-        if (verificacionClaveMayuscula == false || verificacionClaveNumero == false || clave1.trim().length() < 5) {
-            throw new Excepcion("La contraseña no cumple con los requisitos especificados");
+//        System.out.println(verificacionClaveMayuscula + " " + verificacionClaveNumero);
+        if (verificacionClaveMayuscula < 1 || verificacionClaveNumero < 1 || clave1.trim().length() < 6) {
+            throw new Excepcion("La contraseña no cumple con los requisitos especificados (debe contener una mayúscula, un número y por lo menos 6 caractéres");
         }
 
+        if (!clave2.trim().equalsIgnoreCase(clave1.trim())) {
+            throw new Excepcion("Las contraseñas ingresadas no son iguales");
+        }
         if (!clave2.trim().equalsIgnoreCase(clave1.trim())) {
             throw new Excepcion("Las contraseñas ingresadas no son iguales");
         }

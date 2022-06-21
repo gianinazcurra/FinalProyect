@@ -11,4 +11,18 @@ package com.vineyarg.demo.enumeraciones;
  */
 public enum TipoUsuario {
     USUARIOCOMUN, ADMINISTRADOR, PRODUCTOR;
+
+    public static TipoUsuario getUSUARIOCOMUN() {
+        return USUARIOCOMUN;
+    }
+
+    public static TipoUsuario getADMINISTRADOR() {
+        return ADMINISTRADOR;
+    }
+
+    public static TipoUsuario getPRODUCTOR() {
+        return PRODUCTOR;
+    }
+    
+    
 }

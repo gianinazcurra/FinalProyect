@@ -74,7 +74,7 @@ public class ImagenesControlador {
        }
          }
     
-        @GetMapping("/usuario/{id}")
+        @GetMapping("/usuarioimagen")
         public ResponseEntity<byte[]> fotoUsuarioComun(@PathVariable String id){
         
         try {
@@ -88,7 +88,7 @@ public class ImagenesControlador {
         HttpHeaders headers = new HttpHeaders();
         
       
-        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentType(MediaType.ALL);
         return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
         }
         }

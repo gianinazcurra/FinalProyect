@@ -31,7 +31,7 @@
         <div class="nav__container">
 
             <div class="nav__logo">
-                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                         width="200px"></a>
             </div>
 
@@ -41,15 +41,16 @@
             </label>
             <input type="checkbox" id="menuId" class="nav__input">
 
-
+<a href="/logout"> Cerrar sesión </a><br>
+     <a href="/"> Volver al menú principal</a>
 
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/index.html">Home</a></li>
+                   <li class="nav__item"><a href="/">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
-                    <li class="nav__item"><a href="">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
 
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
@@ -59,7 +60,7 @@
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
 
-                    <a href="/HTML/registro.html">
+                    <a href="/logueo">
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
@@ -90,8 +91,8 @@
                 <input class="control" type="password" name="clave1" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave1}">
                 <input class="control" type="password" name="clave2" id="" placeholder="Vuelva a ingresra su Contraseña" required="" th:value="${clave2}">
                 <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto de perfil" required="">
-                <input class="control" type="hidden" name="tipoUsuario" id="" placeholder="Podés cargar una foto de perfil" required="" th:value="${ADMINISTRADOR}">
-                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                <input class="control" type="hidden" name="tipoUsuario" id="" th:value="ADMINISTRADOR">
+                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/terminos-condiciones">Terminos y Condiciones</a></p>
                 <input class="boton" type="submit" value="Enviar peticion">
             </form>
         </section>
@@ -116,11 +117,11 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="/index.html">Home</a></li>
+                     <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Contacto</a></li>
+                    <li><a href="/tienda">Tienda</a></li>
+                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-columna-3">

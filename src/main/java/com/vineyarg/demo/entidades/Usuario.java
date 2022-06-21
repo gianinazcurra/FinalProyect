@@ -8,16 +8,19 @@ package com.vineyarg.demo.entidades;
 import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  *
@@ -39,13 +42,15 @@ public class Usuario implements Serializable {
     
     
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
     private boolean alta;
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
     private int totalComprasEfectuadas;
     private Double totalDineroComprado;
+    
+    @OneToOne(cascade = {CascadeType.ALL})
     private Imagenes imagen;
     
     public Usuario() {
