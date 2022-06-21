@@ -4,6 +4,7 @@ import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.entidades.Usuario;
+import com.vineyarg.demo.enumeraciones.Regiones;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
@@ -41,9 +42,9 @@ public class ProductoControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
     @GetMapping("/agregar-producto")
-    public String agregarproducto(ModelMap modelo, HttpSession session, @RequestParam String idUsuario) {
+    public String agregarproducto(ModelMap modelo, HttpSession session, @RequestParam String idUsuario) throws Excepcion {
         
-        Usuario login = (Usuario) session.getAttribute("UsuarioSession");
+        Usuario login = (Usuario) session.getAttribute("usuarioSession");
         if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
             return "redirect:/index.html";
         }
@@ -51,41 +52,46 @@ public class ProductoControlador {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
 
         if (respuesta.isPresent()) {
+
             Usuario usuario = new Usuario();
             usuario = respuesta.get();
-            modelo.put("perfil-productor", usuario);
-        } 
-        
+
+            Productor productor = new Productor();
+            productor = productorRepositorio.BuscarProductorPorCorreo(usuario.getCorreo());
+
+//            modelo.put("regiones", Regiones.values());
+
+            modelo.put("perfil", productor);
+
+            modelo.put("perfilUsuario", usuario);
+
+        } else {
+
+            throw new Excepcion ("Usuario no reconocido");
+        }
+
         return "agregar-producto.html";
 
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
     @PostMapping("/agregarProducto")
-    public String agregarProducto(ModelMap modelo, @RequestParam String nombre, @RequestParam Integer cantidad, @RequestParam Double precio, @RequestParam String descripcion,
-            @RequestParam String varietal, @RequestParam String id, @RequestParam String SKU, List<MultipartFile> imagenes) throws Exception {
+    public String agregarProducto(ModelMap modelo, @RequestParam String idProductor, @RequestParam String nombre, @RequestParam Integer cantidad, @RequestParam Double precio, @RequestParam String descripcion,
+            @RequestParam String varietal,@RequestParam String SKU, @RequestParam(required = false) List<MultipartFile> imagenes) throws Exception {
         
         try {
             
-            Optional<Productor> respuesta = productorRepositorio.findById(id);
+            Optional<Productor> respuesta = productorRepositorio.findById(idProductor);
             
             if(respuesta.isPresent()) {
             
             Productor productorDelProducto = respuesta.get();
                 
-            System.out.println("Nombre " + nombre);
-            System.out.println("Cantidad " + cantidad);
-            System.out.println("Precio " + precio);
-            System.out.println("Descripcion " + descripcion);
-            System.out.println("Varietal " + varietal);
-            System.out.println("Productor " + productorDelProducto);//no esta en el html
-            System.out.println("SKU " + SKU);
-//            System.out.println("Valoraciones " + valoraciones); //no esta en el html y creo que es correcto que no esté en agregar producto
-            System.out.println("Imagenes " + imagenes);//no esta en el html de agregar-producto
+            modelo.put("perfil", productorDelProducto);
             
-            productoServicio.agregarProducto(imagenes, nombre, cantidad, precio, descripcion, varietal, productorDelProducto, SKU);
+            productoServicio.agregarProducto(null, nombre, cantidad, precio, descripcion, varietal, productorDelProducto, SKU);
             
-            modelo.put("exito", "Producto ingresado con éxito!");
+           
             }
             
            
@@ -95,7 +101,9 @@ public class ProductoControlador {
             e.getMessage();
             modelo.put("error", "No se ha podido guardar el producto");
         }
-        return "agregar-producto";
+        modelo.put("registrado", "Producto agregado correctamente y disponible para la venta");
+        
+        return "agregar-producto.html";
     }
     
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")

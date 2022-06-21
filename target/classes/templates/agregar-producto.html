@@ -60,10 +60,11 @@
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
 
-                    <a href="/logueo">
-                        <li class="fa-solid fa-user nav__item"></li>
-                    </a>
+                   
+        <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> Volver al menú principal</a>
             </ul>
+            
+            <a href="/logout"> Cerrar sesion </a><br>
         </div>
     </nav>
     <!-- Fin del header -->
@@ -76,9 +77,9 @@
             <form action="/agregarProducto" method="POST" enctype="multipart/form-data">
                 
                  <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                  <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                  <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
                  
-                  <input type="hidden" class="form-control" name="id" th:value="${perfil-productor.id}"/> 
+                   <input class="control" type="hidden" name="idProductor" id="" th:value="${perfil.id}">
 <!--                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
                 <div class="detalles__usuario">
                     <div class="input__caja">
@@ -91,7 +92,7 @@
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Precio</span>
-                        <input type="number" name="precio" th:value="${precio}" placeholder="Ingresa el Precio unitario" required>
+                        <input type="number"  step="0.01" min="0" max="100000" name="precio" th:value="${precio}" placeholder="Ingresa el Precio unitario" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Descripcion</span>
@@ -109,7 +110,7 @@
                 </div>
                 <div class="imag">
                     <span class="detalles">Imagenes:</span>
-                    <input class="btn__imagen" type="files" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto" required>
+                    <input class="btn__imagen" type="files" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto">
                 </div>
                 <input class="boton" type="submit" value="Guardar">
 
