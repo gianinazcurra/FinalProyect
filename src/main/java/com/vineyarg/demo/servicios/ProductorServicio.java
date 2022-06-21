@@ -6,12 +6,14 @@ import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
+import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,12 @@ public class ProductorServicio {
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    
     //GUARDAR UN PRODUCTOR:creación
     @Transactional
     public Productor guardar(String nombre, String razonSocial, String domicilio, String correo,
@@ -63,16 +71,19 @@ public class ProductorServicio {
 
     //MODIFICAR DATOS
     @Transactional
-    public void modificar(String idProductor, String nombre, String razonSocial, String domicilio, String correo,
+    public void modificar(String idUsuario, String idProductor, String nombre, String razonSocial, String domicilio, String correo,
             String clave1, String clave2, String descripcion, String region, MultipartFile archivo) throws Exception {
 
        
 
         Optional<Productor> respuesta = productorRepositorio.findById(idProductor);
 
+        
         if (respuesta.isPresent()) {
             
             Productor productor = respuesta.get();
+            
+            System.out.println(productor.getId());
             
             if(productor.getCorreo().equalsIgnoreCase(correo)) {
                 
@@ -84,27 +95,31 @@ public class ProductorServicio {
                 validar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region);
             }
             
-
+            System.out.println(productor.getId());
             
             productor.setNombre(nombre);
             productor.setRazonSocial(razonSocial);
             productor.setDomicilio(domicilio);
             productor.setCorreo(correo);
-
+            System.out.println(productor.getId());
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             productor.setClave(encriptada);
 
             productor.setRegion(region);
-
+            System.out.println(productor.getId());
             Imagenes imagen = new Imagenes();
             imagenesServicio.guardarNueva(archivo);
 
             productor.setImagen(imagen);
             
-           
+           System.out.println(productor.getId() + "ultima");
 
             productorRepositorio.save(productor);
+            System.out.println(productor.getId() + "ultima2");
+            
+            usuarioServicio.modificarUsuario(idUsuario, archivo, correo, clave1, clave2);
 
+               System.out.println(productor.getId() + "ultima3");
         } else {
             throw new Excepcion("Usuario o clave no hallada");
         }
@@ -122,28 +137,37 @@ public class ProductorServicio {
     }
 
     //DAR DE BAJA
-    public void darDeBaja(@RequestParam String correo, @RequestParam String clave) throws Exception {
+    public void eliminarProductor(@RequestParam String idUsuario, @RequestParam String idProductor, @RequestParam String correo, @RequestParam String clave) throws Exception {
         
-        Productor verificacionProductor = productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave);
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
 
-        if (verificacionProductor == null) {
-            throw new Excepcion("Usuario no encontrado");
+        if (respuesta.isPresent()) {
 
-        }
+            Usuario usuarioProductor = respuesta.get();
 
-        Optional<Productor> respuesta = productorRepositorio.findById(productorRepositorio.BuscarProductorPorCorreoYClave(correo, clave).getId());
+            if (usuarioProductor.getCorreo().equalsIgnoreCase(correo)) {
 
-        if (respuesta.isPresent()){
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                if (passwordEncoder.matches(clave, usuarioProductor.getClave())) {
 
-            Productor productor = respuesta.get();
+                    usuarioProductor.setAlta(false);
 
-            productor.setAlta(false);
-            
-            productorRepositorio.save(productor);
-            
-        } else {
+                    usuarioRepositorio.save(usuarioProductor);
+                    
+                    if(respuesta1.isPresent()) {
+                       Productor productor = respuesta1.get();
+                       
+                       productor.setAlta(false);
+                       productorRepositorio.save(productor);
+                    }
+                } else {
 
-            throw new Excepcion("Usuario o clave no hallada");
+                    throw new Excepcion("Usuario o Clave incorrecta");
+                }
+
+            }
+           
         }
 
     }

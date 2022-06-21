@@ -41,14 +41,14 @@ public class ProductoControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
     @GetMapping("/agregar-producto")
-    public String agregarproducto(ModelMap modelo, HttpSession session, @RequestParam String id) {
+    public String agregarproducto(ModelMap modelo, HttpSession session, @RequestParam String idUsuario) {
         
         Usuario login = (Usuario) session.getAttribute("UsuarioSession");
-        if (login == null || !login.getId().equalsIgnoreCase(id)) {
+        if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
             return "redirect:/index.html";
         }
 
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
 
         if (respuesta.isPresent()) {
             Usuario usuario = new Usuario();
@@ -56,7 +56,7 @@ public class ProductoControlador {
             modelo.put("perfil-productor", usuario);
         } 
         
-        return "agregar-producto";
+        return "agregar-producto.html";
 
     }
 

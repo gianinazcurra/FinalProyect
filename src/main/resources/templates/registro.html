@@ -45,11 +45,11 @@
 
                 <ul class="nav__ul">
 
-                   <li class="nav__item"><a href="/index.html">Home</a></li>
+                 <li class="nav__item"><a href="/">Home</a></li>
                     <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
-                    <li class="nav__item"><a href="">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
 
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
@@ -73,6 +73,8 @@
 
     <!-- FORMULARIO -->
 
+    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
     <div class="formulario">
 
         <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
@@ -116,7 +118,7 @@
             <div class="footer-columna-2">
                 <h3>Navegación</h3>
                 <ul>
-                   <li><a href="/index">Home</a></li>
+                 <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>

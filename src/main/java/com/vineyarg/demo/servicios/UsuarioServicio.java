@@ -135,26 +135,11 @@ public class UsuarioServicio implements UserDetailsService {
     @Transactional
     public void modificarUsuario(String id, MultipartFile archivo, String correo, String clave1, String clave2) throws Excepcion {
 
-       
-
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
 
             Usuario usuario = respuesta.get();
-            
-            if(usuario.getCorreo().equalsIgnoreCase(correo)) {
-                
-                String correoEstaOk = "estaok@estaok.com";
-                
-                validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correoEstaOk, clave1, clave2, usuario.getFechaNacimiento());
-                
-            } else {
-                 validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correo, clave1, clave2, usuario.getFechaNacimiento());
-            }
-            
-
-            
 
 //            usuario.setNombre(nombre);
 //            usuario.setApellido(apellido);
@@ -166,16 +151,13 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setAlta(true);
 //            usuario.setTipoUsuario(tipoUsuario);
 
-            if(archivo != null) {
+            if (archivo != null) {
                 Imagenes imagen = new Imagenes();
-            imagenesServicio.guardarNueva(archivo);
+                imagenesServicio.guardarNueva(archivo);
 
-            usuario.setImagen(imagen);
-            
+                usuario.setImagen(imagen);
+
             }
-            
-
-            
 
             usuarioRepositorio.save(usuario);
         } else {
@@ -186,29 +168,30 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void eliminarUsuario(@RequestParam String correo, @RequestParam String clave) throws Excepcion {
+    public void eliminarUsuario(@RequestParam String id, @RequestParam String correo, @RequestParam String clave) throws Excepcion {
 
-        Usuario verificacionUsuario = usuarioRepositorio.BuscarUsuarioPorCorreoYClave(correo, clave);
-
-        if (verificacionUsuario == null) {
-            throw new Excepcion("Usuario no encontrado");
-
-        }
-
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(usuarioRepositorio.BuscarUsuarioPorCorreoYClave(correo, clave).getId());
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
 
-            Usuario usuarioOAdmin = respuesta.get();
+            Usuario usuario = respuesta.get();
 
-            usuarioOAdmin.setAlta(false);
-            
-            usuarioRepositorio.save(usuarioOAdmin);
-        } else {
+            if (usuario.getCorreo().equalsIgnoreCase(correo)) {
 
-            throw new Excepcion("Usuario o clave no hallada");
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                if (passwordEncoder.matches(clave, usuario.getClave())) {
+
+                    usuario.setAlta(false);
+
+                    usuarioRepositorio.save(usuario);
+                } else {
+
+                    throw new Excepcion("Usuario o Clave incorrecta");
+                }
+
+            }
+           
         }
-
     }
 
     public void validar(String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento) throws Excepcion {
@@ -239,6 +222,7 @@ public class UsuarioServicio implements UserDetailsService {
 
                 throw new Excepcion("Ya existe un usuario regisrado con este correo");
             }
+
         }
         //Validación clave contiene requisitos
 
@@ -247,16 +231,16 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
         char ch;
-        
+
         int verificacionClaveNumero = 0;
         int verificacionClaveMayuscula = 0;
-        
+
         for (int i = 0; i < clave1.length(); i++) {
 
 //            ch = (char) i;
             if (Character.isUpperCase(clave1.charAt(i))) {
                 verificacionClaveMayuscula++;
-               
+
             };
         }
         for (int i = 0; i < clave1.length(); i++) {
@@ -295,7 +279,8 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-
+   
+       
         Usuario usuario = usuarioRepositorio.BuscarUsuarioPorCorreo(correo);
 
         if (usuario != null && usuario.isAlta()) {
@@ -307,11 +292,12 @@ public class UsuarioServicio implements UserDetailsService {
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_ADMINISTRADOR");
                 GrantedAuthority p2 = new SimpleGrantedAuthority("ROLE_USUARIO_COMUN");
                 GrantedAuthority p3 = new SimpleGrantedAuthority("ROLE_PRODUCTOR");
+//                GrantedAuthority p4 = new SimpleGrantedAuthority("CREA_MODIFICA_USUARIO");
 
                 permisosAdministrador.add(p1);
                 permisosAdministrador.add(p2);
                 permisosAdministrador.add(p3);
-
+//                permisosAdministrador.add(p4);
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
                 session.setAttribute("usuarioSession", usuario);
@@ -325,9 +311,11 @@ public class UsuarioServicio implements UserDetailsService {
 
                 List<GrantedAuthority> permisosUsuarioComun = new ArrayList<>();
 
-                GrantedAuthority p2 = new SimpleGrantedAuthority("ROLE_USUARIO_COMUN");
+                GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_COMUN");
+//                GrantedAuthority p2 = new SimpleGrantedAuthority("CREA_MODIFICA_USUARIO");
 
-                permisosUsuarioComun.add(p2);
+                permisosUsuarioComun.add(p1);
+//                permisosUsuarioComun.add(p2);
 
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
@@ -337,14 +325,16 @@ public class UsuarioServicio implements UserDetailsService {
 
                 return user;
             }
-            
+
             if (usuario.getTipoUsuario() == PRODUCTOR) {
 
                 List<GrantedAuthority> permisosProductor = new ArrayList<>();
 
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_PRODUCTOR");
-               
+//                GrantedAuthority p2 = new SimpleGrantedAuthority("CREA_MODIFICA_USUARIO");
+//
                 permisosProductor.add(p1);
+//                permisosProductor.add(p2);
 
                 ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
                 HttpSession session = attr.getRequest().getSession(true);
@@ -358,12 +348,11 @@ public class UsuarioServicio implements UserDetailsService {
         } else if (usuario != null && !usuario.isAlta()) {
 
             throw new UsernameNotFoundException("USUARIO DADO DE BAJA");
-        }
-        else {
+        } else {
 
             throw new UsernameNotFoundException("USER NOT FOUND");
         }
-        
+
         User user = null;
         return user;
     }

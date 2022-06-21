@@ -24,12 +24,13 @@
 
 <body>
 <a href="/logout"> Cerrar sesion </a><br>
-     <a href="/"> Volver al menú principal</a>
+    <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}">  Volver al menú principal</a>
+    <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}">  Volver al menú principal</a>
      
       <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
             <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
                 
-                
+                <p> A continuación podés modificar algunos de tus datos (recordá que los datos personales no puede cambiarse) </p>
                   
                  <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
                
@@ -42,6 +43,24 @@
                 <input class="boton" type="submit" value="Actualizar perfil">
                 </form>
        
+      <p> Si querés darte de baja como Usuario de nuestros servicios, por favor ingresá tu correo y contraseña </p>
+      
+      <form action="/eliminarUsuario" method="POST" enctype="multipart/form-data">
+                
+                 <p th:if="${error1 != null}" th:text="${error1}" style="color:red";></p>
+                  
+                 <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
+               
+                 <input class="control" type="email" name="correo" placeholder="Ingresar su Email"  id="" required=""  th:value="${perfil.correo}">
+                
+                <input class="control" type="password" name="clave" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave}">
+              
+                 <p><input type="checkbox" required=""> Quiero darme de baja </p>
+                 
+                <input class="boton" type="submit" value="Eliminar perfil">
+                </form>
+      
+      
 </body>
 
 </html>

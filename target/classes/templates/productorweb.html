@@ -74,8 +74,9 @@
 
         <a th:href="@{/editar-productor(idUsuario=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
         
-        <a href="/agregar-producto">AGREGÁ PRODUCTOS</a>
-        <a href="/editar-productor">EDITAR PRODUCTOS</a>
+        <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ PRODUCTOS</a>
+        
+        <a href="/editar-productos">EDITAR PRODUCTOS</a>
 
         <a href="´'/verVentas' + productor.id">VER EL ESTADO DE TUS VENTAS</a>
         <div th:if="${compras != null}" th:each="compra : ${compras}">

@@ -46,25 +46,23 @@
 
             <ul class="nav__ul">
 
-                <li class="nav__item"><a href="/index.html">Home</a></li>
-                <li class="nav__item"><a href="">Regiones</a></li>
-                <li class="nav__item"><a href="">Bodegas</a></li>
-                <li class="nav__item"><a href="">Tienda</a></li>
-                <li class="nav__item"><a href="">Contacto</a></li>
+               <li class="nav__item"><a href="/">Home</a></li>
+                    <li class="nav__item"><a href="">Regiones</a></li>
+                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
 
-                <a href="">
-                    <li class="fa-solid fa-bag-shopping nav__item"></li>
-                </a>
+                    <a href="">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
 
-                <a href="">
-                    <li class="fa-solid fa-heart nav__item"></li>
-                </a>
+                    <a href="">
+                        <li class="fa-solid fa-heart nav__item"></li>
+                    </a>
 
-                <a href="/HTML/registro.html">
-                    <li class="fa-solid fa-user nav__item"></li>
-                </a>
-                <p th:if="${logout != null}" th:text="${'Cerrar sesión'}" th:ref="@{/checkout}" style="color:red"></p>
-                <p th:if="${login != null}" th:text="${'Iniciar sesión'}" th:ref="@{/login}" style="color:red"></p>
+                    <a href="/logueo">
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
             </ul>
         </div>
     </nav>
@@ -85,15 +83,15 @@
                 <div class="detalles__usuario">
                     <div class="input__caja">
                         <span class="detalles">Nombre</span>
-                        <input type="text" name="nombre" th:value="${nombre}" placeholder="Ingresa tu nombre" required>
+                        <input type="text" name="nombre" th:value="${nombre}" placeholder="Ingresa el nombre del producto" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Cantidad</span>
-                        <input type="number" name="cantidad" th:value="${cantidad}" placeholder="Ingresa la Cantidad" required>
+                        <input type="number" name="cantidad" th:value="${cantidad}" placeholder="Ingresa la Cantidad disponible para vender" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Precio</span>
-                        <input type="number" name="precio" th:value="${precio}" placeholder="Ingresa el Precio" required>
+                        <input type="number" name="precio" th:value="${precio}" placeholder="Ingresa el Precio unitario" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Descripcion</span>
@@ -140,11 +138,11 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="/index.html">Home</a></li>
+                  <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Contacto</a></li>
+                    <li><a href="/tienda">Tienda</a></li>
+                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-columna-3">

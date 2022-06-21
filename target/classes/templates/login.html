@@ -58,9 +58,24 @@
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
-                     <a href="/logueo">
+                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                     
                         <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession != null}"> 
+                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                       
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
                     </a>
                 </ul>
             </div>

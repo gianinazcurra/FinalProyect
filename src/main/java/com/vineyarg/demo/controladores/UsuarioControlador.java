@@ -56,6 +56,7 @@ public class UsuarioControlador {
 //    public String registro() {
 //        return "registro.html";
 //    }
+    
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/registro-admin")
     public String registroAdmin() {
@@ -222,10 +223,36 @@ public class UsuarioControlador {
         return "usuarioweb.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
-    @GetMapping("/eliminar-usuario")
-    public String eliminarUsuario(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
+//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
+//    @GetMapping("/eliminar-usuario")
+//    public String eliminarUsuario(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
+//
+//        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+//        if (login == null || !login.getId().equalsIgnoreCase(id)) {
+//            return "redirect:/index.html";
+//        }
+//
+//        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+//
+//        if (respuesta.isPresent()) {
+//            Usuario usuario = new Usuario();
+//            usuario = respuesta.get();
+//            modelo.put("perfil", usuario);
+//        } else {
+//
+//            throw new Excepcion("Usuario no reconocido");
+//        }
+//
+//        return "eliminar-usuario.html";
+//    }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
+    @PostMapping("/eliminarUsuario")
+    public String eliminarUsuario(ModelMap modelo, HttpSession session, @RequestParam String id, @RequestParam String correo, @RequestParam String clave) throws Excepcion {
+
+        try {
+
+        
         Usuario login = (Usuario) session.getAttribute("usuarioSession");
         if (login == null || !login.getId().equalsIgnoreCase(id)) {
             return "redirect:/index.html";
@@ -234,35 +261,26 @@ public class UsuarioControlador {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
+            
             Usuario usuario = new Usuario();
             usuario = respuesta.get();
+            
+           
             modelo.put("perfil", usuario);
-        } else {
+            
+            usuarioServicio.eliminarUsuario(id, correo, clave);
+            
 
-            throw new Excepcion("Usuario no reconocido");
-        }
-
-        return "eliminar-usuario.html";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
-    @PostMapping("/borrarUsuario")
-    public String eliminarUsuario(ModelMap modelo, @RequestParam String correo, @RequestParam String clave) throws Excepcion {
-
-        try {
-
-            usuarioServicio.eliminarUsuario(correo, clave);
-
-        } catch (Excepcion ex) {
-            modelo.put("error", ex.getMessage());
+        } } catch (Excepcion ex) {
+            modelo.put("error1", ex.getMessage());
 
             modelo.put("mail", correo);
-            modelo.put("clae1", clave);
+            modelo.put("clave", clave);
 
-            return "borrar-usuario.html";
+            return "editar-usuario.html";
         }
 
-        modelo.put("borrado", "Administrador eliminado con éxito");
+        modelo.put("registrado", "Baja exitosa");
         return "registro.html";
     }
 

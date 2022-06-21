@@ -32,8 +32,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping
 public class ProductorControlador {
 
-    @Autowired
-    ProductorServicio productorServicio;
+    
+     @Autowired
+     private ProductorServicio productorServicio;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -122,25 +123,28 @@ public class ProductorControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
-    @PostMapping("/editar-productor")
+    @PostMapping("/editarProductor")
     public String editarProductor(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idProductor, @RequestParam String nombre,
             @RequestParam String razonSocial, @RequestParam String domicilio, @RequestParam String correo,
-            @RequestParam String clave1, @RequestParam String clave2, @RequestParam String descripcion, @RequestParam(required = false) String region, @RequestParam(required = false) MultipartFile archivo)
+            @RequestParam String clave1, @RequestParam String clave2, @RequestParam String descripcion, @RequestParam String region, @RequestParam(required = false) MultipartFile archivo)
             throws Excepcion, Exception {
 
         try {
-            Usuario login = (Usuario) session.getAttribute("usuarioSession");
-            if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
-                return "redirect:/index.html";
-            }
-//
+         Usuario login = (Usuario) session.getAttribute("usuarioSession");
+         if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
+              return "redirect:/index.html";
+           }
+
             Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+            
+            
 
             Usuario usuario = new Usuario();
             Productor productor = new Productor();
             if (respuesta.isPresent()) {
 
                 usuario = respuesta.get();
+                
             }
 
             Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
@@ -148,14 +152,15 @@ public class ProductorControlador {
             if (respuesta1.isPresent()) {
 
                 productor = respuesta1.get();
+                
             }
             modelo.put("perfil", productor);
             modelo.put("perfilUsuario", usuario);
+        
+            
+            productorServicio.modificar(idUsuario, idProductor, nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
 
-            productorServicio.modificar(idProductor, nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
-
-            usuarioServicio.modificarUsuario(idUsuario, archivo, correo, clave1, clave2);
-
+           
         } catch (Exception ex) {
             
             modelo.put("error", ex.getMessage());
@@ -177,47 +182,72 @@ public class ProductorControlador {
         return "productorweb.html";
     }
 
+//    @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
+//    @GetMapping("/eliminar-productor")
+//    public String eliminarProductor(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
+//
+//        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+//        if (login == null || !login.getId().equalsIgnoreCase(id)) {
+//            return "redirect:/index.html";
+//        }
+//
+//        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+//
+//        if (respuesta.isPresent()) {
+//            Usuario usuario = new Usuario();
+//            usuario = respuesta.get();
+//            modelo.put("perfil", usuario);
+//        } else {
+//
+//            throw new Excepcion("Usuario no reconocido");
+//        }
+//
+//        return "eliminar-productor";
+//    }
+
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
-    @GetMapping("/eliminar-productor")
-    public String darDeBaja(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
-
-        Usuario login = (Usuario) session.getAttribute("usuarioSession");
-        if (login == null || !login.getId().equalsIgnoreCase(id)) {
-            return "redirect:/index.html";
-        }
-
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
-
-        if (respuesta.isPresent()) {
-            Usuario usuario = new Usuario();
-            usuario = respuesta.get();
-            modelo.put("perfil", usuario);
-        } else {
-
-            throw new Excepcion("Usuario no reconocido");
-        }
-
-        return "eliminar-productor";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
-    @PostMapping("/eliminar-productor")
-    public String darDeBaja(ModelMap modelo, @RequestParam String correo, @RequestParam String clave) throws Excepcion {
+    @PostMapping("/eliminarProductor")
+    public String eliminarProductor(ModelMap modelo, HttpSession session, @RequestParam String idProductor, @RequestParam String idUsuario, @RequestParam String correo, @RequestParam String clave) throws Excepcion, Exception {
 
         try {
 
-            usuarioServicio.eliminarUsuario(correo, clave);
-
-        } catch (Excepcion ex) {
-            modelo.put("error", ex.getMessage());
-
-            modelo.put("mail", correo);
-            modelo.put("clave1", clave);
-
-            return "eliminar-productor.html";
+        
+        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+        if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
+            return "redirect:/index.html";
         }
 
-        modelo.put("borrado", "Productor eliminado con éxito");
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+            Productor productor = new Productor();
+            Usuario usuario = new Usuario();
+            usuario = respuesta.get();
+            
+           Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
+
+            if (respuesta1.isPresent()) {
+
+               productor = respuesta1.get();
+                
+            }
+            modelo.put("perfil", productor);
+            modelo.put("perfilUsuario", usuario);
+   
+            
+            productorServicio.eliminarProductor(idUsuario, idProductor, correo, clave);
+            
+
+        } } catch (Excepcion ex) {
+            modelo.put("error1", ex.getMessage());
+
+            modelo.put("mail", correo);
+            modelo.put("clave", clave);
+
+            return "editar-productor.html";
+        }
+
+        modelo.put("registrado", "Baja exitosa");
         return "registro.html";
     }
 
