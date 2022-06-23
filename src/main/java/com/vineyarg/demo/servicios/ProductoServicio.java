@@ -70,9 +70,9 @@ public class ProductoServicio {
 
     }
 
-    public void modificarProducto(String id, String nombre, Integer cantidad, Double precio, String descripcion) throws Excepcion {
+    public void modificarProducto(String idProductoElegido, String nombre, Integer cantidad, Double precio, String descripcion) throws Excepcion {
 
-        Optional<Producto> respuesta = productoRepositorio.findById(id);
+        Optional<Producto> respuesta = productoRepositorio.findById(idProductoElegido);
         if (respuesta.isPresent()) {
 
             Producto producto = respuesta.get();

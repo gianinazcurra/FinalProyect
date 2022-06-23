@@ -7,14 +7,18 @@ package com.vineyarg.demo.entidades;
 
 import com.vineyarg.demo.enumeraciones.EstadoCompra;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -28,7 +32,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Compra implements Serializable {
 
-   @Id
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
@@ -38,8 +42,12 @@ public class Compra implements Serializable {
     private List<Integer> cantidades;
     @OneToOne
     private Usuario usuario;
+    
     @OneToMany
-    private List<Producto> listaProductos;
+    @ElementCollection(targetClass=Producto.class)
+//    @OneToMany(mappedBy = "Compra", cascade = CascadeType.ALL, orphanRemoval = true)
+   private Set<Producto> listaProductos;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
     @ElementCollection(targetClass=Double.class)
@@ -52,7 +60,7 @@ public class Compra implements Serializable {
     private EstadoCompra estadoCompra;
     private String observacionesCompra;
 
-    public Compra(String id, List<Integer> cantidades, Usuario usuario, List<Producto> listaProductos, Date fechaCompra, List<Double> subtotales, Double montoFinal, String direccionEnvio, String formaDePago, boolean compraEnviadaParaAceptacion, EstadoCompra estadoCompra, String observacionesCompra) {
+    public Compra(String id, List<Integer> cantidades, Usuario usuario, Set<Producto> listaProductos, Date fechaCompra, List<Double> subtotales, Double montoFinal, String direccionEnvio, String formaDePago, boolean compraEnviadaParaAceptacion, EstadoCompra estadoCompra, String observacionesCompra) {
         this.id = id;
         this.cantidades = cantidades;
         this.usuario = usuario;
@@ -199,14 +207,14 @@ public class Compra implements Serializable {
     /**
      * @return the listaProductos
      */
-    public List<Producto> getListaProductos() {
+    public Set<Producto> getListaProductos() {
         return listaProductos;
     }
 
     /**
      * @param listaProductos the listaProductos to set
      */
-    public void setListaProductos(List<Producto> listaProductos) {
+    public void setListaProductos(Set<Producto> listaProductos) {
         this.listaProductos = listaProductos;
     }
 

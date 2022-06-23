@@ -76,7 +76,7 @@
         
         <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ PRODUCTOS</a>
         
-        <a href="/editar-productos">EDITAR PRODUCTOS</a>
+        <a th:href="@{/editar-producto(idProductor=${productor.id})}">EDITAR PRODUCTOS</a>
 
         <a href="´'/verVentas' + productor.id">VER EL ESTADO DE TUS VENTAS</a>
         <div th:if="${compras != null}" th:each="compra : ${compras}">

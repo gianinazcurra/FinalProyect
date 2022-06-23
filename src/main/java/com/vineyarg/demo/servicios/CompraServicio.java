@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,13 @@ public class CompraServicio {
         Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(id);
 
         if (compraEnCurso != null) {
-
-            List<Producto> listaProductos = compraEnCurso.getListaProductos();
+            
+            Set<Producto> listaProductos = compraEnCurso.getListaProductos();
             List<Integer> listaCantidades = compraEnCurso.getCantidades();
             List<Double> listaSubtotales = compraEnCurso.getSubtotales();
 
-            listaProductos.add(producto);
+            Producto producto1 = productoRepositorio.getById(producto.getId());
+            listaProductos.add(producto1);
             listaCantidades.add(cantidad);
             listaSubtotales.add((producto.getPrecio() * cantidad.doubleValue()));
 
@@ -48,20 +50,24 @@ public class CompraServicio {
             compraEnCurso.setCantidades(listaCantidades);
             compraEnCurso.setSubtotales(listaSubtotales);
             
-            producto.setCantidad(producto.getCantidad() - cantidad);
-            productoRepositorio.save(producto);
+            
+            producto1.setCantidad(producto.getCantidad() - cantidad);
+            productoRepositorio.save(producto1);
 
             compraRepositorio.save(compraEnCurso);
-
-        } else {
-            List<Producto> listaProductos = new ArrayList();
+            System.out.println("asdasdasdas");
+        } 
+            else if (compraEnCurso == null){
+            Set<Producto> listaProductos = null;
+            
             List<Integer> listaCantidades = new ArrayList();
             List<Double> listaSubtotales = new ArrayList();
 
-            listaProductos.add(producto);
+            Producto producto1 = productoRepositorio.getById(producto.getId());
+            listaProductos.add(producto1);
             listaCantidades.add(cantidad);
             listaSubtotales.add((producto.getPrecio() * cantidad.doubleValue()));
-
+            
             Compra compra = new Compra();
 
             compra.setListaProductos(listaProductos);
@@ -74,10 +80,12 @@ public class CompraServicio {
                 compra.setUsuario(respuesta.get());
             }
 
-            compraEnCurso.setEstadoCompra(EstadoCompra.NOENVIADA);
+            compra.setEstadoCompra(EstadoCompra.NOENVIADA);
             
-            producto.setCantidad(producto.getCantidad() - cantidad);
-            productoRepositorio.save(producto);
+            
+            producto1.setCantidad(producto.getCantidad() - cantidad);
+            productoRepositorio.save(producto1);
+            
             compraRepositorio.save(compra);
 
         }
@@ -94,7 +102,7 @@ public class CompraServicio {
             Compra compraAnular = optional.get();
 
             //ESTO ES PARA DEVOLVER EL STOCK AL PRODUCTO QUE NO SE COMPRÓ
-            List<Producto> listaProductos = compraAnular.getListaProductos();
+            Set<Producto> listaProductos = compraAnular.getListaProductos();
             List<Integer> listaCantidades = compraAnular.getCantidades();
 
             for (int i = 0; i < listaProductos.size(); i++) {
@@ -136,7 +144,7 @@ public class CompraServicio {
                 Producto productoEliminar = new Producto();
                 productoEliminar = respuesta.get();
 
-                List<Producto> listaProductos = compraEnCurso.getListaProductos();
+                Set<Producto> listaProductos = compraEnCurso.getListaProductos();
 
                 int posicionProducto = listaProductos.indexOf(productoEliminar);
                 listaProductos.remove(productoEliminar);

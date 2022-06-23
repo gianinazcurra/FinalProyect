@@ -92,6 +92,7 @@
         <section class="login">
             <div class="login-2">
             <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+            <p th:if="${noLogin != null}" th:text="${xxx}" style="color:red"></p>
             <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
             
             <img class="avatar" src="/imagenes/logoCuadrado.jpeg" alt="">

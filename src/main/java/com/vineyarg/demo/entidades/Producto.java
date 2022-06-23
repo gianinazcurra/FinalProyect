@@ -13,13 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
 public class Producto implements Serializable {
 
-   @Id
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
@@ -35,6 +36,8 @@ public class Producto implements Serializable {
     private int cantidadVecesValorado;
     private int cantidadValoraciones;
     private int promedioValoraciones;
+    @ManyToOne
+    private Compra compra;
     
     private boolean alta;
     
@@ -45,7 +48,7 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, int promedioValoraciones, boolean alta, List<Imagenes> imagenes) {
+    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, int promedioValoraciones, Compra compra, boolean alta, List<Imagenes> imagenes) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -57,10 +60,20 @@ public class Producto implements Serializable {
         this.cantidadVecesValorado = cantidadVecesValorado;
         this.cantidadValoraciones = cantidadValoraciones;
         this.promedioValoraciones = promedioValoraciones;
+        this.compra = compra;
         this.alta = alta;
         this.imagenes = imagenes;
     }
 
+    public Compra getCompra() {
+        return compra;
+    }
+
+    public void setCompra(Compra compra) {
+        this.compra = compra;
+    }
+
+   
     public String getId() {
         return id;
     }

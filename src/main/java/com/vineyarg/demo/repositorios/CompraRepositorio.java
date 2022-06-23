@@ -20,7 +20,7 @@ public interface CompraRepositorio extends JpaRepository<Compra, String> {
     @Query("SELECT c FROM Compra c WHERE c.fechaCompra = :fechaCompra")
     public Compra buscarPorFechaCompra(@Param("fechaCompra") String fechaCompra);
     
-    @Query("SELECT c FROM Compra c WHERE c.usuario.id = :idUsuario AND c.fechaCompra is null")
+    @Query("SELECT c FROM Compra c WHERE c.usuario.id = :idUsuario and c.fechaCompra is null")
     public Compra buscarComprasSinEnviarPorUsuario(@Param("idUsuario") String idUsuario);
     
     @Query("SELECT c FROM Compra c WHERE c.usuario.id = :idUsuario")

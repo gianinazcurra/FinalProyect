@@ -32,7 +32,7 @@
         <div class="nav__container">
 
             <div class="nav__logo">
-                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                         width="200px"></a>
             </div>
 
@@ -44,28 +44,25 @@
 
 
 
-            <ul class="nav__ul">
-
-                <li class="nav__item"><a href="/index.html">Home</a></li>
-                <li class="nav__item"><a href="">Regiones</a></li>
-                <li class="nav__item"><a href="">Bodegas</a></li>
-                <li class="nav__item"><a href="">Tienda</a></li>
-                <li class="nav__item"><a href="">Contacto</a></li>
-
-                <a href="">
-                    <li class="fa-solid fa-bag-shopping nav__item"></li>
-                </a>
-
-                <a href="">
-                    <li class="fa-solid fa-heart nav__item"></li>
-                </a>
-
-                <a href="/HTML/registro.html">
-                    <li class="fa-solid fa-user nav__item"></li>
-                </a>
-                    <p th:if="${logout != null}" th:text="${'Cerrar sesión'}" th:ref="@{/checkout}" style="color:red"></p>
-                <p th:if="${login != null}" th:text="${'Iniciar sesión'}" th:ref="@{/login}" style="color:red"></p>
-            </ul>
+            <ul class="nav__iconos">
+                    <a href="">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
+                    <a href="">
+                        <li class="fa-solid fa-heart nav__item"></li>
+                    </a>
+                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession != null}"> 
+                     
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    </a>
+                </ul>
         </div>
     </nav>
     <!-- Fin del header -->
@@ -73,18 +70,18 @@
 
 
     <div class="contenedor__grande">
-        <div class="producto__container">
-            <div class="titulo">Editá tu producto</div>
-            <form action="/editarProducto" method="POST" enctype="multipart/form-data">
+        <div th:if="${productoElegido == null}"class="producto__container">
+            <div class="titulo">Estos son tus productos, seleccioná uno para editarlo o eliminarlo</div>
+            <form action="/editarProducto1" method="POST" enctype="multipart/form-data">
                 
                  <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
                  <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
                  
-                 <input type="hidden" class="form-control" name="idProductorSesion" th:value="${perfil-productor.id}"/> 
-                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> 
+                 <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
+                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
                   
-                 <label> Selecione el producto que desea editar o eliminar</label>
-                <select class="" name="idProductoElegido"> 
+                <p th:if="${productos == null and productoElegido == null}" th:text="${'No tenés productos cargados'}" style="color:red"></p>
+                <select th:if="${productos != null}" class="" name="idProducto"> 
                   <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option> 
                   </select>
 
@@ -93,42 +90,62 @@
                   <option th:each="eleccion : ${opciones}" th:value="${eleccion}" th:text="${eleccion}"></option> 
                   </select>
                     
-                <div class="detalles__usuario">
-                    <div class="input__caja">
-                        <span class="detalles">Nombre</span>
-                        <input type="text" name="nombre" th:value="${nombre}"  placeholder="Ingresa tu nombre" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Cantidad</span>
-                        <input type="number" name="cantidad" th:value="${cantidad}" placeholder="Ingresa la nueva cantidad total de producto" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Precio</span>
-                        <input type="number" name="precio" th:value="${precio}" placeholder="Ingresa el Precio" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Descripcion</span>
-                        <input type="text" name="descripcion" th:value="${descripcion}" placeholder="Ingresa la Descripcion" required>
-                    </div>
-<!--                    <div class="input__caja">
-                        <span class="detalles">Varietal</span>
-                        <input type="text" placeholder="Ingresa su Varietal" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">SKU</span>
-                        <input type="text" placeholder="Ingresa el SKU" required>
-                    </div>-->
 
-                </div>
-                <div class="imag">
-                    <span class="detalles">Imagenes:</span>
-                    <input class="btn__imagen" type="files" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto" required>
-                </div>
-                <input class="boton" type="submit" value="Guardar">
+
+
+                <input class="boton" type="submit" value="Editar / Eliminar">
 
             </form>
         </div>
-    </div>
+        
+        <div th:if="${productoElegido != null}" class="producto__container">
+        
+        <div th:if="${productoElegido != null}" class="titulo">Modificá tu producto</div>
+            <form action="/editarProducto" method="POST" enctype="multipart/form-data">
+                
+                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                 <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                 
+                 <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
+                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
+                  
+                <input th:if="${productoElegido != null}" type="hidden" class="form-control" name="idProductoElegido" th:value="${productoElegido.id}"/> <!--
+-->
+                 
+                <div th:if="${productoElegido != null}" class="detalles__usuario">
+                    <div class="input__caja">
+                        <span class="detalles">Nombre</span>
+                        <input th:if="${productoElegido != null}" type="text" name="nombre" placeholder="Ingresa tu nombre" th:value="${productoElegido.nombre}" required>
+                    </div>
+                    <div class="input__caja">
+                        <span class="detalles">Cantidad</span>
+                        <input th:if="${productoElegido != null}" min="0" max="1000000"  type="number" name="cantidad" th:value="${productoElegido.cantidad}" placeholder="Ingresa la nueva cantidad total de producto" required>
+                    </div>
+                    <div class="input__caja">
+                        <span class="detalles">Precio</span>
+                        <input th:if="${productoElegido != null}" step="0.01" min="0" max="1000000"  type="number" name="precio" th:value="${productoElegido.precio}" placeholder="Ingresa el Precio" required>
+                    </div>
+                    <div class="input__caja">
+                        <span class="detalles">Descripcion</span>
+                        <input th:if="${productoElegido != null}"  type="text" name="descripcion" th:value="${productoElegido.descripcion}" placeholder="Ingresa la Descripcion" required>
+                    </div>
+                    <div class="input__caja">
+                        <span class="detalles">Varietal</span>
+                        <input th:if="${productoElegido != null}"  type="text" placeholder="Ingresa su Varietal" th:value="${productoElegido.varietal}" required>
+                    </div>
+                   
+
+                </div>
+                <div th:if="${productoElegido != null}" class="imag">
+                    <span class="detalles">Imagenes:</span>
+                    <input th:if="${productoElegido != null}" class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto">
+                </div><!--
+-->                <input th:if="${productoElegido != null}" class="boton" type="submit" value="Guardar modificaciones">
+
+            </form><!--
+                   
+-->        </div>
+    </div><!--
 
 
 
@@ -140,7 +157,7 @@
 
 
 
-    <div class="footer">
+-->    <div class="footer">
         <div class="footer-a">
             <div class="footer-columna-1">
                 <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
@@ -173,10 +190,10 @@
         </div>
     </div>
 
-    <!-- Fin del Footer -->
+    <!-- Fin del Footer 
 
 
-
+-->
 
 </body>
 

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -64,11 +65,16 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/logueo")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+    public String login(@RequestParam(required = false) String error, ModelMap modelo/*, @RequestParam(required = false) String faltaLogin*/) {
+        
         
         if(error != null) {
              modelo.put("error", "Nombre de usuario o clave incorrectos");
         }
+        
+//        if(faltaLogin.equalsIgnoreCase("aa")) {
+//             modelo.put("debeLoguearse", "Debes ingresar a tu cuenta para poder comprar");
+//        }
        
        
             return "login.html";
@@ -349,7 +355,7 @@ public class UsuarioControlador {
             compra.setObservacionesCompra(observaciones);
 
             //RESTITUIMOS EL STOCK DE PRODUCTOS (COMO EN EL SERVICIO ANULAR COMPRA PERO SIN ELIMINAR LA COMPRA DE LA BASE DE DATOS):
-            List<Producto> listaProductos = compra.getListaProductos();
+            Set<Producto> listaProductos = compra.getListaProductos();
             List<Integer> listaCantidades = compra.getCantidades();
 
             for (int i = 0; i < listaProductos.size(); i++) {

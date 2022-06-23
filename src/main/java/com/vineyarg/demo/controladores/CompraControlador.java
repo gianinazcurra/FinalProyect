@@ -46,18 +46,19 @@ public class CompraControlador {
 //    public String iniciarCompra() {
 //        return "carrito.html";
 //    }
-    
     @PostMapping("/agregaCarrito")
-    public String agregaCarrito(ModelMap modelo, HttpSession session, @RequestParam String id, @RequestParam String idProducto, @RequestParam Integer cantidad) {
+    public String agregaCarrito(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idProducto, @RequestParam Integer cantidad) {
 
-        Usuario login = (Usuario) session.getAttribute("UsuarioSession");
-        if (login == null || !login.getId().equalsIgnoreCase(id)) {
+        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+        if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
 
             modelo.put("error", "Para comprar primero debes iniciar sesión");
             return "login.html";
 
         }
 
+       
+        
         Optional<Producto> verificaProducto = productoRepositorio.findById(idProducto);
         Producto producto = new Producto();
 
@@ -72,25 +73,33 @@ public class CompraControlador {
             }
         }
 
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
-
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        
         if (respuesta.isPresent()) {
             Usuario usuario = new Usuario();
             usuario = respuesta.get();
-
+            System.out.println(usuario.getNombre());
+            
             Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(usuario.getId());
-
+            System.out.println(compraEnCurso.getId());
+            
             if (compraEnCurso != null) {
-
+                 System.out.println("aca1");
+                compraServicio.preCompraCarrito(producto, idUsuario, cantidad);
+                 System.out.println("aca2");
                 modelo.put("compraEnCurso", "Se agregó el producto al carrito");
                 modelo.put("compra", compraEnCurso);
-                compraServicio.preCompraCarrito(producto, id, cantidad);
-
+                System.out.println(compraEnCurso.getListaProductos());
+                
+                 return "tienda.html";
+                
+            } else if (compraEnCurso == null) {
+                
+                compraServicio.preCompraCarrito(producto, idUsuario, cantidad);
+                modelo.put("compra", compraEnCurso);
+                modelo.put("compraEnCurso", "Se agregó el producto al carrito");
+                System.out.println("aca3");
             }
-
-            modelo.put("compraEnCurso", "Se agregó el producto al carrito");
-            modelo.put("compra", compraEnCurso);
-            compraServicio.preCompraCarrito(producto, id, cantidad);
 
         } else {
             modelo.put("error", "Para comprar primero debes iniciar sesión");
@@ -140,31 +149,30 @@ public class CompraControlador {
         }
         return "carrito.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/checkout")
     public String checkout(ModelMap modelo, @RequestParam String idCompra, HttpSession session) {
-        
+
         try {
-            
-        
-           Optional<Compra> respuesta = compraRepositorio.findById(idCompra);
-           
-           if (respuesta.isPresent()) {
-              
-               Compra compra = respuesta.get();
-               
-               Usuario login = (Usuario) session.getAttribute("UsuarioSession");
-               if (login == null || !login.getId().equalsIgnoreCase(compra.getUsuario().getId())) {
 
-            modelo.put("error", "Para comprar primero debes iniciar sesión");
-            return "login.html";
+            Optional<Compra> respuesta = compraRepositorio.findById(idCompra);
 
-        }
-               modelo.put("compra", compra);
-               modelo.put("usuario", compra.getUsuario());
-               
-               List<Double> subtotales = compra.getSubtotales();
+            if (respuesta.isPresent()) {
+
+                Compra compra = respuesta.get();
+
+                Usuario login = (Usuario) session.getAttribute("UsuarioSession");
+                if (login == null || !login.getId().equalsIgnoreCase(compra.getUsuario().getId())) {
+
+                    modelo.put("error", "Para comprar primero debes iniciar sesión");
+                    return "login.html";
+
+                }
+                modelo.put("compra", compra);
+                modelo.put("usuario", compra.getUsuario());
+
+                List<Double> subtotales = compra.getSubtotales();
 
                 Double sbt = 0.00;
                 Double subtotal = 0.00;
@@ -182,8 +190,8 @@ public class CompraControlador {
                 Double totalCompra = (subtotal + envio);
 
                 modelo.put("totalCompra", totalCompra);
-           
-      }   
+
+            }
 
         } catch (Exception e) {
             e.getMessage();
@@ -191,22 +199,22 @@ public class CompraControlador {
         }
         return "checkout.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @PostMapping("/enviarPedido")
     public String enviarPedidoCompra(ModelMap modelo, @RequestParam String idCompra, @RequestParam String direccion, @RequestParam String detalles, @RequestParam String provincia,
-            @RequestParam String pais, @RequestParam String CP, @RequestParam String modoPago, @RequestParam String numTarjeta, @RequestParam String titTarjeta, 
+            @RequestParam String pais, @RequestParam String CP, @RequestParam String modoPago, @RequestParam String numTarjeta, @RequestParam String titTarjeta,
             @RequestParam String vencimiento, @RequestParam String CVV, @RequestParam String DNI) {
 
-           String direccionEnvio = "Direccion de envío " + direccion + " detalles para el envío " + detalles + " provincia " + provincia + " país" + pais + " CP: " + CP;
-           String formaDePago = "Modo " + modoPago + " número tarjeta " + numTarjeta + " titular Tarjeta " + titTarjeta + " vencimiento " + vencimiento + " CVV " + CVV + " DNI titular de la tarjeta " + DNI;
-        
-           try {
-                compraServicio.enviarPedido(idCompra, direccionEnvio, formaDePago);
-            
-               String exito = "Felicitaciones! Tu compra fue enviada con éxito. Nos encargaremos de procesar el pago y podrás ver la confirmación en tu perfil de usuario cuando tu compra esté finalizasda";
-                
-               modelo.put("éxito", exito);
+        String direccionEnvio = "Direccion de envío " + direccion + " detalles para el envío " + detalles + " provincia " + provincia + " país" + pais + " CP: " + CP;
+        String formaDePago = "Modo " + modoPago + " número tarjeta " + numTarjeta + " titular Tarjeta " + titTarjeta + " vencimiento " + vencimiento + " CVV " + CVV + " DNI titular de la tarjeta " + DNI;
+
+        try {
+            compraServicio.enviarPedido(idCompra, direccionEnvio, formaDePago);
+
+            String exito = "Felicitaciones! Tu compra fue enviada con éxito. Nos encargaremos de procesar el pago y podrás ver la confirmación en tu perfil de usuario cuando tu compra esté finalizasda";
+
+            modelo.put("éxito", exito);
 
         } catch (Exception e) {
             e.getMessage();
@@ -308,7 +316,6 @@ public class CompraControlador {
 //    public String borrarCompra() {
 //        return "carrito.html";
 //    }
-
 //    @PostMapping("/eliminarCompra")
 //    public String borrarCompra(ModelMap modelo, @RequestParam String id) {
 //        try {
@@ -320,7 +327,6 @@ public class CompraControlador {
 //        }
 //        return "carrito.html";
 //    }
-
 //    @GetMapping("/compraCarrito")
 //    public String carrito(){
 //        return "carrito.html";

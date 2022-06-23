@@ -61,11 +61,10 @@
             <div class="hamburguesa">
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="">Regiones</a></li>
+                   <li class="nav__item"><a href="">Regiones</a></li>
                     <li class="nav__item"><a href="">Bodegas</a></li>
-                    <li class="nav__item"><a href="">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
                 
                   <a href="/logout"> Cerrar sesión </a><br>
@@ -119,7 +118,7 @@
                 <p th:if="${compraEnCurso!= null}" th:text="${compraEnCurso}" style="color:red"></p>
                
                 <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
-                   <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
+                   <input th:if="${compra != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
                     <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
                 <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
                 </form>
@@ -138,268 +137,10 @@
                 </div>
                 <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
                 <h4 class="p-precio" th:text="'$' + ${producto.precio}"> </h4>
-                <a th:href="@{/mostrarProducto(idProducto=${producto.id})}"><button class="buy-btn">Comprar ahora</button></a> 
+                <a th:if="${session.usuarioSession != null and session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/mostrarProducto(idProducto=${producto.id} , idUsuario=${session.usuarioSession.id})}"><button class="buy-btn">Comprar ahora</button></a> 
+                 <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a cuenta para poder comprar</button></a>
             </div>
-<!--            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>
-            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                <h4 class="p-precio">$ 8010,90</h4>
-                <button class="buy-btn">Comprar ahora</button>
-            </div>-->
+
         </div>
         <nav aria-label="...">
             <ul class="pagination container mt-5">
@@ -431,11 +172,11 @@
             <div class="footer-columna-2">
                 <h3>Navegacion</h3>
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Regiones</a></li>
-                    <li><a href="">Bodegas</a></li>
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Contacto</a></li>
+                     <li><a href="/">Home</a></li>
+                                <li><a href="">Regiones</a></li>
+                                <li><a href="">Bodegas</a></li>
+                                <li><a href="/tienda">Tienda</a></li>
+                                <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-columna-3">

@@ -6,6 +6,7 @@ import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductoServicio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -35,27 +36,33 @@ public class TiendaControlador {
     @GetMapping("/tienda")
     public String tienda(ModelMap modelo) {
 
-        List<Producto> productos = productoRepositorio.findAll();
-
+        List<Producto> productosT = productoRepositorio.findAll();
+        List<Producto> productos = new ArrayList();
+        for (Producto producto : productosT) {
+           if(producto.isAlta()) {
+               productos.add(producto);
+           }
+        }
         modelo.put("productos", productos);
+        
 
         return "tienda.html";
 
     }
 
     @GetMapping("/mostrarProducto")
-    public String mostrarproducto(ModelMap modelo, HttpSession session, String id, @RequestParam String idProducto) {
+    public String mostrarproducto(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idProducto) {
 
         if (session != null) {
-            Usuario login = (Usuario) session.getAttribute("UsuarioSession");
-            if (login == null || !login.getId().equalsIgnoreCase(id)) {
+            Usuario login = (Usuario) session.getAttribute("usuarioSession");
+            if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
                 return "redirect:/index.html";
             }
 
         }
 
         
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
 
         if (respuesta.isPresent()) {
             Usuario usuario = new Usuario();
@@ -64,16 +71,18 @@ public class TiendaControlador {
             modelo.put("perfil", usuario);
             }
             
+        
 
             
-            Producto producto = productoRepositorio.buscarPorId(idProducto);
+            Producto productoElegido = productoRepositorio.buscarPorId(idProducto);
 
-            modelo.addAttribute("producto", producto);
+            modelo.put("productoElegido", productoElegido);
 
-            List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoRepositorio.findById(idProducto).get().getVarietal());
+            List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoElegido.getVarietal());
 
+           
             modelo.put("productosSimilares", productosSimilares);
 
-            return "producto";
+            return "producto.html";
         }
     }

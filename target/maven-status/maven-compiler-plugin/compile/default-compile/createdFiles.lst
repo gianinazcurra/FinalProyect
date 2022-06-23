@@ -1,9 +1,6 @@
 com\vineyarg\demo\repositorios\ProductoRepositorio.class
-com\vineyarg\demo\controladores\TiendaControlador.class
-com\vineyarg\demo\controladores\CompraControlador.class
 com\vineyarg\demo\controladores\ProductorControlador.class
 com\vineyarg\demo\controladores\TerminosCondicionesControlador.class
-com\vineyarg\demo\controladores\UsuarioControlador.class
 com\vineyarg\demo\repositorios\UsuarioRepositorio.class
 com\vineyarg\demo\controladores\ImagenesControlador.class
 com\vineyarg\demo\servicios\ProductoServicio.class
@@ -17,7 +14,6 @@ com\vineyarg\demo\servicios\ProductorServicio.class
 com\vineyarg\demo\servicios\ImagenesServicio.class
 com\vineyarg\demo\controladores\ProductoControlador.class
 com\vineyarg\demo\entidades\Imagenes.class
-com\vineyarg\demo\servicios\CompraServicio.class
 com\vineyarg\demo\enumeraciones\TipoUsuario.class
 com\vineyarg\demo\ConfiguracionSeguridad.class
 com\vineyarg\demo\controladores\ControladorPrincipal.class
