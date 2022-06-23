@@ -6,6 +6,7 @@ C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vine
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\enumeraciones\TipoUsuario.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\controladores\ImagenesControlador.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\DemoApplication.java
+C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\entidades\ItemCompra.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\entidades\Productor.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\repositorios\ProductoRepositorio.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\entidades\Compra.java
@@ -21,11 +22,14 @@ C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vine
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\servicios\CompraServicio.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\repositorios\ImagenesRepositorio.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\servicios\ProductorServicio.java
+C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\servicios\ItemCompraServicio.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\ServletInitializer.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\errores\Excepcion.java
+C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\repositorios\ItemCompraRepositorio.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\controladores\CompraControlador.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\enumeraciones\Regiones.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\repositorios\ProductorRepositorio.java
+C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\controladores\ItemCompracontrolador.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\controladores\TiendaControlador.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\controladores\UsuarioControlador.java
 C:\Users\joaqu\Documents\NetBeansProjects\VineyArgOficial\src\main\java\com\vineyarg\demo\repositorios\CompraRepositorio.java

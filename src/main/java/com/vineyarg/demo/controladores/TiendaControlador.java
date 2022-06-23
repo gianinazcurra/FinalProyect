@@ -3,6 +3,7 @@ package com.vineyarg.demo.controladores;
 import com.vineyarg.demo.entidades.Compra;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Usuario;
+import com.vineyarg.demo.repositorios.CompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductoServicio;
@@ -25,26 +26,36 @@ public class TiendaControlador {
 
     @Autowired
     ProductoServicio productoServicio;
-    
+    @Autowired
+    private CompraRepositorio compraRepositorio;
 
     @Autowired
     ProductoRepositorio productoRepositorio;
-    
+
     @Autowired
     UsuarioRepositorio usuarioRepositorio;
 
     @GetMapping("/tienda")
-    public String tienda(ModelMap modelo) {
+    public String tienda(ModelMap modelo, HttpSession session) {
 
+//        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+//
+//        Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getDNI());
+//        
+//       if(compraEnCurso != null) {
+//           System.out.println("esto esta");
+//            modelo.put("compra", compraEnCurso);
+//       }
+//        
+        
         List<Producto> productosT = productoRepositorio.findAll();
         List<Producto> productos = new ArrayList();
         for (Producto producto : productosT) {
-           if(producto.isAlta()) {
-               productos.add(producto);
-           }
+            if (producto.isAlta()) {
+                productos.add(producto);
+            }
         }
         modelo.put("productos", productos);
-        
 
         return "tienda.html";
 
@@ -61,7 +72,6 @@ public class TiendaControlador {
 
         }
 
-        
         Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
 
         if (respuesta.isPresent()) {
@@ -69,20 +79,16 @@ public class TiendaControlador {
             usuario = respuesta.get();
 
             modelo.put("perfil", usuario);
-            }
-            
-        
-
-            
-            Producto productoElegido = productoRepositorio.buscarPorId(idProducto);
-
-            modelo.put("productoElegido", productoElegido);
-
-            List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoElegido.getVarietal());
-
-           
-            modelo.put("productosSimilares", productosSimilares);
-
-            return "producto.html";
         }
+
+        Producto productoElegido = productoRepositorio.buscarPorId(idProducto);
+
+        modelo.put("productoElegido", productoElegido);
+
+        List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoElegido.getVarietal());
+
+        modelo.put("productosSimilares", productosSimilares);
+
+        return "producto.html";
     }
+}

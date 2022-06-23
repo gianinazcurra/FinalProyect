@@ -90,7 +90,17 @@
 
 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
    <p th:if="${logout != null}" th:text="${logout}" style="color:red"></p>
-
+   <p th:if="${compraPendiente != null}" th:text="${compraPendiente}"></p>
+   
+   <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="POST">
+                   <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
+                    <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="idCompra" th:value="${compraEnCursoInicioSesion.id}">
+                      <select name="decision">
+                     <option th:each="decision : ${decisiones}" th:value="${decision}" th:text="${decision}"></option> 
+                  </select>
+                     <button class="buy-btn" type="submit" th:text="${'Continuar'}"></button> </option> 
+   </form>
+                
     <div class="container">
         <div class="row">
             <div class="row-2">

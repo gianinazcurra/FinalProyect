@@ -43,10 +43,14 @@ public class Compra implements Serializable {
     @OneToOne
     private Usuario usuario;
     
-    @OneToMany
-    @ElementCollection(targetClass=Producto.class)
+//    @OneToMany
+//    @ElementCollection(targetClass=Producto.class)
 //    @OneToMany(mappedBy = "Compra", cascade = CascadeType.ALL, orphanRemoval = true)
-   private Set<Producto> listaProductos;
+//   private Set<Producto> listaProductos;
+    
+    @ElementCollection(targetClass=ItemCompra.class)
+    @OneToMany
+    private Set<ItemCompra> itemCompra;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
@@ -60,11 +64,11 @@ public class Compra implements Serializable {
     private EstadoCompra estadoCompra;
     private String observacionesCompra;
 
-    public Compra(String id, List<Integer> cantidades, Usuario usuario, Set<Producto> listaProductos, Date fechaCompra, List<Double> subtotales, Double montoFinal, String direccionEnvio, String formaDePago, boolean compraEnviadaParaAceptacion, EstadoCompra estadoCompra, String observacionesCompra) {
+    public Compra(String id, List<Integer> cantidades, Usuario usuario, Set<ItemCompra> itemCompra, Date fechaCompra, List<Double> subtotales, Double montoFinal, String direccionEnvio, String formaDePago, boolean compraEnviadaParaAceptacion, EstadoCompra estadoCompra, String observacionesCompra) {
         this.id = id;
         this.cantidades = cantidades;
         this.usuario = usuario;
-        this.listaProductos = listaProductos;
+        this.itemCompra = itemCompra;
         this.fechaCompra = fechaCompra;
         this.subtotales = subtotales;
         this.montoFinal = montoFinal;
@@ -74,6 +78,9 @@ public class Compra implements Serializable {
         this.estadoCompra = estadoCompra;
         this.observacionesCompra = observacionesCompra;
     }
+
+    
+    
 
     
 
@@ -204,18 +211,15 @@ public class Compra implements Serializable {
         this.usuario = usuario;
     }
 
-    /**
-     * @return the listaProductos
-     */
-    public Set<Producto> getListaProductos() {
-        return listaProductos;
+    public Set<ItemCompra> getItemCompra() {
+        return itemCompra;
     }
 
     /**
-     * @param listaProductos the listaProductos to set
+     * @return the listaProductos
      */
-    public void setListaProductos(Set<Producto> listaProductos) {
-        this.listaProductos = listaProductos;
+    public void setItemCompra(Set<ItemCompra> itemCompra) {   
+        this.itemCompra = itemCompra;
     }
 
     /**

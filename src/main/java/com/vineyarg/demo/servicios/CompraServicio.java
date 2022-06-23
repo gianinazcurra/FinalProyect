@@ -1,16 +1,19 @@
 package com.vineyarg.demo.servicios;
 
 import com.vineyarg.demo.entidades.Compra;
+import com.vineyarg.demo.entidades.ItemCompra;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.enumeraciones.EstadoCompra;
 import static com.vineyarg.demo.enumeraciones.EstadoCompra.NOENVIADA;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
+import com.vineyarg.demo.repositorios.ItemCompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,6 +32,10 @@ public class CompraServicio {
     private ProductoRepositorio productoRepositorio;
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private ItemCompraServicio itemCompraServicio;
+    @Autowired
+    private ItemCompraRepositorio itemCompraRepositorio;
 
     @Transactional
     public void preCompraCarrito(Producto producto, String id, Integer cantidad) {
@@ -36,43 +43,53 @@ public class CompraServicio {
         Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(id);
 
         if (compraEnCurso != null) {
-            
-            Set<Producto> listaProductos = compraEnCurso.getListaProductos();
-            List<Integer> listaCantidades = compraEnCurso.getCantidades();
-            List<Double> listaSubtotales = compraEnCurso.getSubtotales();
 
             Producto producto1 = productoRepositorio.getById(producto.getId());
-            listaProductos.add(producto1);
-            listaCantidades.add(cantidad);
-            listaSubtotales.add((producto.getPrecio() * cantidad.doubleValue()));
+//            listaProductos.add(producto1);
+//            listaCantidades.add(cantidad);
+//            listaSubtotales.add((producto.getPrecio() * cantidad.doubleValue()));
+//
+//            compraEnCurso.setListaProductos(listaProductos);
+//            compraEnCurso.setCantidades(listaCantidades);
+//            compraEnCurso.setSubtotales(listaSubtotales);
 
-            compraEnCurso.setListaProductos(listaProductos);
-            compraEnCurso.setCantidades(listaCantidades);
-            compraEnCurso.setSubtotales(listaSubtotales);
-            
-            
+            ItemCompra itemCompra = new ItemCompra();
+            itemCompra.setProducto(producto1);
+            itemCompra.setCantidad(cantidad);
+            itemCompra.setTotalProducto(producto1.getPrecio() * cantidad);
+            itemCompraRepositorio.save(itemCompra);
+
+            Set<ItemCompra> nuevoProductoParaCarrito = compraEnCurso.getItemCompra();
+
+            nuevoProductoParaCarrito.add(itemCompra);
+
+            compraEnCurso.setItemCompra(nuevoProductoParaCarrito);
+
             producto1.setCantidad(producto.getCantidad() - cantidad);
             productoRepositorio.save(producto1);
 
             compraRepositorio.save(compraEnCurso);
             System.out.println("asdasdasdas");
-        } 
-            else if (compraEnCurso == null){
-            Set<Producto> listaProductos = null;
-            
-            List<Integer> listaCantidades = new ArrayList();
-            List<Double> listaSubtotales = new ArrayList();
+        } else if (compraEnCurso == null) {
+//            Set<Producto> listaProductos = null;
+//            
+//            List<Integer> listaCantidades = new ArrayList();
+//            List<Double> listaSubtotales = new ArrayList();
 
             Producto producto1 = productoRepositorio.getById(producto.getId());
-            listaProductos.add(producto1);
-            listaCantidades.add(cantidad);
-            listaSubtotales.add((producto.getPrecio() * cantidad.doubleValue()));
-            
+
+            ItemCompra itemCompra = new ItemCompra();
+            itemCompra.setProducto(producto1);
+            itemCompra.setCantidad(cantidad);
+            itemCompra.setTotalProducto(producto1.getPrecio() * cantidad);
+            itemCompraRepositorio.save(itemCompra);
+
             Compra compra = new Compra();
 
-            compra.setListaProductos(listaProductos);
-            compra.setCantidades(listaCantidades);
-            compra.setSubtotales(listaSubtotales);
+            Set<ItemCompra> nuevoProductoParaCarrito = new HashSet();
+                    nuevoProductoParaCarrito.add(itemCompra);
+
+            compra.setItemCompra(nuevoProductoParaCarrito);
 
             Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
@@ -81,11 +98,10 @@ public class CompraServicio {
             }
 
             compra.setEstadoCompra(EstadoCompra.NOENVIADA);
-            
-            
+
             producto1.setCantidad(producto.getCantidad() - cantidad);
             productoRepositorio.save(producto1);
-            
+
             compraRepositorio.save(compra);
 
         }
@@ -100,74 +116,49 @@ public class CompraServicio {
         if (optional.isPresent()) {
 
             Compra compraAnular = optional.get();
-
+            
             //ESTO ES PARA DEVOLVER EL STOCK AL PRODUCTO QUE NO SE COMPRÓ
-            Set<Producto> listaProductos = compraAnular.getListaProductos();
-            List<Integer> listaCantidades = compraAnular.getCantidades();
-
-            for (int i = 0; i < listaProductos.size(); i++) {
-                for (int j = 0; j < listaCantidades.size(); j++) {
-                    
-                    if(i == j) {
-                        
-                        Producto producto = productoRepositorio.buscarPorId(listaProductos.get(i).getId());
-                        
-                        producto.setCantidad(producto.getCantidad()+listaCantidades.get(j));
-                        
-                        productoRepositorio.save(producto);
-                              
-                        
-                        
-                }
-                }
+            Set<ItemCompra> nuevoProductoParaCarrito = compraAnular.getItemCompra();
+            
+            for (ItemCompra itemCompra : nuevoProductoParaCarrito) {
+                
+                Producto productoA = productoRepositorio.getById(itemCompra.getProducto().getId());
+                productoA.setCantidad(productoA.getCantidad()+itemCompra.getCantidad());
+                productoRepositorio.save(productoA);
             }
             compraRepositorio.delete(compraAnular);
-        }
-    }
-    
-    
+            }
+//           
+}
 
     @Transactional
-    public void quitarProducto(String idProductoEliminar, Integer cantidades, String idCompraEnCurso) throws Excepcion {
+    public void quitarProducto(String idProductoEliminar, String idCompraEnCurso) throws Excepcion {
 
-        Optional<Compra> optional = compraRepositorio.findById(idCompraEnCurso);
+        Optional<Compra> respuesta = compraRepositorio.findById(idCompraEnCurso);
 
-        if (optional.isPresent()) {
+        if (respuesta.isPresent()) {
 
-            Compra compraEnCurso = new Compra();
-            compraEnCurso = optional.get();
+            Compra compraEnCurso = respuesta.get();
+            
 
-            Optional<Producto> respuesta = productoRepositorio.findById(idProductoEliminar);
+            Set<ItemCompra> ItemsCompraEnCurso = compraEnCurso.getItemCompra();
 
-            if (respuesta.isPresent()) {
+            Optional<ItemCompra> optional = itemCompraRepositorio.findById(idProductoEliminar);
 
-                Producto productoEliminar = new Producto();
-                productoEliminar = respuesta.get();
+            if (optional.isPresent()) {
+            
+                ItemCompra eliminar = optional.get();
+                
+                ItemsCompraEnCurso.remove(eliminar);
 
-                Set<Producto> listaProductos = compraEnCurso.getListaProductos();
-
-                int posicionProducto = listaProductos.indexOf(productoEliminar);
-                listaProductos.remove(productoEliminar);
-
-                List<Integer> listaCantidades = compraEnCurso.getCantidades();
-
-                listaCantidades.remove(cantidades);
-
-                List<Double> listaSubtotales = compraEnCurso.getSubtotales();
-
-                listaSubtotales.remove(posicionProducto);
-
-                compraEnCurso.setListaProductos(listaProductos);
-                compraEnCurso.setCantidades(listaCantidades);
-                compraEnCurso.setSubtotales(listaSubtotales);
-
-                productoEliminar.setCantidad(productoEliminar.getCantidad() + cantidades);
-
-                productoRepositorio.save(productoEliminar);
-
+                compraEnCurso.setItemCompra(ItemsCompraEnCurso);
+                   
                 compraRepositorio.save(compraEnCurso);
-
             }
+
+//
+//            
+//        }
         }
     }
 
@@ -184,7 +175,7 @@ public class CompraServicio {
             compraFinal.setDireccionEnvio(direccionEnvio);
             compraFinal.setFechaCompra(new Date());
             compraFinal.setEstadoCompra(EstadoCompra.PENDIENTE);
-            
+
             List<Double> subtotales = compraFinal.getSubtotales();
 
             Double sbt = 0.00;

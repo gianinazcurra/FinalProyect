@@ -103,7 +103,8 @@
     <!-- Fin del header -->
 
     <!-- productos destacados -->
-    
+           <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+   <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
     
     <section id="destacados" class="my-5 pb-5">
         <div class="container mt-5 py-5">
@@ -119,7 +120,8 @@
                
                 <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
                    <input th:if="${compra != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
-                    <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
+                    <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="${compra.id}">
+                    <input th:if="${compra != null}" type="hidden" name="decision" th:value="${'notDecision'}">
                 <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
                 </form>
         </div>
