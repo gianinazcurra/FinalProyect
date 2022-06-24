@@ -97,7 +97,7 @@ public class ProductoControlador {
             e.getMessage();
             modelo.put("error", "No se ha podido guardar el producto");
         }
-        modelo.put("registrado", "Producto agregado correctamente y disponible para la venta");
+        modelo.put("registrado", "Producto agregado correctamente al catálogo y disponible para la venta");
 
         return "agregar-producto.html";
     }
@@ -148,12 +148,38 @@ public class ProductoControlador {
             try {
                 productoServicio.bajaProducto(idProducto);
 
-                modelo.put("exito", "Producto dado de baja con éxito!!");
+                modelo.put("exito", "El producto se quitó del catálogo");
+                
+                List<Producto> productos = productoRepositorio.buscarTodosPorProductor(productoRepositorio.getById(idProducto).getProductor().getId());
+
+            modelo.put("productos", productos);
+
+            Producto productoElegido;
+            modelo.put("productoElegido", null);
+
+            List<String> opciones = new ArrayList();
+            opciones.add("editar");
+            opciones.add("eliminar");
+            modelo.put("opciones", opciones);
+
 
             } catch (Exception e) {
 
                 e.getMessage();
-                modelo.put("error", "No se han podido eliminar el productos");
+                modelo.put("error", "No se han podido eliminar el producto");
+                
+                List<Producto> productos = productoRepositorio.buscarTodosPorProductor(productoRepositorio.getById(idProducto).getProductor().getId());
+
+            modelo.put("productos", productos);
+
+            Producto productoElegido;
+            modelo.put("productoElegido", null);
+
+            List<String> opciones = new ArrayList();
+            opciones.add("editar");
+            opciones.add("eliminar");
+            modelo.put("opciones", opciones);
+
             }
 
         }
@@ -174,7 +200,7 @@ public class ProductoControlador {
         try {
             productoServicio.modificarProducto(idProductoElegido, nombre, cantidad, precio, descripcion, varietal);
 
-            modelo.put("exito", "Producto modificado con éxito!!");
+            modelo.put("exito", "Producto modificado con éxito");
 
             List<Producto> productos = productoRepositorio.buscarTodosPorProductor(productoRepositorio.getById(idProductoElegido).getProductor().getId());
 

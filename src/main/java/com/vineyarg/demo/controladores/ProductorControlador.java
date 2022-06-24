@@ -287,7 +287,10 @@ public class ProductorControlador {
         }
         Productor productor = productorRepositorio.getById(idProductor);
         
-        
+          if(itemsProductor.isEmpty()) {
+            modelo.put("sinVentas", "sinVentas");
+        }
+          
         modelo.put("productor", productor);
         modelo.put("itemsProductor", itemsProductor);
         return "productorweb.html";
@@ -311,6 +314,10 @@ public class ProductorControlador {
         }
 
         Productor productor = productorRepositorio.getById(idProductor);
+        
+        if(productosProductor.isEmpty()) {
+            modelo.put("sinProductos", "sinProductos");
+        }
         
         modelo.put("ProductosProductor", productosProductor);
         modelo.put("productor", productor);

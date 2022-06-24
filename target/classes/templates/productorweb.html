@@ -84,6 +84,9 @@
         
          <a th:href="@{/verProductos(idProductor=${productor.id})}"> VER TUS PRODUCTOS EN CATÁLOGO</a>
          
+         <div th:if="${sinVentas != null}">
+             <p th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}" </p>
+</div>
         <div th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
              <p th:text="${'Producto vendido:'}" </p>
             <p th:text="${'Producto: ' + item.producto.nombre}" </p>
@@ -93,7 +96,10 @@
 <!--            <p th:value="${'Fecha de la venta: ' + compra.fechaCompra}" </p>-->
 </div>
             
-
+<div th:if="${sinProductos != null}">
+            <p th:text="${'Todavía no cargás tu primer producto. Hacelo pronto para que los clientes puedan conocer tus vinos!'}" </p> 
+            <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ TU PRIMER PRODUCTO</a>
+                </div> 
         <div th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
             <p th:text="${'Producto en venta:'}" </p>
         <p th:text="${'Nombre ' + producto.nombre}" </p>

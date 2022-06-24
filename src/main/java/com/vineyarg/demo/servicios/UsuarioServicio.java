@@ -62,7 +62,7 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario admin = new Usuario();
 
-            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
+//            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
 
             admin.setNombre(nombre);
             admin.setApellido(apellido);
@@ -141,6 +141,15 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario usuario = respuesta.get();
 
+            if(usuario.getCorreo().equalsIgnoreCase(correo)) {
+                
+                String correoEstaOk = "estaok@estaok.com";
+                
+                validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correoEstaOk, clave1, clave2, usuario.getFechaNacimiento());
+                
+            } else {
+                validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correo, clave1, clave2, usuario.getFechaNacimiento());
+            }
 
             usuario.setCorreo(correo);
             String encriptada = new BCryptPasswordEncoder().encode(clave1);

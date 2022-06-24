@@ -15,8 +15,10 @@ import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import static com.vineyarg.demo.enumeraciones.TipoUsuario.ADMINISTRADOR;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
+import com.vineyarg.demo.repositorios.ItemCompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
+import com.vineyarg.demo.servicios.ItemCompraServicio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +56,10 @@ public class UsuarioControlador {
     private CompraRepositorio compraRepositorio;
     @Autowired
     private ProductoRepositorio productoRepositorio;
+    @Autowired
+    private ItemCompraServicio itemCompraServicio;
+    @Autowired
+    private ItemCompraRepositorio itemCompraRepositorio;
 
 //    @GetMapping("/registro")
 //    public String registro() {
@@ -310,9 +316,17 @@ public class UsuarioControlador {
 
         }
         
+//        List<String> decision = new ArrayList();
+//        decision.add("ACEPTAR");
+//        decision.add("RECHAZAR");
+//        
+//        modelo.put("decisiones", decision);
+//        
         modelo.put("comprasNuevas", comprasNuevas);
 
-        
+        if(comprasNuevas.isEmpty()) {
+            modelo.put("sinNuevas", "sinNuevas");
+        }
         
         return "administradorweb.html";
     }
@@ -327,44 +341,80 @@ public class UsuarioControlador {
         return "administradorweb.html";
     }
 
-//    @PostMapping("/aceptarCompra")
-//    public String aceptarCompra(ModelMap modelo, @RequestParam String decision, @RequestParam String observaciones, @RequestParam String id) {
-//
-//        Compra compra = compraRepositorio.buscarPorId(id);
-//
-//        if (decision.equalsIgnoreCase("ACEPTAR")) {
-//
-//            compra.setEstadoCompra(EstadoCompra.ACEPTADA);
-//            compra.setObservacionesCompra(observaciones);
-//
-//        } else if (decision.equalsIgnoreCase("RECHAZAR")) {
-//            compra.setEstadoCompra(EstadoCompra.RECHAZADA);
-//            compra.setObservacionesCompra(observaciones);
-//
-//            //RESTITUIMOS EL STOCK DE PRODUCTOS (COMO EN EL SERVICIO ANULAR COMPRA PERO SIN ELIMINAR LA COMPRA DE LA BASE DE DATOS):
-//            Set<Producto> listaProductos = compra.getListaProductos();
-//            List<Integer> listaCantidades = compra.getCantidades();
-//
-//            for (int i = 0; i < listaProductos.size(); i++) {
-//                for (int j = 0; j < listaCantidades.size(); j++) {
-//
-//                    if (i == j) {
-//
-//                        Producto producto = productoRepositorio.buscarPorId(listaProductos.get(i).getId());
-//
-//                        producto.setCantidad(producto.getCantidad() + listaCantidades.get(j));
-//
-//                        productoRepositorio.save(producto);
-//
-//                    }
-//                }
-//
-//            }
-//
-//        }
-//        return "administrador.html";
-//    }
-//
+    @PostMapping("/aceptarCompra")
+    public String aceptarCompra(ModelMap modelo, @RequestParam String decision, @RequestParam String observaciones, @RequestParam String idCompra) {
+
+        Compra compra = compraRepositorio.buscarPorId(idCompra);
+        System.out.println(decision);
+        if (decision.equalsIgnoreCase("ACEPTAR")) {
+
+            compra.setEstadoCompra(EstadoCompra.ACEPTADA);
+            compra.setObservacionesCompra(observaciones);
+            
+            compraRepositorio.save(compra);
+            List<Compra> comprasNuevasPre = compraRepositorio.buscarComprasNuevas();
+           List<Compra> comprasNuevas = new ArrayList();
+
+         System.out.println(decision);
+
+        for (Compra compraNueva : comprasNuevasPre) {
+
+            if (compraNueva.getFechaCompra() != null) {
+                comprasNuevas.add(compraNueva);
+            }
+
+        }
+        
+        modelo.put("comprasNuevas", comprasNuevas);
+
+        if(comprasNuevas.isEmpty()) {
+            modelo.put("sinNuevas", "sinNuevas");
+        }
+
+        } else if (decision.equalsIgnoreCase("RECHAZAR")) {
+            compra.setEstadoCompra(EstadoCompra.RECHAZADA);
+            compra.setObservacionesCompra(observaciones);
+            compraRepositorio.save(compra);
+            
+            //RESTITUIMOS EL STOCK DE PRODUCTOS (COMO EN EL SERVICIO ANULAR COMPRA PERO SIN ELIMINAR LA COMPRA DE LA BASE DE DATOS):
+            Set<ItemCompra> listaItems = compra.getItemCompra();
+
+            Producto productoReponer = new Producto();
+            
+            for (ItemCompra item : listaItems) {
+                
+                productoReponer = item.getProducto();
+                
+                productoReponer.setCantidad(productoReponer.getCantidad() + item.getCantidad());
+                
+                productoRepositorio.save(productoReponer);
+                
+            }
+                
+           List<Compra> comprasNuevasPre = compraRepositorio.buscarComprasNuevas();
+        List<Compra> comprasNuevas = new ArrayList();
+
+        
+
+        for (Compra compraNueva : comprasNuevasPre) {
+
+            if (compraNueva.getFechaCompra() != null) {
+                comprasNuevas.add(compraNueva);
+            }
+
+        }
+        
+        modelo.put("comprasNuevas", comprasNuevas);
+
+        if(comprasNuevas.isEmpty()) {
+            modelo.put("sinNuevas", "sinNuevas");
+        }
+               
+
+        }
+        return "administradorweb.html";
+    }
+
     @GetMapping("/usuarioweb")
     public String usuarioWeb(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
 

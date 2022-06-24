@@ -45,13 +45,6 @@ public class CompraServicio {
         if (compraEnCurso != null) {
 
             Producto producto1 = productoRepositorio.getById(producto.getId());
-//            listaProductos.add(producto1);
-//            listaCantidades.add(cantidad);
-//            listaSubtotales.add((producto.getPrecio() * cantidad.doubleValue()));
-//
-//            compraEnCurso.setListaProductos(listaProductos);
-//            compraEnCurso.setCantidades(listaCantidades);
-//            compraEnCurso.setSubtotales(listaSubtotales);
 
             ItemCompra itemCompra = new ItemCompra();
             itemCompra.setProducto(producto1);
@@ -71,10 +64,6 @@ public class CompraServicio {
             compraRepositorio.save(compraEnCurso);
             System.out.println("asdasdasdas");
         } else if (compraEnCurso == null) {
-//            Set<Producto> listaProductos = null;
-//            
-//            List<Integer> listaCantidades = new ArrayList();
-//            List<Double> listaSubtotales = new ArrayList();
 
             Producto producto1 = productoRepositorio.getById(producto.getId());
 
@@ -87,7 +76,7 @@ public class CompraServicio {
             Compra compra = new Compra();
 
             Set<ItemCompra> nuevoProductoParaCarrito = new HashSet();
-                    nuevoProductoParaCarrito.add(itemCompra);
+            nuevoProductoParaCarrito.add(itemCompra);
 
             compra.setItemCompra(nuevoProductoParaCarrito);
 
@@ -116,20 +105,20 @@ public class CompraServicio {
         if (optional.isPresent()) {
 
             Compra compraAnular = optional.get();
-            
+
             //ESTO ES PARA DEVOLVER EL STOCK AL PRODUCTO QUE NO SE COMPRÓ
             Set<ItemCompra> nuevoProductoParaCarrito = compraAnular.getItemCompra();
-            
+
             for (ItemCompra itemCompra : nuevoProductoParaCarrito) {
-                
+
                 Producto productoA = productoRepositorio.getById(itemCompra.getProducto().getId());
-                productoA.setCantidad(productoA.getCantidad()+itemCompra.getCantidad());
+                productoA.setCantidad(productoA.getCantidad() + itemCompra.getCantidad());
                 productoRepositorio.save(productoA);
             }
             compraRepositorio.delete(compraAnular);
-            }
+        }
 //           
-}
+    }
 
     @Transactional
     public void quitarProducto(String idProductoEliminar, String idCompraEnCurso) throws Excepcion {
@@ -139,26 +128,23 @@ public class CompraServicio {
         if (respuesta.isPresent()) {
 
             Compra compraEnCurso = respuesta.get();
-            
 
             Set<ItemCompra> ItemsCompraEnCurso = compraEnCurso.getItemCompra();
 
             Optional<ItemCompra> optional = itemCompraRepositorio.findById(idProductoEliminar);
 
             if (optional.isPresent()) {
-            
+
                 ItemCompra eliminar = optional.get();
-                
+
                 ItemsCompraEnCurso.remove(eliminar);
 
                 compraEnCurso.setItemCompra(ItemsCompraEnCurso);
-                   
+
                 compraRepositorio.save(compraEnCurso);
             }
 
-//
-//            
-//        }
+
         }
     }
 
@@ -176,8 +162,6 @@ public class CompraServicio {
             compraFinal.setFechaCompra(new Date());
             compraFinal.setEstadoCompra(EstadoCompra.PENDIENTE);
 
-           
-
             compraFinal.setMontoFinal(Math.round(totalCompra * 100.0) / 100.0);
 
             compraFinal.setFormaDePago(formaDePago);
@@ -186,15 +170,6 @@ public class CompraServicio {
         }
     }
 
-//   @Transactional
-//    public void agregarProducto(List<Producto> listaProductos, String id) throws Excepcion{
-//        
-//        Optional<Producto> optional = productoRepositorio.findById(id);
-//        if (optional.isPresent()) {
-//
-//            listaProductos.add(optional.get());
-//        }
-//    }
     public void validar(Integer cantidad, Usuario usuario, List<Producto> listaProductos, Date fechaCompra, Double montoFinal, String direccionEnvio) throws Excepcion {
 
         if (cantidad == null || cantidad.toString().trim().isEmpty()) {

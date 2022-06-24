@@ -78,7 +78,9 @@
    
     <a href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS         </a>  
         
-        
+        <div th:if="${sinNuevas != null}">
+        <p th:text="${'No existen compras nuevas para procesar'}"> </p>
+         </div>
     <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
         <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
          <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
@@ -92,10 +94,10 @@
          <form action="/aceptarCompra" method="POST" >
              
              <label th:text="${'El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso'}">  </label>
-              <input type="hidden" class="" name="id" th:value="${compra.id}"/> 
-                <select class="" name="decision" value="decision" required> 
-                  <option th:text="ACEPTAR"></option> 
-                  <option th:text="RECHAZAR"></option> 
+              <input type="hidden" class="" name="idCompra" th:value="${compra.id}"/> 
+                <select class="" name="decision" required> 
+                  <option th:text="${'ACEPTAR'}" th:value="${'ACEPTAR'}"></option> 
+                  <option th:text="${'RECHAZAR'}" th:value="${'RECHAZAR'}"></option> 
                   </select>
                    <input type="text" name="observaciones" th:value="${observaciones}" placeholder="Indique si la compra fue aprobada o causas del rechazo" required>
                   <input class="boton" type="submit" value="Aceptar/Rechazar">
