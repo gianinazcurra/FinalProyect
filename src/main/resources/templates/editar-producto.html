@@ -98,49 +98,50 @@
             </form>
         </div>
         
+         
+                 
         <div th:if="${productoElegido != null}" class="producto__container">
         
-        <div th:if="${productoElegido != null}" class="titulo">Modificá tu producto</div>
+        <div class="titulo">Modificá tu producto</div>
             <form action="/editarProducto" method="POST" enctype="multipart/form-data">
                 
-                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                 <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                
                  
                  <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
                   <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
                   
-                <input th:if="${productoElegido != null}" type="hidden" class="form-control" name="idProductoElegido" th:value="${productoElegido.id}"/> <!--
+                <input type="hidden" class="form-control" name="idProductoElegido" th:value="${productoElegido.id}"/> <!--
 -->
                  
-                <div th:if="${productoElegido != null}" class="detalles__usuario">
+                <div class="detalles__usuario">
                     <div class="input__caja">
                         <span class="detalles">Nombre</span>
-                        <input th:if="${productoElegido != null}" type="text" name="nombre" placeholder="Ingresa tu nombre" th:value="${productoElegido.nombre}" required>
+                        <input type="text" name="nombre" placeholder="Ingresa tu nombre" th:value="${productoElegido.nombre}" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Cantidad</span>
-                        <input th:if="${productoElegido != null}" min="0" max="1000000"  type="number" name="cantidad" th:value="${productoElegido.cantidad}" placeholder="Ingresa la nueva cantidad total de producto" required>
+                        <input min="0" max="1000000"  type="number" name="cantidad" th:value="${productoElegido.cantidad}" placeholder="Ingresa la nueva cantidad total de producto" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Precio</span>
-                        <input th:if="${productoElegido != null}" step="0.01" min="0" max="1000000"  type="number" name="precio" th:value="${productoElegido.precio}" placeholder="Ingresa el Precio" required>
+                        <input step="0.01" min="0" max="1000000"  type="number" name="precio" th:value="${productoElegido.precio}" placeholder="Ingresa el Precio" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Descripcion</span>
-                        <input th:if="${productoElegido != null}"  type="text" name="descripcion" th:value="${productoElegido.descripcion}" placeholder="Ingresa la Descripcion" required>
+                        <input type="text" name="descripcion" th:value="${productoElegido.descripcion}" placeholder="Ingresa la Descripcion" required>
                     </div>
                     <div class="input__caja">
                         <span class="detalles">Varietal</span>
-                        <input th:if="${productoElegido != null}"  type="text" placeholder="Ingresa su Varietal" th:value="${productoElegido.varietal}" required>
+                        <input type="text" placeholder="Ingresa su Varietal" th:value="${productoElegido.varietal}" name="varietal" required>
                     </div>
                    
 
                 </div>
-                <div th:if="${productoElegido != null}" class="imag">
+                <div class="imag">
                     <span class="detalles">Imagenes:</span>
-                    <input th:if="${productoElegido != null}" class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto">
+                    <input class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto">
                 </div><!--
--->                <input th:if="${productoElegido != null}" class="boton" type="submit" value="Guardar modificaciones">
+-->                <input class="boton" type="submit" value="Guardar modificaciones">
 
             </form><!--
                    

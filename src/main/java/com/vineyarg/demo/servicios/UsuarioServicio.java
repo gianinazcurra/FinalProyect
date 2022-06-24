@@ -141,15 +141,11 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario usuario = respuesta.get();
 
-//            usuario.setNombre(nombre);
-//            usuario.setApellido(apellido);
-//            usuario.setDNI(DNI);
+
             usuario.setCorreo(correo);
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(encriptada);
-//            usuario.setFechaNacimiento(fechaNacimiento);
             usuario.setAlta(true);
-//            usuario.setTipoUsuario(tipoUsuario);
 
             if (archivo != null) {
                 Imagenes imagen = new Imagenes();

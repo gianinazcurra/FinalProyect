@@ -1,20 +1,25 @@
 package com.vineyarg.demo.controladores;
 
 import com.vineyarg.demo.entidades.Compra;
+import com.vineyarg.demo.entidades.ItemCompra;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.entidades.Usuario;
+import com.vineyarg.demo.enumeraciones.EstadoCompra;
 import com.vineyarg.demo.enumeraciones.Regiones;
 import com.vineyarg.demo.enumeraciones.TipoUsuario;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
+import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductorServicio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -32,9 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping
 public class ProductorControlador {
 
-    
-     @Autowired
-     private ProductorServicio productorServicio;
+    @Autowired
+    private ProductorServicio productorServicio;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -47,6 +51,9 @@ public class ProductorControlador {
 
     @Autowired
     private ProductorRepositorio productorRepositorio;
+
+    @Autowired
+    private ProductoRepositorio productoRepositorio;
 
     @GetMapping("/registro")
     public String registro() {
@@ -130,21 +137,19 @@ public class ProductorControlador {
             throws Excepcion, Exception {
 
         try {
-         Usuario login = (Usuario) session.getAttribute("usuarioSession");
-         if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
-              return "redirect:/index.html";
-           }
+            Usuario login = (Usuario) session.getAttribute("usuarioSession");
+            if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
+                return "redirect:/index.html";
+            }
 
             Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
-            
-            
 
             Usuario usuario = new Usuario();
             Productor productor = new Productor();
             if (respuesta.isPresent()) {
 
                 usuario = respuesta.get();
-                
+
             }
 
             Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
@@ -152,17 +157,15 @@ public class ProductorControlador {
             if (respuesta1.isPresent()) {
 
                 productor = respuesta1.get();
-                
+
             }
-            modelo.put("perfil", productor);
+            modelo.put("productor", productor);
             modelo.put("perfilUsuario", usuario);
-        
-            
+
             productorServicio.modificar(idUsuario, idProductor, nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
 
-           
         } catch (Exception ex) {
-            
+
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("razonSocial", razonSocial);
@@ -182,63 +185,38 @@ public class ProductorControlador {
         return "productorweb.html";
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
-//    @GetMapping("/eliminar-productor")
-//    public String eliminarProductor(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
-//
-//        Usuario login = (Usuario) session.getAttribute("usuarioSession");
-//        if (login == null || !login.getId().equalsIgnoreCase(id)) {
-//            return "redirect:/index.html";
-//        }
-//
-//        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
-//
-//        if (respuesta.isPresent()) {
-//            Usuario usuario = new Usuario();
-//            usuario = respuesta.get();
-//            modelo.put("perfil", usuario);
-//        } else {
-//
-//            throw new Excepcion("Usuario no reconocido");
-//        }
-//
-//        return "eliminar-productor";
-//    }
-
     @PreAuthorize("hasAnyRole('ROLE_PRODUCTOR')")
     @PostMapping("/eliminarProductor")
     public String eliminarProductor(ModelMap modelo, HttpSession session, @RequestParam String idProductor, @RequestParam String idUsuario, @RequestParam String correo, @RequestParam String clave) throws Excepcion, Exception {
 
         try {
 
-        
-        Usuario login = (Usuario) session.getAttribute("usuarioSession");
-        if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
-            return "redirect:/index.html";
-        }
-
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
-
-        if (respuesta.isPresent()) {
-            Productor productor = new Productor();
-            Usuario usuario = new Usuario();
-            usuario = respuesta.get();
-            
-           Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
-
-            if (respuesta1.isPresent()) {
-
-               productor = respuesta1.get();
-                
+            Usuario login = (Usuario) session.getAttribute("usuarioSession");
+            if (login == null || !login.getId().equalsIgnoreCase(idUsuario)) {
+                return "redirect:/index.html";
             }
-            modelo.put("perfil", productor);
-            modelo.put("perfilUsuario", usuario);
-   
-            
-            productorServicio.eliminarProductor(idUsuario, idProductor, correo, clave);
-            
 
-        } } catch (Excepcion ex) {
+            Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+            if (respuesta.isPresent()) {
+                Productor productor = new Productor();
+                Usuario usuario = new Usuario();
+                usuario = respuesta.get();
+
+                Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
+
+                if (respuesta1.isPresent()) {
+
+                    productor = respuesta1.get();
+
+                }
+                modelo.put("perfil", productor);
+                modelo.put("perfilUsuario", usuario);
+
+                productorServicio.eliminarProductor(idUsuario, idProductor, correo, clave);
+
+            }
+        } catch (Excepcion ex) {
             modelo.put("error1", ex.getMessage());
 
             modelo.put("mail", correo);
@@ -278,20 +256,66 @@ public class ProductorControlador {
     }
 
     @GetMapping("/verVentas") //FALTA DESARROLLAR PARA QUE EL PRODUCTOR PUEDA VER SUS VENTAS
-    public String verVentas(ModelMap modelo, HttpSession session, @RequestParam String id) {
-//
-//        List<Compra> comprasTotales = compraRepositorio.findAll();
-//        
-//        List<Producto> productosVendidos = new ArrayList();
-//        
-//        for (Compra comprasTotale : comprasTotales) {
-//            
-//            if(comprasTotale.getListaProductos().contains())
-//        }
-//
-//        modelo.put("compras", comprasUsuario);
+    public String verVentas(ModelMap modelo, HttpSession session, @RequestParam String idProductor) {
 
-        return null;
+        List<Compra> listaComprasTotales = compraRepositorio.findAll();
+        List<Compra> listaComprasCompletadas = new ArrayList();
+        
+        
+
+        for (Compra listaCompras : listaComprasTotales) {
+            
+            if(listaCompras.getEstadoCompra().equals(EstadoCompra.ACEPTADA)) {
+                
+                listaComprasCompletadas.add(listaCompras);
+            }
+        }
+        
+        Set<ItemCompra> itemsProductor = new HashSet();
+        for (Compra compras : listaComprasTotales) {
+
+            Set<ItemCompra> items = compras.getItemCompra();
+
+            for (ItemCompra item : items) {
+
+                if (item.getProducto().getProductor().getId().equals(idProductor)) {
+
+                    itemsProductor.add(item);
+                }
+
+            }
+        }
+        Productor productor = productorRepositorio.getById(idProductor);
+        
+        
+        modelo.put("productor", productor);
+        modelo.put("itemsProductor", itemsProductor);
+        return "productorweb.html";
+
+    }
+
+    @GetMapping("/verProductos")
+    public String verProductos(ModelMap modelo, HttpSession session, @RequestParam String idProductor) {
+
+        List<Producto> listaProductosProductor = productoRepositorio.buscarTodosPorProductor(idProductor);
+        
+        
+        List<Producto> productosProductor = new ArrayList();
+
+        
+        for (Producto producto : listaProductosProductor) {
+
+            if (producto.isAlta()) {
+                productosProductor.add(producto);
+            }
+        }
+
+        Productor productor = productorRepositorio.getById(idProductor);
+        
+        modelo.put("ProductosProductor", productosProductor);
+        modelo.put("productor", productor);
+
+         return "productorweb.html";
     }
 
 }

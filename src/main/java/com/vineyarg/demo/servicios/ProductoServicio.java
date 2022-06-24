@@ -70,21 +70,29 @@ public class ProductoServicio {
 
     }
 
-    public void modificarProducto(String idProductoElegido, String nombre, Integer cantidad, Double precio, String descripcion) throws Excepcion {
+    public void modificarProducto(String idProductoElegido, String nombre, Integer cantidad, Double precio, String descripcion, String varietal) throws Excepcion {
 
         Optional<Producto> respuesta = productoRepositorio.findById(idProductoElegido);
         if (respuesta.isPresent()) {
 
             Producto producto = respuesta.get();
 
-            validar(nombre, cantidad, precio, descripcion,
+            if(producto.getNombre().equalsIgnoreCase(nombre)) {
+                
+                String nombreEstaOk = "nombreOk";
+                validar(nombreEstaOk, cantidad, precio, descripcion,
                     producto.getVarietal(), producto.getProductor(), producto.getSku());
+                
+            } else {validar(nombre, cantidad, precio, descripcion,
+                    producto.getVarietal(), producto.getProductor(), producto.getSku());
+            }
+            
 
             producto.setNombre(nombre);
             producto.setCantidad(cantidad);
             producto.setPrecio(precio);
             producto.setDescripcion(descripcion);
-//        producto.setVarietal(varietal);
+        producto.setVarietal(varietal);
 //        producto.setProductor(productor);
 //        producto.setSku(SKU);
 //        producto.setValoraciones(valoraciones);
@@ -189,6 +197,7 @@ public class ProductoServicio {
             if(producto.getNombre().equalsIgnoreCase(nombre))
             throw new Excepcion("Ya hay un producto registrado con ese nombre");
         }
+        
         if (cantidad < 0) {
             throw new Excepcion("No puedes agregar un stock negativo");
         }

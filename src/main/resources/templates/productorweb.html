@@ -67,7 +67,9 @@
             </div>
         </nav>
         <!-- Fin del header -->
-
+         <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                 <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                 
          <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
         <img th:if="${session.usuarioSession.imagen != null}" th:src="${'/usuarioimagen?id=' + session.usuarioSession.id}" alt="" th:text="aa"> 
         <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
@@ -78,19 +80,30 @@
         
         <a th:href="@{/editar-producto(idProductor=${productor.id})}">EDITAR PRODUCTOS</a>
 
-        <a href="´'/verVentas' + productor.id">VER EL ESTADO DE TUS VENTAS</a>
-        <div th:if="${compras != null}" th:each="compra : ${compras}">
-            <p th:text="${compra.id}" </p>
-            <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.nombre}" ></p>
-            <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.precio}" ></p>
-            <p th:value="${compra.montoFinal}" </p>
-            <p th:value="${compra.fechaCompra}" </p>
-            <p th:text="${compra.estadoCompra}" </p>
+        <a th:href="@{/verVentas(idProductor=${productor.id})}"> REVISÁ QUÉ PRODUCTOS HAS VENDIDO</a>
+        
+         <a th:href="@{/verProductos(idProductor=${productor.id})}"> VER TUS PRODUCTOS EN CATÁLOGO</a>
+         
+        <div th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
+             <p th:text="${'Producto vendido:'}" </p>
+            <p th:text="${'Producto: ' + item.producto.nombre}" </p>
+            <p th:text="${'Precio de venta:  ' + item.producto.precio}" ></p>
+            <p th:text="${'Cantidad vendida: ' + item.cantidad}" ></p>
+            <p th:text="${'Precio total por esta venta:  ' + item.totalProducto}" ></p>
+<!--            <p th:value="${'Fecha de la venta: ' + compra.fechaCompra}" </p>-->
+</div>
+            
 
-
-
-            <a href=""></a>
-            <hr>
+        <div th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
+            <p th:text="${'Producto en venta:'}" </p>
+        <p th:text="${'Nombre ' + producto.nombre}" </p>
+         <p th:text="${'Precio ' + producto.precio}" </p>
+          <p th:text="${'Stock disponible ' +  producto.cantidad}" </p>
+           <p th:text="${'Descripcion ' +  producto.descripcion}" </p>
+            <p th:text="${'Varietal ' +  producto.varietal}" </p>
+        
+        </div> 
+         
 
 
             <!-- Footer -->

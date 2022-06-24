@@ -45,7 +45,7 @@
             <input class="control" type="password" name="clave2" id="" placeholder="Repita la contraseña" required="" th:value="${perfil.clave}">
             <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${perfil.descripcion}">
             <select class="control" name="region"> 
-                <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${region}"></option> 
+                <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:selected=="${perfil.region}" th:text="${region}"></option> 
             </select>
             <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca">
             <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/terminos-condiciones.html">Terminos y Condiciones</a></p>
