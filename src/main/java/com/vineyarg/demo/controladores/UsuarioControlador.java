@@ -6,6 +6,7 @@
 package com.vineyarg.demo.controladores;
 
 import com.vineyarg.demo.entidades.Compra;
+import com.vineyarg.demo.entidades.ItemCompra;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.entidades.Usuario;
@@ -20,6 +21,7 @@ import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -298,6 +300,8 @@ public class UsuarioControlador {
         List<Compra> comprasNuevasPre = compraRepositorio.buscarComprasNuevas();
         List<Compra> comprasNuevas = new ArrayList();
 
+        
+
         for (Compra compraNueva : comprasNuevasPre) {
 
             if (compraNueva.getFechaCompra() != null) {
@@ -305,8 +309,11 @@ public class UsuarioControlador {
             }
 
         }
+        
         modelo.put("comprasNuevas", comprasNuevas);
 
+        
+        
         return "administradorweb.html";
     }
 
@@ -316,7 +323,8 @@ public class UsuarioControlador {
         List<Compra> comprasHistoricas = compraRepositorio.buscarComprasHistoricas();
 
         modelo.put("comprasHistoricas", comprasHistoricas);
-        return "administrador.html";
+        
+        return "administradorweb.html";
     }
 
 //    @PostMapping("/aceptarCompra")
@@ -380,7 +388,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/verCompras")
-    public String verCompras(ModelMap modelo, HttpSession session, @RequestParam String id) {
+    public String verCompras(ModelMap modelo, @RequestParam String id) {
 
         List<Compra> comprasUsuario = compraRepositorio.buscarComprasTotalesPorUsuario(id);
 

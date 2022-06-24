@@ -76,15 +76,16 @@
                  
                  </div>
                  <a th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
-    <a href="´'/verCompras' + perfil.id">VER EL ESTADO DE TUS COMPRAS</a>
+                 
+    <a th:href="@{/verCompras(id=${session.usuarioSession.id})}"> VER EL ESTADO DE TUS COMPRAS</a>
     <div th:if="${compras != null}" th:each="compra : ${compras}">
-        <p th:text="${compra.id}" </p>
-         <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.nombre}" </p>
-          <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.precio}" </p>
-         <p th:value="${compra.montoFinal}" </p>
-         <p th:value="${compra.fechaCompra}" </p>
-        <p th:text="${estadoCompra}" </p>
-         <p th:text="${compra.observacionesCompra}" </p>
+        <p th:text="${'Identificador de la Compra ' + compra.id}" </p>
+         <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado ' + item.producto.nombre}" </p>
+          <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total pagado ' +  item.totalProducto}" </p>
+         <p th:value="${'precio total con envío ' +  compra.montoFinal}" </p>
+         <p th:value="${'Fecha de la compra ' +  compra.fechaCompra}" </p>
+        <p th:text="${'Estado de tu compra ' +  estadoCompra}" </p>
+         <p th:text="${'Observaciones ' +  compra.observacionesCompra}" </p>
          
          </div>
        

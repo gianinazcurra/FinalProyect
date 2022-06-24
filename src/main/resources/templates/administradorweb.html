@@ -75,36 +75,46 @@
      <a th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIR DATOS DEL ADMINISTRADOR</a>
     
    <a href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
+   
+    <a href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS         </a>  
+        
+        
     <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
-        <p th:text="${compra.id}"> </p>
-         <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.nombre}"> </p>
-         <p th:each="producto : ${comprasNuevas.productos}" th:text="${producto.precio}"> </p>
-         <p th:value="${compra.montoFinal}"> </p>
-         <p th:value="${compra.fechaCompra}"> </p>
-         <p th:text="${compra.usuario.apellido}"> </p>
+        <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
+         <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
+         <p th:each="item : ${compra.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+         <p th:each="item : ${compra.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
+         <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+         <p th:value="${'Precio final con envío: ' + compra.montoFinal}"> </p>
+         <p th:value="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
+         <p th:text="${'Nombre del comprador: ' + compra.usuario.nombre + compra.usuario.apellido}"> </p>
+         
          <form action="/aceptarCompra" method="POST" >
-             <label th:text="El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso">  </label>
+             
+             <label th:text="${'El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso'}">  </label>
               <input type="hidden" class="" name="id" th:value="${compra.id}"/> 
                 <select class="" name="decision" value="decision" required> 
                   <option th:text="ACEPTAR"></option> 
-                  <option h:text="RECHAZAR"></option> 
+                  <option th:text="RECHAZAR"></option> 
                   </select>
-                   <input type="text" name="observaciones" th:value="observaciones" placeholder="Indique si la compra fue aprobada o causas del rechazo" required>
+                   <input type="text" name="observaciones" th:value="${observaciones}" placeholder="Indique si la compra fue aprobada o causas del rechazo" required>
                   <input class="boton" type="submit" value="Aceptar/Rechazar">
          </form>
          
         </div>
-    <a href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS          
-                           </a>
-    <div th:if="${comprasHistoricas != null}" th:each="compraOk : ${comprasHistoricas}">
-        <p th:text="${compra.id}" </p>
-         <p th:each="producto : ${comprasHistoricas.productos}" th:text="${comprasHistoricas.nombre}" </p>
-          <p th:each="producto : ${comprasHistoricas.productos}" th:text="${comprasHistoricas.precio}" </p>
-         <p th:value="${comprasHistoricas.montoFinal}" </p>
-         <p th:value="${comprasHistoricas.fechaCompra}" </p>
-         <p th:text="${compra.usuario.apellido}" </p>
-         <p th:text="${estadoCompra}" </p>
-         <p th:text="${compra.observacionesCompra}" </p>
+  
+                          
+    <div th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
+        <p th:text="${'Identificador de la compra: ' + compraAntiguas.id}" </p>
+         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
+         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
+         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+         <p th:value="${'Precio final con envío: ' + compraAntiguas.montoFinal}"> </p>
+         <p th:value="${'Fecha de la compra: ' +compraAntiguas.fechaCompra}"> </p>
+         <p th:text="${'Nombre del comprador: ' + compraAntiguas.usuario.nombre + compraAntiguas.usuario.apellido}"> </p>
+         <p th:text="${compraAntiguas.estadoCompra}" </p>
+         <p th:text="${compraAntiguas.observacionesCompra}" </p>
          
          
         </div>
