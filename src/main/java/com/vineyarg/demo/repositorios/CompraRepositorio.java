@@ -26,7 +26,7 @@ public interface CompraRepositorio extends JpaRepository<Compra, String> {
     @Query("SELECT c FROM Compra c WHERE c.usuario.id = :idUsuario")
     public List<Compra> buscarComprasTotalesPorUsuario(@Param("idUsuario") String idUsuario);
     
-    @Query("SELECT c FROM Compra c WHERE c.estadoCompra != ACEPTADA and c.estadoCompra != RECHAZADA")
+    @Query("SELECT c FROM Compra c WHERE c.estadoCompra != 'ACEPTADA' and c.estadoCompra != 'RECHAZADA'")
     public List<Compra> buscarComprasNuevas();
     
     @Query("SELECT c FROM Compra c WHERE c.estadoCompra = ACEPTADA or c.estadoCompra = RECHAZADA")

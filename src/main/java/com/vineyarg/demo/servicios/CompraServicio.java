@@ -163,7 +163,7 @@ public class CompraServicio {
     }
 
     @Transactional
-    public void enviarPedido(String idCompra, String direccionEnvio, String formaDePago) throws Excepcion {
+    public void enviarPedido(String idCompra, String direccionEnvio, String formaDePago, Double totalCompra) throws Excepcion {
 
         Optional<Compra> optional = compraRepositorio.findById(idCompra);
 
@@ -176,19 +176,9 @@ public class CompraServicio {
             compraFinal.setFechaCompra(new Date());
             compraFinal.setEstadoCompra(EstadoCompra.PENDIENTE);
 
-            List<Double> subtotales = compraFinal.getSubtotales();
+           
 
-            Double sbt = 0.00;
-            Double total = 0.00;
-
-            for (Double subtotale : subtotales) {
-
-                total = subtotale + sbt;
-                sbt = subtotale;
-
-            }
-
-            compraFinal.setMontoFinal(total);
+            compraFinal.setMontoFinal(Math.round(totalCompra * 100.0) / 100.0);
 
             compraFinal.setFormaDePago(formaDePago);
 

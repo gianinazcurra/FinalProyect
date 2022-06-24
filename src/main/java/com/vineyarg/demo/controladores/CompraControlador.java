@@ -258,42 +258,52 @@ public class CompraControlador {
     @GetMapping("/checkout")
     public String checkout(ModelMap modelo, @RequestParam String idCompra, HttpSession session) {
 
+        
         try {
 
             Optional<Compra> respuesta = compraRepositorio.findById(idCompra);
 
             if (respuesta.isPresent()) {
 
-                Compra compra = respuesta.get();
-
-                Usuario login = (Usuario) session.getAttribute("UsuarioSession");
-                if (login == null || !login.getId().equalsIgnoreCase(compra.getUsuario().getId())) {
+                Compra compraDef = respuesta.get();
+                
+                Usuario login = (Usuario) session.getAttribute("usuarioSession");
+                if (login == null || !login.getId().equalsIgnoreCase(compraDef.getUsuario().getId())) {
 
                     modelo.put("error", "Para comprar primero debes iniciar sesión");
                     return "login.html";
 
+                }       
+                
+                modelo.put("carrito", compraDef);
+                modelo.put("usuario", compraDef.getUsuario());
+
+                Set<ItemCompra> productosCompra = compraDef.getItemCompra();
+
+                Double total = 0.00;
+                Double totalSumaProductos = 0.00;
+
+                for (ItemCompra itemCompra : productosCompra) {
+
+                    total = itemCompra.getTotalProducto();
+
+                    totalSumaProductos = totalSumaProductos + total;
+
                 }
-                modelo.put("compra", compra);
-                modelo.put("usuario", compra.getUsuario());
+                modelo.put("itemsCompra", productosCompra);
 
-                List<Double> subtotales = compra.getSubtotales();
-
-                Double sbt = 0.00;
-                Double subtotal = 0.00;
-
-                for (Double subtotale : subtotales) {
-
-                    subtotal = subtotale + sbt;
-                    sbt = subtotale;
-
-                }
-
-                modelo.put("subtotal", subtotal);
+                modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
                 Double envio = 850.00;
-                Double totalCompra = (subtotal + envio);
+                Double totalCompraConEnvio = (totalSumaProductos + envio);
 
-                modelo.put("totalCompra", totalCompra);
+                modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
+
+
+//                modelo.put("subtotal", subtotal);
+
+
+                modelo.put("totalCompra", totalCompraConEnvio);
 
             }
 
@@ -308,23 +318,23 @@ public class CompraControlador {
     @PostMapping("/enviarPedido")
     public String enviarPedidoCompra(ModelMap modelo, @RequestParam String idCompra, @RequestParam String direccion, @RequestParam String detalles, @RequestParam String provincia,
             @RequestParam String pais, @RequestParam String CP, @RequestParam String modoPago, @RequestParam String numTarjeta, @RequestParam String titTarjeta,
-            @RequestParam String vencimiento, @RequestParam String CVV, @RequestParam String DNI) {
+            @RequestParam String vencimiento, @RequestParam String CVV, @RequestParam String DNI, @RequestParam Double totalCompra) {
 
         String direccionEnvio = "Direccion de envío " + direccion + " detalles para el envío " + detalles + " provincia " + provincia + " país" + pais + " CP: " + CP;
         String formaDePago = "Modo " + modoPago + " número tarjeta " + numTarjeta + " titular Tarjeta " + titTarjeta + " vencimiento " + vencimiento + " CVV " + CVV + " DNI titular de la tarjeta " + DNI;
 
         try {
-            compraServicio.enviarPedido(idCompra, direccionEnvio, formaDePago);
+            compraServicio.enviarPedido(idCompra, direccionEnvio, formaDePago, totalCompra);
 
-            String exito = "Felicitaciones! Tu compra fue enviada con éxito. Nos encargaremos de procesar el pago y podrás ver la confirmación en tu perfil de usuario cuando tu compra esté finalizasda";
+            String exito = "Felicitaciones! Tu compra fue enviada con éxito. Nos encargaremos de procesar el pago y podrás ver la confirmación en tu perfil de usuario cuando tu compra esté finalizada";
 
-            modelo.put("éxito", exito);
+            modelo.put("exito", exito);
 
         } catch (Exception e) {
             e.getMessage();
-            modelo.put("error", "Error al realizar la compra.");
+            modelo.put("error", "Error al realizar la compra");
         }
-        return "perfil-usuario.html";
+        return "exito-compra.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
@@ -359,11 +369,6 @@ public class CompraControlador {
         return "tienda.html";
     }
 
-
-//    @GetMapping("/quitarProducto")
-//    public String eliminarProducto() {
-//        return "carrito.html";
-//    }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/eliminarProducto")
