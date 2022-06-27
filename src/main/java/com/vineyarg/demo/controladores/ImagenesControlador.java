@@ -10,6 +10,7 @@ import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Productor;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.errores.Excepcion;
+import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/imagen")
 public class ImagenesControlador {
 
-    @Autowired
+      @Autowired
     private ProductoServicio productoServicio;
 
     @Autowired
@@ -50,12 +51,15 @@ public class ImagenesControlador {
 
     @Autowired
     private ProductorRepositorio productorRepositorio;
+    
+    @Autowired
+    private ImagenesRepositorio imagenesRepositorio;
 
-    @GetMapping("/productoimagen/{id}")
-    public ResponseEntity<byte[]> fotoProducto(@PathVariable String id) {
+    @GetMapping("/productoimagen/{idProductor}")
+    public ResponseEntity<byte[]> fotoProductoPorIdProductor(@PathVariable String idProductor) {
 
         try {
-            Producto producto = productoRepositorio.getById(id);
+            Producto producto = productoRepositorio.getById(idProductor);
 
             if (producto.getImagenes().isEmpty()) {
                 throw new Excepcion("Producto sin imágen");
@@ -83,6 +87,19 @@ public class ImagenesControlador {
         }
         return null;
     }
+    
+     @GetMapping("/productoimagen-idImagen/{idImagen}")
+    public ResponseEntity<byte[]> fotoProducto(@PathVariable String idImagen) {
+
+        Imagenes imagen = imagenesRepositorio.getById(idImagen);
+        byte[] foto = imagen.getContenido();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(foto, headers, HttpStatus.OK);
+       
+    }
+    
+    
 
     @GetMapping("/usuarioimagen/{id}")
     public ResponseEntity<byte[]> fotoUsuarioComun(@PathVariable String id) {

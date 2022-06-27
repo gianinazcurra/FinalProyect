@@ -1,6 +1,7 @@
 package com.vineyarg.demo.controladores;
 
 import com.vineyarg.demo.entidades.Compra;
+import com.vineyarg.demo.entidades.Imagenes;
 import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
@@ -8,8 +9,10 @@ import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductoServicio;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,21 +41,18 @@ public class TiendaControlador {
     @GetMapping("/tienda")
     public String tienda(ModelMap modelo, HttpSession session) {
 
-//        Usuario login = (Usuario) session.getAttribute("usuarioSession");
-//
-//        Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getDNI());
-//        
-//       if(compraEnCurso != null) {
-//           System.out.println("esto esta");
-//            modelo.put("compra", compraEnCurso);
-//       }
-//        
+    
         
         List<Producto> productosT = productoRepositorio.findAll();
         List<Producto> productos = new ArrayList();
+        
+        
+        
         for (Producto producto : productosT) {
             if (producto.isAlta()) {
                 productos.add(producto);
+                
+               
             }
         }
         modelo.put("productos", productos);

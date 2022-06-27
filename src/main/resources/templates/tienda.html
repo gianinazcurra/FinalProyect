@@ -127,7 +127,8 @@
         </div>
         <div class="row mx-auto container">
             <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productos != null}" th:each="producto : ${productos}">
-                    <img th:if="${producto != null}" th:src="@{${'/imagen/productoimagen/' + producto.id}}" alt="Foto del producto"> 
+<!--                    <img th:if="${producto != null}" th:src="@{${'/imagen/productoimagen/' + producto.id}}" alt="Foto del producto"> ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS--> 
+                         <img th:if="${producto.imagenes != null}" th:each="img : ${producto.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
 <!--                 <img th:if="${producto.imagen == null}" class="img-fluid mb-3" th:text="${'Producto sin imágen'}">-->
              
                 <div class="estrella">

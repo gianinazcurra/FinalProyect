@@ -102,7 +102,7 @@
             <tbody>
                 <tr th:if="${carrito != null}" th:each="item : ${itemsCompra}">
                     <td><a th:href="@{/eliminarProducto(idProductoEliminar=${item.id}, idCompraEnCurso=${carrito.id} )}"><i class="fas fa-trash-alt"></i></a></td>
-                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
+                    <td><img th:src="@{${'/imagen/productoimagen/' + item.producto.id}}" alt="Foto del producto"></td>
                     <td>
                         <h5 th:text="${item.producto.nombre}"></h5>
                     </td>
@@ -141,7 +141,7 @@
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Envío fijo a todo el país </h6>
-                        <p>$ 850,00</p>
+                        <p>$ 450,00</p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
@@ -150,6 +150,7 @@
                     </div>
                    
                     <a th:href="@{/checkout/(idCompra=${carrito.id})}"> <button id="botonCompra" class="ml-auto" >PROCEDER A LA COMPRA</button></a>
+                    <a th:href="@{/tienda}"> <button id="botonCompra" class="ml-auto" >SEGUIR COMPRANDO</button></a>
                     <a th:href="@{/anularCompra/(idCompra=${carrito.id})}"> <button id="botonCompra" class="ml-auto" >ANULAR COMPRA</button></a>
                 </div>
             </div>

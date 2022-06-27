@@ -63,7 +63,7 @@
             <div class="nav__container">
                 <div class="nav__logo">
                     <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
-                                               width="200px"></a>
+                                     width="200px"></a>
                 </div>
                 <label for="menuId" class="nav__label">
                     <img src="/MENU RESPONSIVE/menu.svg" alt="nav__img" width="40px">
@@ -108,9 +108,10 @@
 
                                 <div class="row mt-5">
                                     <div class="col-lg-5 col-md-12 col-12">
-                                      
-                                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto"> 
-<!--                                   <img th:if="${productoEl.imagen == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">-->
+
+                                        <!--                                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto"> ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS -->
+                                        <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idProducto/' + img.id}}" alt="Foto del producto">
+                                        <!--                                   <img th:if="${productoEl.imagen == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">-->
 
 
                                         <div class="small-img-group">
@@ -133,7 +134,7 @@
 
                                         <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
 
-                                        
+
                                         <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
                                             <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
                                             <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
@@ -143,27 +144,27 @@
 
                                         <h4 classs="mt-5 mb-5">El producto que elegiste</h4>
 
-                                        
+
                                         <h6 th:text="${productoElegido.productor.nombre}"></h6>
                                         <h3 class="py-4" th:text="${productoElegido.nombre}"></h3>
                                         <h2 th:text="'$' + ${productoElegido.precio}"></h2>
                                         <h4 classs="mt-5 mb-5">Descripcion</h4>
                                         <span th:text="${productoElegido.descripcion}"></span>
-                                        
+
                                         <form action="/agregaCarrito" method="POST" enctype="multipart/form-data">  
-                                            
+
                                             <input type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"> 
                                             <input th:if="${productoElegido.cantidad} > 0" type="number" min="1" th:max="${productoElegido.cantidad}" name="cantidad" class="form-control" placeholder="1" required th:value="1">
                                             <input th:if="${productoElegido.cantidad} <= 0" type="text" name="cantidad" class="form-control" placeholder="Lo sentimos! Este producto esta agotado" required th:value="${cantidad}">
                                             <input type="hidden" name="idProducto" class="form-control" th:value="${productoElegido.id}">
-                                                
+
                                             <button th:if="${productoElegido.cantidad} > 0" class="buy-btn" type="submit" th:text="${'Agregar al carrito'}"></button>
-                                             <button th:if="${productoElegido.cantidad} <= 0" class="buy-btn" type="submit" th:text="${'El producto está agotado'}" disabled></button>
-                                            
+                                            <button th:if="${productoElegido.cantidad} <= 0" class="buy-btn" type="submit" th:text="${'El producto está agotado'}" disabled></button>
+
                                         </form>
 
-                                        
-                                        
+
+
                                     </div>
                                 </div>
                             </section>

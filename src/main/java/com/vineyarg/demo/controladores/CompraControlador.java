@@ -89,7 +89,6 @@ public class CompraControlador {
             System.out.println(usuario.getNombre());
 
             Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(usuario.getId());
-           
 
             if (compraEnCurso != null) {
                 System.out.println("aca1");
@@ -117,7 +116,7 @@ public class CompraControlador {
                 compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(usuario.getId());
                 modelo.put("compra", compraEnCurso);
                 modelo.put("compraEnCurso", "Se agregó el producto al carrito");
-                
+
                 List<Producto> productosT = productoRepositorio.findAll();
                 List<Producto> productos = new ArrayList();
                 for (Producto productoS : productosT) {
@@ -140,125 +139,122 @@ public class CompraControlador {
     @PostMapping("/finalizarCompra")
     public String finalizarCompra(ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCompra, @RequestParam(required = false) String decision) {
 
-        
-        
         if (decision.equalsIgnoreCase("anular")) {
 
-           
-         try {
-            compraServicio.anularCompra(idCompra);
+            try {
+                compraServicio.anularCompra(idCompra);
 
-            modelo.put("exito", "La compra se canceló con éxito.");
-            
-            List<Producto> productosT = productoRepositorio.findAll();
-        List<Producto> productos = new ArrayList();
-        for (Producto producto : productosT) {
-            if (producto.isAlta()) {
-                productos.add(producto);
+                modelo.put("exito", "La compra se canceló con éxito.");
+
+                List<Producto> productosT = productoRepositorio.findAll();
+                List<Producto> productos = new ArrayList();
+                for (Producto producto : productosT) {
+                    if (producto.isAlta()) {
+                        productos.add(producto);
+                    }
+                }
+                modelo.put("productos", productos);
+                return "tienda.html";
+            } catch (Exception e) {
+                e.getMessage();
+                modelo.put("error", "Error al cancelar la compra");
+
+                List<Producto> productosT = productoRepositorio.findAll();
+                List<Producto> productos = new ArrayList();
+                for (Producto producto : productosT) {
+                    if (producto.isAlta()) {
+                        productos.add(producto);
+                    }
+                }
+                modelo.put("productos", productos);
             }
+            return "tienda.html";
         }
-        modelo.put("productos", productos);
-        return "tienda.html";
-        } catch (Exception e) {
-            e.getMessage();
-            modelo.put("error", "Error al cancelar la compra");
-            
-            List<Producto> productosT = productoRepositorio.findAll();
-        List<Producto> productos = new ArrayList();
-        for (Producto producto : productosT) {
-            if (producto.isAlta()) {
-                productos.add(producto);
-            }
-        }
-        modelo.put("productos", productos);
-        }
-        return "tienda.html";
-        }
-                
-          if (decision.equalsIgnoreCase("continuar"))   {
-        try {
 
-            Compra compraAntesDePago = compraRepositorio.buscarComprasSinEnviarPorUsuario(idUsuario);
+        if (decision.equalsIgnoreCase("continuar")) {
+            try {
 
-            System.out.println(compraAntesDePago.getId());
-            if (compraAntesDePago != null) {
+                Compra compraAntesDePago = compraRepositorio.buscarComprasSinEnviarPorUsuario(idUsuario);
 
-                modelo.put("carrito", compraAntesDePago);
+                System.out.println(compraAntesDePago.getId());
+                if (compraAntesDePago != null) {
 
-                Set<ItemCompra> productosCompra = compraAntesDePago.getItemCompra();
+                    modelo.put("carrito", compraAntesDePago);
 
-                Double total = 0.00;
-                Double totalSumaProductos = 0.00;
+                    Set<ItemCompra> productosCompra = compraAntesDePago.getItemCompra();
 
-                for (ItemCompra itemCompra : productosCompra) {
+                    Double total = 0.00;
+                    Double totalSumaProductos = 0.00;
 
-                    total = itemCompra.getTotalProducto();
+                    for (ItemCompra itemCompra : productosCompra) {
 
-                    totalSumaProductos = totalSumaProductos + total;
+                        total = itemCompra.getTotalProducto();
+
+                        totalSumaProductos = totalSumaProductos + total;
+
+                    }
+                    modelo.put("itemsCompra", productosCompra);
+
+                    modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
+
+                    Double envio = 450.00;
+                    Double totalCompraConEnvio = (totalSumaProductos + envio);
+
+                    modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
                 }
-                modelo.put("itemsCompra", productosCompra);
-
-                modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
-
-                Double envio = 850.00;
-                Double totalCompraConEnvio = (totalSumaProductos + envio);
-
-                modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
-
-            } 
-        } catch (Exception e) {
-            e.getMessage();
-            modelo.put("error", "Error al realizar la compra.");
+            } catch (Exception e) {
+                e.getMessage();
+                modelo.put("error", "Error al realizar la compra.");
+            }
+            return "carrito.html";
         }
-        return "carrito.html";
-    }  if (decision.equalsIgnoreCase("notDecision"))  {
-              
-               try {
+        if (decision.equalsIgnoreCase("notDecision")) {
 
-            Compra compraAntesDePago = compraRepositorio.buscarComprasSinEnviarPorUsuario(idUsuario);
+            try {
 
-            System.out.println(compraAntesDePago.getId());
-            if (compraAntesDePago != null) {
+                Compra compraAntesDePago = compraRepositorio.buscarComprasSinEnviarPorUsuario(idUsuario);
 
-                modelo.put("carrito", compraAntesDePago);
+                System.out.println(compraAntesDePago.getId());
+                if (compraAntesDePago != null) {
 
-                Set<ItemCompra> productosCompra = compraAntesDePago.getItemCompra();
+                    modelo.put("carrito", compraAntesDePago);
 
-                Double total = 0.00;
-                Double totalSumaProductos = 0.00;
+                    Set<ItemCompra> productosCompra = compraAntesDePago.getItemCompra();
 
-                for (ItemCompra itemCompra : productosCompra) {
+                    Double total = 0.00;
+                    Double totalSumaProductos = 0.00;
 
-                    total = itemCompra.getTotalProducto();
+                    for (ItemCompra itemCompra : productosCompra) {
 
-                    totalSumaProductos = totalSumaProductos + total;
+                        total = itemCompra.getTotalProducto();
+
+                        totalSumaProductos = totalSumaProductos + total;
+
+                    }
+                    modelo.put("itemsCompra", productosCompra);
+
+                    modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
+
+                    Double envio = 450.00;
+                    Double totalCompraConEnvio = (totalSumaProductos + envio);
+
+                    modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
                 }
-                modelo.put("itemsCompra", productosCompra);
-
-                modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
-
-                Double envio = 850.00;
-                Double totalCompraConEnvio = (totalSumaProductos + envio);
-
-                modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
-
-            } 
-        } catch (Exception e) {
-            e.getMessage();
-            modelo.put("error", "Error al realizar la compra.");
+            } catch (Exception e) {
+                e.getMessage();
+                modelo.put("error", "Error al realizar la compra.");
+            }
+            return "carrito.html";
         }
-        return "carrito.html";
-          }
-              return "index.html";
-           }   
+        return "index.html";
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/checkout")
     public String checkout(ModelMap modelo, @RequestParam String idCompra, HttpSession session) {
 
-        
         try {
 
             Optional<Compra> respuesta = compraRepositorio.findById(idCompra);
@@ -266,15 +262,15 @@ public class CompraControlador {
             if (respuesta.isPresent()) {
 
                 Compra compraDef = respuesta.get();
-                
+
                 Usuario login = (Usuario) session.getAttribute("usuarioSession");
                 if (login == null || !login.getId().equalsIgnoreCase(compraDef.getUsuario().getId())) {
 
                     modelo.put("error", "Para comprar primero debes iniciar sesión");
                     return "login.html";
 
-                }       
-                
+                }
+
                 modelo.put("carrito", compraDef);
                 modelo.put("usuario", compraDef.getUsuario());
 
@@ -294,15 +290,12 @@ public class CompraControlador {
 
                 modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
-                Double envio = 850.00;
+                Double envio = 450.00;
                 Double totalCompraConEnvio = (totalSumaProductos + envio);
 
                 modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
-
 //                modelo.put("subtotal", subtotal);
-
-
                 modelo.put("totalCompra", totalCompraConEnvio);
 
             }
@@ -344,31 +337,30 @@ public class CompraControlador {
             compraServicio.anularCompra(idCompra);
 
             modelo.put("exito", "La compra se canceló con éxito.");
-            
+
             List<Producto> productosT = productoRepositorio.findAll();
-        List<Producto> productos = new ArrayList();
-        for (Producto producto : productosT) {
-            if (producto.isAlta()) {
-                productos.add(producto);
+            List<Producto> productos = new ArrayList();
+            for (Producto producto : productosT) {
+                if (producto.isAlta()) {
+                    productos.add(producto);
+                }
             }
-        }
-        modelo.put("productos", productos);
+            modelo.put("productos", productos);
         } catch (Exception e) {
             e.getMessage();
             modelo.put("error", "Error al cancelar la compra");
-            
+
             List<Producto> productosT = productoRepositorio.findAll();
-        List<Producto> productos = new ArrayList();
-        for (Producto producto : productosT) {
-            if (producto.isAlta()) {
-                productos.add(producto);
+            List<Producto> productos = new ArrayList();
+            for (Producto producto : productosT) {
+                if (producto.isAlta()) {
+                    productos.add(producto);
+                }
             }
-        }
-        modelo.put("productos", productos);
+            modelo.put("productos", productos);
         }
         return "tienda.html";
     }
-
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/eliminarProducto")
@@ -399,7 +391,7 @@ public class CompraControlador {
 
                 modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
-                Double envio = 850.00;
+                Double envio = 450.00;
                 Double totalCompraConEnvio = (totalSumaProductos + envio);
 
                 modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
