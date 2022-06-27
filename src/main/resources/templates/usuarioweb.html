@@ -54,15 +54,21 @@
                 </ul>
 
                 <ul class="nav__iconos">
-                    <a href="">
-                        <li class="fa-solid fa-bag-shopping nav__item"></li>
-                    </a>
-                    <a href="">
-                        <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
-                    <a href="/registro">
+            <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
+                    
+<!--                    <a th:if="${session.usuarioSession != null}">    </a>-->
+                        <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                        </a>
+
+                        <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                        </a>
+                        <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                        </a>
                 </ul>
             </div>
         </div>
@@ -70,7 +76,7 @@
     <!-- Fin del header -->
     <div>
       <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
-                     <img th:if="${session.usuarioSession.imagen != null}" th:src="${'/usuarioimagen?id=' + session.usuarioSession.id}" alt="" th:text="aa"> 
+                     <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="Tu imagen de perfil"> 
                  <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
                  
                  

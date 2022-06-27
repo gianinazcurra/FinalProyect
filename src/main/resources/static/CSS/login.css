@@ -88,4 +88,9 @@
     color: #EC268F;
 }
 
+@media screen and (max-width: 900px) {
+    .imagen{
+        display: none;
+    }
+}
 

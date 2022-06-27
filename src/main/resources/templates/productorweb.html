@@ -71,7 +71,7 @@
                  <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
                  
          <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
-        <img th:if="${session.usuarioSession.imagen != null}" th:src="${'/usuarioimagen?id=' + session.usuarioSession.id}" alt="" th:text="aa"> 
+       <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="La imagen de perfil de tu bodega"> 
         <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
 
         <a th:href="@{/editar-productor(idUsuario=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>

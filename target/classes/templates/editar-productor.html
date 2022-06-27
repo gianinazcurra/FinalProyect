@@ -32,20 +32,19 @@
         <form action="/editarProductor" method="POST" enctype="multipart/form-data">
 
 
+      <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id="" th:value="${session.usuarioSession.id}">
 
-            <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id="" th:value="${session.usuarioSession.id}">
+            <input class="control" type="hidden" name="idProductor" id="" th:value="${productor.id}">
 
-            <input class="control" type="hidden" name="idProductor" id="" th:value="${perfil.id}">
-
-            <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${perfil.nombre}">
-            <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${perfil.razonSocial}">
-            <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${perfil.domicilio}">
-            <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${perfil.correo}">
-            <input class="control" type="password" name="clave1" id="" placeholder="Ingresar una Contraseña" required="" th:value="${perfil.clave}">
-            <input class="control" type="password" name="clave2" id="" placeholder="Repita la contraseña" required="" th:value="${perfil.clave}">
-            <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${perfil.descripcion}">
+            <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${productor.nombre}">
+            <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${productor.razonSocial}">
+            <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${productor.domicilio}">
+            <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${productor.correo}">
+            <input class="control" type="password" name="clave1" id="" placeholder="Ingresar una Contraseña" required="" th:value="${productor.clave}">
+            <input class="control" type="password" name="clave2" id="" placeholder="Repita la contraseña" required="" th:value="${productor.clave}">
+            <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una Descripción de su bogega" required="" th:value="${productor.descripcion}">
             <select class="control" name="region"> 
-                <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:selected=="${perfil.region}" th:text="${region}"></option> 
+                <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:selected=="${productor.region}" th:text="${region}"></option> 
             </select>
             <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca">
             <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/terminos-condiciones.html">Terminos y Condiciones</a></p>
@@ -60,9 +59,9 @@
                   
                  <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id="" th:value="${session.usuarioSession.id}">
                  
-                <input class="control" type="hidden" name="idProductor" id="" th:value="${perfil.id}">
+                <input class="control" type="hidden" name="idProductor" id="" th:value="${productor.id}">
                
-                 <input class="control" type="email" name="correo" placeholder="Ingresar su Email"  id="" required=""  th:value="${perfil.correo}">
+                 <input class="control" type="email" name="correo" placeholder="Ingresar su Email"  id="" required=""  th:value="${productor.correo}">
                 
                 <input class="control" type="password" name="clave" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave}">
               

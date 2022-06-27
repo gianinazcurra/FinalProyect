@@ -117,7 +117,7 @@ public class ProductorControlador {
 
             modelo.put("regiones", Regiones.values());
 
-            modelo.put("perfil", productor);
+            modelo.put("productor", productor);
 
             modelo.put("perfilUsuario", usuario);
 
@@ -164,7 +164,7 @@ public class ProductorControlador {
 
             productorServicio.modificar(idUsuario, idProductor, nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
 
-        } catch (Exception ex) {
+        } catch (Excepcion ex) {
 
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
@@ -176,6 +176,25 @@ public class ProductorControlador {
             modelo.put("descripcion", descripcion);
             modelo.put("regiones", Regiones.values());
 
+            Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+            Usuario usuario = new Usuario();
+            Productor productor = new Productor();
+            if (respuesta.isPresent()) {
+
+                usuario = respuesta.get();
+
+            }
+
+            Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
+
+            if (respuesta1.isPresent()) {
+
+                productor = respuesta1.get();
+
+            }
+            modelo.put("productor", productor);
+            modelo.put("perfilUsuario", usuario);
             return "editar-productor";
 
         }

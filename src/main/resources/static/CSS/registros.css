@@ -97,3 +97,12 @@
     color: #fff;
     text-decoration: none;
 }
+
+@media screen and (max-width: 900px) {
+    .formulario{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .imagen{
+        display: none;
+    }
+}

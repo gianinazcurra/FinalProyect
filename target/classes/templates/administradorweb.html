@@ -69,7 +69,7 @@
     <!-- Fin del header -->
     
      <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
- <img th:if="${session.usuarioSession.imagen != null}" th:src="${'/usuarioimagen?id=' + session.usuarioSession.id}" alt="" th:text="aa"> 
+ <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="Tu imagen de perfil de administrador"> 
                  <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
 
      <a th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIR DATOS DEL ADMINISTRADOR</a>

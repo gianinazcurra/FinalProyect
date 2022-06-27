@@ -30,7 +30,7 @@ public class Productor implements Serializable {
     private String clave;
     private String descripcion;
     private String region;
-    private Imagenes imagen;
+//    private Imagenes imagen;//Finalmente le setearemos imagen como Usuario
 
     private boolean alta;
 
@@ -38,7 +38,7 @@ public class Productor implements Serializable {
     }
 
     public Productor(String id, String nombre, String razonSocial, String domicilio,
-            String correo, String clave, String descripcion, String region,Imagenes imagen, boolean alta) {
+            String correo, String clave, String descripcion, String region,/*Imagenes imagen,*/ boolean alta) {
         this.id = id;
         this.nombre = nombre;
         this.razonSocial = razonSocial;
@@ -47,7 +47,7 @@ public class Productor implements Serializable {
         this.clave = clave;
         this.descripcion = descripcion;
         this.region = region;
-        this.imagen=imagen;
+//        this.imagen=imagen;
         this.alta = alta;
     }
 
@@ -204,15 +204,15 @@ public class Productor implements Serializable {
     /**
      * @return the imagen
      */
-    public Imagenes getImagen() {
-        return imagen;
-    }
-
-    /**
-     * @param imagen the imagen to set
-     */
-    public void setImagen(Imagenes imagen) {
-        this.imagen = imagen;
-    }
+//    public Imagenes getImagen() {
+//        return imagen;
+//    }
+//
+//    /**
+//     * @param imagen the imagen to set
+//     */
+//    public void setImagen(Imagenes imagen) {
+//        this.imagen = imagen;
+//    }
 
 }

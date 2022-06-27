@@ -3,6 +3,7 @@ package com.vineyarg.demo.entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -43,12 +44,12 @@ public class Producto implements Serializable {
     
     @ElementCollection(targetClass=Imagenes.class)
     @OneToMany
-    private List<Imagenes> imagenes;
+    private Set<Imagenes> imagenes;
     
     public Producto() {
     }
 
-    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, int promedioValoraciones, Compra compra, boolean alta, List<Imagenes> imagenes) {
+    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, int promedioValoraciones, Compra compra, boolean alta, Set<Imagenes> imagenes) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -64,6 +65,8 @@ public class Producto implements Serializable {
         this.alta = alta;
         this.imagenes = imagenes;
     }
+
+  
 
     public Compra getCompra() {
         return compra;
@@ -170,13 +173,14 @@ public class Producto implements Serializable {
         this.alta = alta;
     }
 
-    public List<Imagenes> getImagenes() {
+    public Set<Imagenes> getImagenes() {
         return imagenes;
     }
 
-    public void setImagenes(List<Imagenes> imagenes) {
+    public void setImagenes(Set<Imagenes> imagenes) {
         this.imagenes = imagenes;
     }
+
 
     
     

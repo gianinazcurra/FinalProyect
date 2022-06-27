@@ -7,10 +7,10 @@
 
 .contenedor__grande {
     display: flex;
-    height: 100vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
 .producto__container {
@@ -19,6 +19,7 @@
     background-color: #fff;
     padding: 25px 30px;
     border-radius: 5px;
+    border: 3px solid #ccc;
 }
 
 .producto__container .titulo {
@@ -36,36 +37,36 @@
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
-.producto__container form .detalles__usuario {
-    display: flex;
-    flex-wrap: wrap;
+
+.input_editar {
     justify-content: space-between;
 }
 
-form .detalles__usuario .input__caja {
-    margin: 20px 0 12px 0;
-    width: calc(100%/ 2 - 20Px);
-}
-
-.detalles__usuario .input__caja .detalles {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-
-.detalles__usuario .input__caja input {
+.input_editar input{
     height: 45px;
     width: 100%;
     outline: none;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 3px solid #ccc;
     padding-left: 15px;
     font-size: 16px;
+    margin-right: 10px;
 }
-
+.input__caja input{
+    margin: 20px 0 12px 0;
+    width: calc(100%/ 2 - 20Px);
+}
+.input__caja2 input{
+    margin: 20px 0 12px 0;
+    width: calc(100%/ 2 - 20Px);
+}
+.control{
+    margin: 20px 0 1px 0;
+    width: calc(100%/ 2 - 20Px);
+}
 .boton {
     background-image: linear-gradient(to right, #232526 0%, #414345 51%, #232526 100%);
-    margin: 0;
+    margin-top: 15px;
     padding: 15px 45px;
     width: 100%;
     text-align: center;
@@ -82,8 +83,4 @@ form .detalles__usuario .input__caja {
     background-position: right center;
     color: #fff;
     text-decoration: none;
-}
-.imag{
-    margin-top: 20px;
-    margin-bottom: 20px;
 }

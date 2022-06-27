@@ -37,18 +37,22 @@ public class ImagenesServicio {
     public Imagenes guardarNueva(MultipartFile archivo) throws Excepcion {
 
         if (archivo != null) {
-
+            
             try {
                 Imagenes imagen = new Imagenes();
                 imagen.setMime(archivo.getContentType());
                 imagen.setNombre(archivo.getName());
                 imagen.setContenido(archivo.getBytes());
+                
+                System.out.println("archivo bytes" + archivo.getBytes());
                 return imagenesRepositorio.save(imagen);
 
             } catch (IOException ex) {
                 System.err.print(ex.getMessage());
             }
 
+        } if (archivo == null){
+            System.out.println("arhciov nuilo");
         }
 
         return null;

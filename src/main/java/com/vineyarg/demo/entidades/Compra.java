@@ -38,8 +38,8 @@ public class Compra implements Serializable {
     private String id;
 
    
-    @ElementCollection(targetClass=Integer.class)
-    private List<Integer> cantidades;
+//    @ElementCollection(targetClass=Integer.class)
+//    private List<Integer> cantidades;
     @OneToOne
     private Usuario usuario;
     
@@ -54,8 +54,8 @@ public class Compra implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
-    @ElementCollection(targetClass=Double.class)
-    private List<Double> subtotales;
+//    @ElementCollection(targetClass=Double.class)
+//    private List<Double> subtotales;
     private Double montoFinal;
     private String direccionEnvio;
     private String formaDePago;
@@ -66,11 +66,11 @@ public class Compra implements Serializable {
 
     public Compra(String id, List<Integer> cantidades, Usuario usuario, Set<ItemCompra> itemCompra, Date fechaCompra, List<Double> subtotales, Double montoFinal, String direccionEnvio, String formaDePago, boolean compraEnviadaParaAceptacion, EstadoCompra estadoCompra, String observacionesCompra) {
         this.id = id;
-        this.cantidades = cantidades;
+//        this.cantidades = cantidades;
         this.usuario = usuario;
         this.itemCompra = itemCompra;
         this.fechaCompra = fechaCompra;
-        this.subtotales = subtotales;
+//        this.subtotales = subtotales;
         this.montoFinal = montoFinal;
         this.direccionEnvio = direccionEnvio;
         this.formaDePago = formaDePago;
@@ -94,13 +94,13 @@ public class Compra implements Serializable {
     public Compra() {
     }
 
-    public List<Double> getSubtotales() {
-        return subtotales;
-    }
-
-    public void setSubtotales(List<Double> subtotales) {
-        this.subtotales = subtotales;
-    }
+//    public List<Double> getSubtotales() {
+//        return subtotales;
+//    }
+//
+//    public void setSubtotales(List<Double> subtotales) {
+//        this.subtotales = subtotales;
+//    }
 
     public String getFormaDePago() {
         return formaDePago;
@@ -142,13 +142,13 @@ public class Compra implements Serializable {
 
     
 
-    public List<Integer> getCantidades() {
-        return cantidades;
-    }
-
-    public void setCantidades(List<Integer> cantidades) {
-        this.cantidades = cantidades;
-    }
+//    public List<Integer> getCantidades() {
+//        return cantidades;
+//    }
+//
+//    public void setCantidades(List<Integer> cantidades) {
+//        this.cantidades = cantidades;
+//    }
   
     
     
