@@ -72,9 +72,10 @@ public class ProductorControlador {
             @RequestParam String clave1, @RequestParam String clave2, @RequestParam String descripcion, @RequestParam String region, @RequestParam MultipartFile archivo) throws Exception {
         try {
 
+            
             productorServicio.guardar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
 
-            usuarioServicio.registrarUsuario(null, nombre, null, null, correo, clave1, clave2, null, TipoUsuario.PRODUCTOR);
+            usuarioServicio.registrarUsuario(archivo, nombre, null, null, correo, clave1, clave2, null, TipoUsuario.PRODUCTOR);
 
         } catch (Exception e) {
 
@@ -114,6 +115,7 @@ public class ProductorControlador {
 
             Productor productor = new Productor();
             productor = productorRepositorio.BuscarProductorPorCorreo(usuario.getCorreo());
+            
 
             modelo.put("regiones", Regiones.values());
 
@@ -163,7 +165,7 @@ public class ProductorControlador {
             modelo.put("perfilUsuario", usuario);
 
             productorServicio.modificar(idUsuario, idProductor, nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
-
+            usuarioServicio.modificarUsuario(idUsuario, archivo, correo, clave1, clave2);
         } catch (Excepcion ex) {
 
             modelo.put("error", ex.getMessage());

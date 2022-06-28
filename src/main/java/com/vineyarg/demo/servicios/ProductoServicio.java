@@ -22,8 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ProductoServicio {
 
-//    @Autowired
-//    private ImagenesServicio imagenesServicio;
+
     
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;

@@ -10,6 +10,7 @@ import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ProductoServicio;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -236,5 +238,30 @@ public class ProductoControlador {
         }
         return "editar-producto.html";
     }
+    
+   
+    @GetMapping("/valorar")
+    public String editarproducto(ModelMap modelo, String valoracion, String idProducto, HttpSession session) throws Excepcion {
 
+        int valoracionInt = parseInt(valoracion);
+        
+        productoServicio.valorarProducto(idProducto, valoracionInt);
+        
+        List<Producto> productosT = productoRepositorio.findAll();
+        List<Producto> productos = new ArrayList();
+        
+        
+        
+        for (Producto producto : productosT) {
+            if (producto.isAlta() && producto.getProductor().isAlta()) {
+                productos.add(producto);
+                
+               
+            }
+        }
+        modelo.put("productos", productos);
+
+        return "tienda.html";
+    }
+    
 }

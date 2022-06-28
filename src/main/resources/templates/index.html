@@ -54,7 +54,7 @@
                     <li class="nav__item"><a href="">Bodegas</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
                     <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                    
+
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
@@ -66,22 +66,22 @@
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    
-<!--                    <a th:if="${session.usuarioSession != null}">    </a>-->
-                        <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                            <li class="fa-solid fa-user nav__item"></li>
-                        </a>
 
-                        <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
-                            <li class="fa-solid fa-user nav__item"></li>
-                        </a>
-                        <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
-                            <li class="fa-solid fa-user nav__item"></li>
-                        </a>
-                 
-                    
+                    <!--                    <a th:if="${session.usuarioSession != null}">    </a>-->
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+
                     <li class="nav__item"><a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br></li>
-                    
+
                 </ul>
             </div>
         </nav>

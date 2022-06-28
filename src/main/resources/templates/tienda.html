@@ -132,11 +132,12 @@
 <!--                 <img th:if="${producto.imagen == null}" class="img-fluid mb-3" th:text="${'Producto sin imágen'}">-->
              
                 <div class="estrella">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                    <h6 class="p-nombre" th:text="${producto.promedioValoraciones}"></h6>
+                    <a th:href="@{/valorar(valoracion=1 , idProducto=${producto.id})}">   <i class="fas fa-star"></i></a>
+                    <a th:href="@{/valorar(valoracion=2 , idProducto=${producto.id})}">  <i class="fas fa-star"></i></a>
+                    <a th:href="@{/valorar(valoracion=3 , idProducto=${producto.id})}">  <i class="fas fa-star"></i></a>
+                    <a th:href="@{/valorar(valoracion=4 , idProducto=${producto.id})}"> <i class="fas fa-star"></i></a>
+                    <a th:href="@{/valorar(valoracion=5 , idProducto=${producto.id})}"> <i class="fas fa-star"></i></a>
                 </div>
                 <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
                 <h4 class="p-precio" th:text="'$' + ${producto.precio}"> </h4>

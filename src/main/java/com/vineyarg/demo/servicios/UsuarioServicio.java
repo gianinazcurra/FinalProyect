@@ -124,6 +124,8 @@ public class UsuarioServicio implements UserDetailsService {
 
             Imagenes imagen = new Imagenes();
             imagen = imagenesServicio.guardarNueva(archivo);
+
+            usuarioProductor.setImagen(imagen);
             
             usuarioProductor.setImagen(imagen);
             usuarioRepositorio.save(usuarioProductor);

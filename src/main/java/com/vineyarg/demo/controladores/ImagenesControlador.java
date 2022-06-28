@@ -55,11 +55,13 @@ public class ImagenesControlador {
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
-    @GetMapping("/productoimagen/{idProductor}")
-    public ResponseEntity<byte[]> fotoProductoPorIdProductor(@PathVariable String idProductor) {
+    
+    //EL DE ABAJO MUESTRA SOLO LA PRIMERA IMAGEN DEL PRODUCTO
+    @GetMapping("/productoimagen/{idProducto}")
+    public ResponseEntity<byte[]> fotoProductoPorIdProducto(@PathVariable String idProducto) {
 
         try {
-            Producto producto = productoRepositorio.getById(idProductor);
+            Producto producto = productoRepositorio.getById(idProducto);
 
             if (producto.getImagenes().isEmpty()) {
                 throw new Excepcion("Producto sin imágen");
@@ -88,6 +90,7 @@ public class ImagenesControlador {
         return null;
     }
     
+    //ESTE MUESTRA TODAS LAS IMAGENES QUE EL PRODUCTO TIENE CARGADAS    
      @GetMapping("/productoimagen-idImagen/{idImagen}")
     public ResponseEntity<byte[]> fotoProducto(@PathVariable String idImagen) {
 

@@ -49,7 +49,7 @@ public class TiendaControlador {
         
         
         for (Producto producto : productosT) {
-            if (producto.isAlta()) {
+            if (producto.isAlta() && producto.getProductor().isAlta()) {
                 productos.add(producto);
                 
                
