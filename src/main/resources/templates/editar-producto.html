@@ -1,201 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
 
-    <!-- Links -->
-    <!-- CSS -->
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/CSS/agregar-producto.css">
-    <!-- JavaScript -->
-    <script src="/JS/script.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
-    <!-- Links -->
+        <!-- Links -->
+        <!-- CSS -->
+        <link rel="stylesheet" href="./CSS/style.css">
+        <link rel="stylesheet" href="./CSS/agregar-producto.css">
+        <!-- JavaScript -->
+        <script src="/JS/script.js"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+        <!-- Iconos -->
+        <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
+        <!-- Links -->
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <!-- Header -->
-
-    <nav class="etiqueta__nav">
-
-        <div class="nav__container">
-
-            <div class="nav__logo">
-                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
-                        width="200px"></a>
-            </div>
+        <!-- Header -->
 
 
-            <label for="menuId" class="nav__label">
-                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
-            </label>
-            <input type="checkbox" id="menuId" class="nav__input">
+        <nav class="etiqueta__nav">
+
+            <div class="nav__container">
+
+                <div class="nav__logo">
+                    <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                                     width="200px"></a>
+                </div>
+
+
+                <label for="menuId" class="nav__label">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                </label>
+                <input type="checkbox" id="menuId" class="nav__input">
 
 
 
-            <ul class="nav__iconos">
+                <ul class="nav__ul">
+
+                    <li class="nav__item"><a href="#home">Home</a></li>
+                    <li class="nav__item"><a href="#seccion_regiones">Regiones</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
+
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
-                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
-                    
+
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    <a th:if="${session.usuarioSession != null}"> 
-                     
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                     
+                    
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
+                    
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
                     </a>
+
+                    
+
+                    <li class="nav__item"><a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br></li>
+
                 </ul>
-        </div>
-    </nav>
-    <!-- Fin del header -->
+            </div>
+        </nav>
+        <!-- Fin del header -->
 
 
 
-    <div class="contenedor__grande">
-        <div th:if="${productoElegido == null}"class="producto__container">
-            <div class="titulo">Estos son tus productos, seleccioná uno para editarlo o eliminarlo</div>
-            <form action="/editarProducto1" method="POST" enctype="multipart/form-data">
-                
-                 <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
-                 <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
-                 
-                 <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
-                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
-                  
-                <p th:if="${productos == null and productoElegido == null}" th:text="${'No tenés productos cargados'}" style="color:red"></p>
-                <select th:if="${productos != null}" class="" name="idProducto"> 
-                  <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option> 
-                  </select>
+        <div class="contenedor__grande">
+            <div th:if="${productoElegido == null}"class="producto__container">
+                <div class="titulo">Estos son tus productos, seleccioná uno para editarlo o eliminarlo</div>
+                <form action="/editarProducto1" method="POST" enctype="multipart/form-data">
+
+                    <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                    <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+
+                    <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
+                     <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
+
+                    <p th:if="${productos == null and productoElegido == null}" th:text="${'No tenés productos cargados'}" style="color:red"></p>
+                    <select th:if="${productos != null}" class="" name="idProducto"> 
+                        <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option> 
+                    </select>
 
                     <label> Selecione qué desea hacer</label>
-                <select class="" name="eleccion"> 
-                  <option th:each="eleccion : ${opciones}" th:value="${eleccion}" th:text="${eleccion}"></option> 
-                  </select>
-                    
+                    <select class="" name="eleccion"> 
+                        <option th:each="eleccion : ${opciones}" th:value="${eleccion}" th:text="${eleccion}"></option> 
+                    </select>
 
 
 
-                <input class="boton" type="submit" value="Editar / Eliminar">
 
-            </form>
+                    <input class="boton" type="submit" value="Editar / Eliminar">
+
+                </form>
+            </div>
+
+
+
+            <div th:if="${productoElegido != null}" class="producto__container">
+
+                <div class="titulo">Modificá tu producto</div>
+                <form action="/editarProducto" method="POST" enctype="multipart/form-data">
+
+
+
+                    <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
+                     <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
+
+                    <input type="hidden" class="form-control" name="idProductoElegido" th:value="${productoElegido.id}"/> <!--
+                    -->
+
+                    <div class="detalles__usuario">
+                        <div class="input__caja">
+                            <span class="detalles">Nombre</span>
+                            <input type="text" name="nombre" placeholder="Ingresa tu nombre" th:value="${productoElegido.nombre}" required>
+                        </div>
+                        <div class="input__caja">
+                            <span class="detalles">Cantidad</span>
+                            <input min="0" max="1000000"  type="number" name="cantidad" th:value="${productoElegido.cantidad}" placeholder="Ingresa la nueva cantidad total de producto" required>
+                        </div>
+                        <div class="input__caja">
+                            <span class="detalles">Precio</span>
+                            <input step="0.01" min="0" max="1000000"  type="number" name="precio" th:value="${productoElegido.precio}" placeholder="Ingresa el Precio" required>
+                        </div>
+                        <div class="input__caja">
+                            <span class="detalles">Descripcion</span>
+                            <input type="text" name="descripcion" th:value="${productoElegido.descripcion}" placeholder="Ingresa la Descripcion" required>
+                        </div>
+                        <div class="input__caja">
+                            <span class="detalles">Varietal</span>
+                            <input type="text" placeholder="Ingresa su Varietal" th:value="${productoElegido.varietal}" name="varietal" required>
+                        </div>
+
+
+                    </div>
+                    <div class="imag">
+                        <span class="detalles">Imagenes:</span>
+                        <input class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto (se reemplazarán las imágenes que ya tengas cargadas)" multiple>
+                    </div><!--
+                    -->                <input class="boton" type="submit" value="Guardar modificaciones">
+
+                </form><!--
+                       
+                -->        </div>
         </div>
-        
-         
-                 
-        <div th:if="${productoElegido != null}" class="producto__container">
-        
-        <div class="titulo">Modificá tu producto</div>
-            <form action="/editarProducto" method="POST" enctype="multipart/form-data">
-                
-                
-                 
-                 <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
-                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
-                  
-                <input type="hidden" class="form-control" name="idProductoElegido" th:value="${productoElegido.id}"/> <!--
--->
-                 
-                <div class="detalles__usuario">
-                    <div class="input__caja">
-                        <span class="detalles">Nombre</span>
-                        <input type="text" name="nombre" placeholder="Ingresa tu nombre" th:value="${productoElegido.nombre}" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Cantidad</span>
-                        <input min="0" max="1000000"  type="number" name="cantidad" th:value="${productoElegido.cantidad}" placeholder="Ingresa la nueva cantidad total de producto" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Precio</span>
-                        <input step="0.01" min="0" max="1000000"  type="number" name="precio" th:value="${productoElegido.precio}" placeholder="Ingresa el Precio" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Descripcion</span>
-                        <input type="text" name="descripcion" th:value="${productoElegido.descripcion}" placeholder="Ingresa la Descripcion" required>
-                    </div>
-                    <div class="input__caja">
-                        <span class="detalles">Varietal</span>
-                        <input type="text" placeholder="Ingresa su Varietal" th:value="${productoElegido.varietal}" name="varietal" required>
-                    </div>
-                   
 
+
+        <div class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                    <h3>
+                        ¡Comprá los mejores vinos aquí!
+                    </h3>
                 </div>
-                <div class="imag">
-                    <span class="detalles">Imagenes:</span>
-                    <input class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto (se reemplazarán las imágenes que ya tengas cargadas)" multiple>
-                </div><!--
--->                <input class="boton" type="submit" value="Guardar modificaciones">
 
-            </form><!--
-                   
--->        </div>
-    </div><!--
-
-
-
-
-
-
-
-
-
-
-
--->    <div class="footer">
-        <div class="footer-a">
-            <div class="footer-columna-1">
-                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                <h3>
-                    ¡Comprá los mejores vinos Aquí!
-                </h3>
-            </div>
-            <div class="footer-columna-2">
-                <h3>Navegacion</h3>
-                <ul>
-                    <li><a href="/index.html">Home</a></li>
-                    <li><a href="">Regiones</a></li>
-                    <li><a href="">Bodegas</a></li>
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-columna-3">
-                <h3>Nuestras Redes</h3>
-                <div class="redes">
-                    <a href="" class="fa fa-instagram"></a>
-                    <a href="" class="fa fa-linkedin"></a>
-                    <a href="" class="fa-solid fa-at"></a>
-                    <a href="" class="fa fa-twitter"></a>
+                <div class="footer-columna-2">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                        <a href="" class="fa fa-instagram"></a>
+                        <a href="" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="" class="fa fa-twitter"></a>
+                    </div>
                 </div>
             </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
+
         </div>
-        <div class="footer-b">
-            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
-        </div>
-    </div>
 
-    <!-- Fin del Footer 
+        <!-- Fin del Footer 
+    
+    
+        -->
 
-
--->
-
-</body>
+    </body>
 
 </html>

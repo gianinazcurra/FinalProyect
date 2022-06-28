@@ -1,66 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VineyArg</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VineyArg</title>
 
-    <!-- Links -->
-    <!-- CSS -->
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/CSS/registros.css">
-    <!-- JavaScript -->
-    <script src="/JS/script.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
-    <!-- Links -->
-</head>
+        <!-- Links -->
+        <!-- CSS -->
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/editar.css">
+        <!-- JavaScript -->
+        <script src="/JS/script.js"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+        <!-- Iconos -->
+        <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
+        <!-- Links -->
+    </head>
 
-<body>
-<a href="/logout"> Cerrar sesion </a><br>
+    <body>
+        <!-- Header -->
+
+
+        <nav class="etiqueta__nav">
+
+            <div class="nav__container">
+
+                <div class="nav__logo">
+                    <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                                     width="200px"></a>
+                </div>
+
+
+                <label for="menuId" class="nav__label">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                </label>
+                <input type="checkbox" id="menuId" class="nav__input">
+
+
+
+                <ul class="nav__ul">
+
+                    <li class="nav__item"><a href="#home">Home</a></li>
+                    <li class="nav__item"><a href="#seccion_regiones">Regiones</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+
+                    <a href="">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
+
+                    <a href="">
+                        <li class="fa-solid fa-heart nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+
+
+                    <li class="nav__item"><a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br></li>
+
+                </ul>
+            </div>
+        </nav>
+        <!-- Fin del header -->
+
+        <a href="/logout"> Cerrar sesion </a><br>
     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}">  Volver al menú principal</a>
     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}">  Volver al menú principal</a>
-     
-      <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-            <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
-                
-                <p> A continuación podés modificar algunos de tus datos (recordá que los datos personales no puede cambiarse) </p>
-                  
-                 <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
-               
-                <input class="control" type="email" name="correo" placeholder="Podés cargar tu correo de registro"  id="" th:value="${perfil.correo}">
-                <input class="control" type="password" name="clave1" placeholder="Podés cambiar tu clave"  id="" th:value="${perfil.clave}">
-                <input class="control" type="password" name="clave2" placeholder="Si cambiaste tu clave, por favor ingresala nuevamente" id="" required="" th:value="${perfil.clave}">
-                <input class="control" type="file" name="archivo" placeholder="Podés cambiar tu foto de perfil"  id="">
-                
-                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
-                <input class="boton" type="submit" value="Actualizar perfil">
+    
+        <div class="contenedor__grande">
+            <div class="producto__container">
+                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
+
+                    <div class="titulo">Modifica algunos de tus datos</div>
+                    <p>(Recordá que los datos personales no puede cambiarse)</p>
+                    <div class="input_editar">
+                        <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
+                    </div>
+                    <div class="input_editar">
+                        <input class="control" type="email" name="correo" placeholder="Podés cargar tu correo de registro"  id="" th:value="${perfil.correo}">
+                    </div>
+                    <div class="input_editar">
+                        <input class="control" type="password" name="clave1" placeholder="Podés cambiar tu clave"  id="" th:value="${perfil.clave}">
+                    </div>
+                    <div class="input_editar">
+                        <input class="control" type="password" name="clave2" placeholder="Si cambiaste tu clave, por favor ingresala nuevamente" id="" required="" th:value="${perfil.clave}">
+                    </div>
+                    <input class="control" type="file" name="archivo" placeholder="Podés cambiar tu foto de perfil"  id="">
+                    <br><br>
+                    <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+
+                    <input class="boton" type="submit" value="Actualizar perfil">
                 </form>
-       
-      <p> Si querés darte de baja como Usuario de nuestros servicios, por favor ingresá tu correo y contraseña </p>
-      
-      <form action="/eliminarUsuario" method="POST" enctype="multipart/form-data">
-                
-                 <p th:if="${error1 != null}" th:text="${error1}" style="color:red";></p>
-                  
-                 <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
-               
-                 <input class="control" type="email" name="correo" placeholder="Ingresar su Email"  id="" required=""  th:value="${perfil.correo}">
-                
-                <input class="control" type="password" name="clave" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave}">
-              
-                 <p><input type="checkbox" required=""> Quiero darme de baja </p>
-                 
-                <input class="boton" type="submit" value="Eliminar perfil">
+                <br><br>
+                <div class="titulo">Darte de baja</div>
+                <p>Ingresá tu correo y contraseña </p>
+
+                <form action="/eliminarUsuario" method="POST" enctype="multipart/form-data">
+
+                    <p th:if="${error1 != null}" th:text="${error1}" style="color:red";></p>
+                    <div class="input_editar">
+                        <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
+                    </div>
+                    <div class="input_editar">
+                        <input class="control" type="email" name="correo" placeholder="Ingresar su Email"  id="" required=""  th:value="${perfil.correo}">
+                    </div>
+                    <div class="input_editar">
+                        <input class="control" type="password" name="clave" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave}">
+                    </div>
+                    <br>
+                    <p><input type="checkbox" required=""> Quiero darme de baja </p>
+
+                    <input class="boton" type="submit" value="Eliminar perfil">
                 </form>
-      
-      
-</body>
+            </div>
+        </div>
+        <!-- Footer -->
+
+        <div class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                    <h3>
+                        ¡Comprá los mejores vinos aquí!
+                    </h3>
+                </div>
+
+                <div class="footer-columna-2">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                        <a href="" class="fa fa-instagram"></a>
+                        <a href="" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="" class="fa fa-twitter"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
+        </div>
+
+        <!-- Fin del Footer -->
+        <div class="separador"></div>
+
+
+
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    </body>
 
 </html>

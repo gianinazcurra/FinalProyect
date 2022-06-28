@@ -422,7 +422,7 @@ hr {
 /*-----------FOOTER----------*/
 
 .footer {
-    bottom: 0;
+    margin-bottom: 0;
     width: 100%;
     background: #292929;
     color: rgb(255, 255, 255);
@@ -491,13 +491,8 @@ hr {
     text-align: center;
     color: #fff;
 }
-
+    
 /*-----------FIN FOOTER-----------*/
-
-
-
-
-
 
 
 

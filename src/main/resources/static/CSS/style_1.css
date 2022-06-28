@@ -1,4 +1,4 @@
-* {
+/** {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,7 +6,7 @@
 }
 
 
-/*-----------NAVBAR-----------*/
+-----------NAVBAR-----------
 
  .etiqueta__nav{
     position: sticky;
@@ -97,11 +97,11 @@
 
 
 
-/*----------- FIN NAVBAR-----------*/
+----------- FIN NAVBAR-----------
 
 
 
-/*-----------FIN HEADER-----------*/
+-----------FIN HEADER-----------
 .container h1 {
     text-decoration: none;
     color: white;
@@ -163,10 +163,10 @@
     height: 10px;
 }
 
-/*-----------FIN HEADER-----------*/
+-----------FIN HEADER-----------
 
 
-/*-----------FOOTER----------*/
+-----------FOOTER----------
 
 .footer {
     bottom: 0;
@@ -237,7 +237,7 @@
     color: #fff;
 }
 
-/*-----------FIN FOOTER-----------*/
+-----------FIN FOOTER-----------
 
 
 
@@ -248,7 +248,7 @@
 
 
 
-/*-----------FIN FORMULARIO-----------*/
+-----------FIN FORMULARIO-----------
 
 
 
@@ -264,4 +264,4 @@
     .footer-columna-1 {
         text-align: center;
     }
-}
+}*/

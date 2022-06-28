@@ -11,6 +11,7 @@
     margin-bottom: 10px;
     justify-content: center;
     align-items: center;
+    /* background: linear-gradient(135deg, #71b7e6, #9b59b6);  */
 }
 
 .producto__container {
@@ -37,12 +38,24 @@
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
-
-.input_editar {
+.producto__container form .detalles__usuario {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.input_editar input{
+form .detalles__usuario .input__caja {
+    margin: 20px 0 12px 0;
+    width: calc(100%/ 2 - 20Px);
+}
+
+.detalles__usuario .input__caja .detalles {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.detalles__usuario .input__caja input {
     height: 45px;
     width: 100%;
     outline: none;
@@ -50,23 +63,11 @@
     border: 3px solid #ccc;
     padding-left: 15px;
     font-size: 16px;
-    margin-right: 10px;
 }
-.input__caja input{
-    margin: 20px 0 12px 0;
-    width: calc(100%/ 2 - 20Px);
-}
-.input__caja2 input{
-    margin: 20px 0 12px 0;
-    width: calc(100%/ 2 - 20Px);
-}
-.control{
-    margin: 20px 0 1px 0;
-    width: calc(100%/ 2 - 20Px);
-}
+
 .boton {
     background-image: linear-gradient(to right, #232526 0%, #414345 51%, #232526 100%);
-    margin-top: 15px;
+    margin: 0;
     padding: 15px 45px;
     width: 100%;
     text-align: center;
@@ -84,3 +85,9 @@
     color: #fff;
     text-decoration: none;
 }
+.imag{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
