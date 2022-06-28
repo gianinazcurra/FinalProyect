@@ -47,7 +47,7 @@ public class TiendaControlador {
         List<Producto> productos = new ArrayList();
         
         
-        
+        //con el forEach descartamos productos dados de baja o que correspondan a productores dados de baja
         for (Producto producto : productosT) {
             if (producto.isAlta() && producto.getProductor().isAlta()) {
                 productos.add(producto);

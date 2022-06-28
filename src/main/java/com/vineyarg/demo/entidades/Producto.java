@@ -36,7 +36,7 @@ public class Producto implements Serializable {
     private String sku;
     private int cantidadVecesValorado;
     private int cantidadValoraciones;
-    private int promedioValoraciones;
+    private Double promedioValoraciones;
     @ManyToOne
     private Compra compra;
     
@@ -49,7 +49,7 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, int promedioValoraciones, Compra compra, boolean alta, Set<Imagenes> imagenes) {
+    public Producto(String id, String nombre, Integer cantidad, Double precio, String descripcion, String varietal, Productor productor, String sku, int cantidadVecesValorado, int cantidadValoraciones, Double promedioValoraciones, Compra compra, boolean alta, Set<Imagenes> imagenes) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -65,6 +65,8 @@ public class Producto implements Serializable {
         this.alta = alta;
         this.imagenes = imagenes;
     }
+
+
 
   
 
@@ -157,13 +159,15 @@ public class Producto implements Serializable {
         this.cantidadValoraciones = cantidadValoraciones;
     }
 
-    public int getPromedioValoraciones() {
+    public Double getPromedioValoraciones() {
         return promedioValoraciones;
     }
 
-    public void setPromedioValoraciones(int promedioValoraciones) {
+    public void setPromedioValoraciones(Double promedioValoraciones) {
         this.promedioValoraciones = promedioValoraciones;
     }
+
+ 
 
     public boolean isAlta() {
         return alta;

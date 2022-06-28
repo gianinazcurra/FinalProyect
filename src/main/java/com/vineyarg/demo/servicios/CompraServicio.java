@@ -49,7 +49,7 @@ public class CompraServicio {
             ItemCompra itemCompra = new ItemCompra();
             itemCompra.setProducto(producto1);
             itemCompra.setCantidad(cantidad);
-            itemCompra.setTotalProducto(producto1.getPrecio() * cantidad);
+            itemCompra.setTotalProducto((Double) (Math.round(producto1.getPrecio() * 100.0) / 100.0) * cantidad);
             itemCompraRepositorio.save(itemCompra);
 
             Set<ItemCompra> nuevoProductoParaCarrito = compraEnCurso.getItemCompra();
@@ -70,7 +70,7 @@ public class CompraServicio {
             ItemCompra itemCompra = new ItemCompra();
             itemCompra.setProducto(producto1);
             itemCompra.setCantidad(cantidad);
-            itemCompra.setTotalProducto(producto1.getPrecio() * cantidad);
+            itemCompra.setTotalProducto((Double) (Math.round(producto1.getPrecio() * 100.0) / 100.0) * cantidad);
             itemCompraRepositorio.save(itemCompra);
 
             Compra compra = new Compra();

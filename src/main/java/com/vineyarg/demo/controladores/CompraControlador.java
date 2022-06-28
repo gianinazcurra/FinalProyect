@@ -94,7 +94,7 @@ public class CompraControlador {
                
                 compraServicio.preCompraCarrito(producto, idUsuario, cantidad);
                
-                System.out.println(compraEnCurso.getId());
+                
                 modelo.put("compraEnCurso", "Se agregó el producto al carrito");
                 modelo.put("compra", compraEnCurso);
 //                System.out.println(compraEnCurso.getListaProductos());
