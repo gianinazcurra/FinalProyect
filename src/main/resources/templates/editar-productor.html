@@ -85,7 +85,7 @@
         <!-- Fin del header -->
 
 
- <a href="/logout"> Cerrar sesion </a><br>
+        <a href="/logout"> Cerrar sesion </a><br>
         <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> Volver al menú principal</a>
 
         <div class="contenedor_division">
@@ -96,7 +96,7 @@
 
                     <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                     <p> A continuación podés modificar algunos de los datos de tu empresa </p>
-                    <form action="/editar-productor" method="POST" enctype="multipart/form-data">
+                    <form action="/editarProductor" method="POST" enctype="multipart/form-data">
 
                         <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id=""
                                th:value="${session.usuarioSession.id}">
@@ -140,85 +140,90 @@
                                             placeholder="Ingresar una región" required="" th:text="${region}"></option>
                                 </select>
                             </div>
+                            <div class="input_caja">
+                                <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca">
+                            </div>
+
 
                         </div>
                         <p><input type="checkbox" required=""> Estoy de acuerdo con <a
-                                href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                                href="/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                       
                         <input class="boton" type="submit" value="Actualizar perfil">
+                    </form>
+                </div>
+            </div>      
+            <div class="contenedor__grande">
+                <div class="producto__container">
+                    <div class="titulo">Elimina tu bodega</div>
 
-                        </div>
-                        </div>      
-                        <div class="contenedor__grande">
-                            <div class="producto__container">
-                            <div class="titulo">Elimina tu bodega</div>
+                    <p> A continuación podés eliminar los datos de la bodega/empresa </p>
+                    </form>
+                    <form action="/eliminarProductor" method="POST" enctype="multipart/form-data">
 
-                            <p> A continuación podés eliminar los datos de la bodega/empresa </p>
-                                </form>
-                                <form action="/eliminarProductor" method="POST" enctype="multipart/form-data">
+                        <p th:if="${error1 != null}" th:text="${error1}" style="color:red"; ></p>
 
-                                    <p th:if="${error1 != null}" th:text="${error1}" style="color:red"; ></p>
+                        <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id=""
+                               th:value="${session.usuarioSession.id}"> 
 
-                                    <input th:if="${session.usuarioSession != null}" class="control" type="hidden" name="idUsuario" id=""
-                                           th:value="${session.usuarioSession.id}"> 
+                        <input class="control" type="hidden" name="idProductor" id="" th:value="${productor.id}">
+                        <div class="input_editar">
+                            <div class="input_caja">
+                                <input class="control" type="email" name="correo" placeholder="Ingresar su Email" id=""
+                                       required="" th:value="${productor.correo}">
+                            </div>
 
-                                    <input class="control" type="hidden" name="idProductor" id="" th:value="${productor.id}">
-                                    <div class="input_editar">
-                                        <div class="input_caja">
-                                            <input class="control" type="email" name="correo" placeholder="Ingresar su Email" id=""
-                                                   required="" th:value="${productor.correo}">
-                                        </div>
-
-                                        <div class="input_caja">
-                                            <input class="control" type="password" name="clave" id="" placeholder="Ingresar su Contraseña"
-                                                   required="" th:value="${clave}">
-                                        </div>
-                                    </div>
-                                    <br>
-
-                                    <p><input type="checkbox" required=""> Quiero darme de baja </p>
-                                    <input class="boton" type="submit" value="Eliminar perfil">
-                                </form>
+                            <div class="input_caja">
+                                <input class="control" type="password" name="clave" id="" placeholder="Ingresar su Contraseña"
+                                       required="" th:value="${clave}">
                             </div>
                         </div>
+                        <br>
+
+                        <p><input type="checkbox" required=""> Quiero darme de baja </p>
+                        <input class="boton" type="submit" value="Eliminar perfil">
+                    </form>
                 </div>
+            </div>
+        </div>
 
-                <!-- Footer -->
+        <!-- Footer -->
 
-                <div class="footer">
-                    <div class="footer-a">
-                        <div class="footer-columna-1">
-                            <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                            <h3>
-                                ¡Comprá los mejores vinos Aquí!
-                            </h3>
-                        </div>
-                        <div class="footer-columna-2">
-                            <h3>Navegacion</h3>
-                            <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="">Regiones</a></li>
-                                <li><a href="">Bodegas</a></li>
-                                <li><a href="/tienda">Tienda</a></li>
-                                <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer-columna-3">
-                            <h3>Nuestras Redes</h3>
-                            <div class="redes">
-                                <a href="" class="fa fa-instagram"></a>
-                                <a href="" class="fa fa-linkedin"></a>
-                                <a href="" class="fa-solid fa-at"></a>
-                                <a href="" class="fa fa-twitter"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-b">
-                        <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+        <div class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                    <h3>
+                        ¡Comprá los mejores vinos Aquí!
+                    </h3>
+                </div>
+                <div class="footer-columna-2">
+                    <h3>Navegacion</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                   <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
+                    <a href="" class="fa-solid fa-at"></a>
+                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>
+            </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
+        </div>
 
-                <!-- Fin del Footer -->
+        <!-- Fin del Footer -->
 
-                <div class="separador"></div>
-                </body>
-                </html>
+        <div class="separador"></div>
+    </body>
+</html>

@@ -34,10 +34,10 @@ public class ProductorServicio {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
+
     //GUARDAR UN PRODUCTOR:creación
     @Transactional
     public Productor guardar(String nombre, String razonSocial, String domicilio, String correo,
@@ -52,7 +52,7 @@ public class ProductorServicio {
         productor.setRazonSocial(razonSocial);
         productor.setDomicilio(domicilio);
         productor.setCorreo(correo);
-
+        productor.setRegion(region);
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         productor.setClave(encriptada);
 
@@ -63,7 +63,6 @@ public class ProductorServicio {
 //        imagen = imagenesServicio.guardarNueva(archivo);
 //
 //        productor.setImagen(imagen);
-
         //PERSISTENCIA DEL OBJETO
         return productorRepositorio.save(productor);
 
@@ -74,29 +73,26 @@ public class ProductorServicio {
     public void modificar(String idUsuario, String idProductor, String nombre, String razonSocial, String domicilio, String correo,
             String clave1, String clave2, String descripcion, String region, MultipartFile archivo) throws Exception {
 
-       
-
         Optional<Productor> respuesta = productorRepositorio.findById(idProductor);
 
-        
         if (respuesta.isPresent()) {
-            
+
             Productor productor = respuesta.get();
-            
+
             System.out.println(productor.getId());
-            
-            if(productor.getCorreo().equalsIgnoreCase(correo)) {
-                
+
+            if (productor.getCorreo().equalsIgnoreCase(correo)) {
+
                 String correoEstaOk = "estaok@estaok.com";
-                
+
                 validar(nombre, razonSocial, domicilio, correoEstaOk, clave1, clave2, descripcion, region);
-                
+
             } else {
                 validar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region);
             }
-            
+
             System.out.println(productor.getId());
-            
+
             productor.setNombre(nombre);
             productor.setRazonSocial(razonSocial);
             productor.setDomicilio(domicilio);
@@ -107,22 +103,17 @@ public class ProductorServicio {
 
             productor.setRegion(region);
             System.out.println(productor.getId());
-            
+
 //            if(archivo != null) {
 //                  Imagenes imagen = new Imagenes();
 //        imagen = imagenesServicio.guardarNueva(archivo);
 //
 //            productor.setImagen(imagen);
 //            }
-          
-            
-           
             productorRepositorio.save(productor);
-            
-            
+
             usuarioServicio.modificarUsuario(idUsuario, archivo, correo, clave1, clave2);
 
-            
         } else {
             throw new Excepcion("Usuario o clave no hallada");
         }
@@ -141,7 +132,7 @@ public class ProductorServicio {
 
     //DAR DE BAJA
     public void eliminarProductor(@RequestParam String idUsuario, @RequestParam String idProductor, @RequestParam String correo, @RequestParam String clave) throws Exception {
-        
+
         Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
         Optional<Productor> respuesta1 = productorRepositorio.findById(idProductor);
 
@@ -157,12 +148,12 @@ public class ProductorServicio {
                     usuarioProductor.setAlta(false);
 
                     usuarioRepositorio.save(usuarioProductor);
-                    
-                    if(respuesta1.isPresent()) {
-                       Productor productor = respuesta1.get();
-                       
-                       productor.setAlta(false);
-                       productorRepositorio.save(productor);
+
+                    if (respuesta1.isPresent()) {
+                        Productor productor = respuesta1.get();
+
+                        productor.setAlta(false);
+                        productorRepositorio.save(productor);
                     }
                 } else {
 
@@ -170,7 +161,7 @@ public class ProductorServicio {
                 }
 
             }
-           
+
         }
 
     }
@@ -188,7 +179,7 @@ public class ProductorServicio {
     //CONSULTA POR NOMBRE
     @Transactional(readOnly = true)
     public Productor buscarPorNombre(String nombre) throws Exception {
-        
+
         Productor productor = productorRepositorio.buscarPorNombre(nombre);
         return productor;
     }
@@ -235,23 +226,21 @@ public class ProductorServicio {
         }
         //Validación clave contiene requisitos
 
-        
-
-       if (clave1.trim() == null || clave1.trim().isEmpty()) {
+        if (clave1.trim() == null || clave1.trim().isEmpty()) {
             throw new Excepcion("La contraseña no puede ser nula");
         }
 
         char ch;
-        
+
         int verificacionClaveNumero = 0;
         int verificacionClaveMayuscula = 0;
-        
+
         for (int i = 0; i < clave1.length(); i++) {
 
 //            ch = (char) i;
             if (Character.isUpperCase(clave1.charAt(i))) {
                 verificacionClaveMayuscula++;
-               
+
             };
         }
         for (int i = 0; i < clave1.length(); i++) {
