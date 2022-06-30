@@ -91,10 +91,9 @@ public class CompraControlador {
             Compra compraEnCurso = compraRepositorio.buscarComprasSinEnviarPorUsuario(usuario.getId());
 
             if (compraEnCurso != null) {
-               
+
                 compraServicio.preCompraCarrito(producto, idUsuario, cantidad);
-               
-                
+
                 modelo.put("compraEnCurso", "Se agregó el producto al carrito");
                 modelo.put("compra", compraEnCurso);
 //                System.out.println(compraEnCurso.getListaProductos());

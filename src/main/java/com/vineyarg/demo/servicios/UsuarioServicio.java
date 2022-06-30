@@ -188,8 +188,15 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario usuario = respuesta.get();
 
+            //validación para no poder eliminar al usuario Administrador general 
+        
+         if (correo.equalsIgnoreCase("administradoradministracion@vineyarg.com.ar")) {
+            throw new Excepcion("El administrador general no puede ser eliminado");
+        }
+         
             if (usuario.getCorreo().equalsIgnoreCase(correo)) {
 
+                
                 PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
                 if (passwordEncoder.matches(clave, usuario.getClave())) {
 
@@ -208,6 +215,8 @@ public class UsuarioServicio implements UserDetailsService {
 
     public void validar(String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento) throws Excepcion {
 
+        
+         
         //Validaciones nombre, apellido y DNI
         if (nombre.trim() == null || nombre.trim().isEmpty()) {
             throw new Excepcion("nombre inválido");

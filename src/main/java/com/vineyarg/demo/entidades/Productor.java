@@ -51,8 +51,6 @@ public class Productor implements Serializable {
         this.alta = alta;
     }
 
- 
-
     public String getId() {
         return id;
     }
@@ -214,5 +212,4 @@ public class Productor implements Serializable {
 //    public void setImagen(Imagenes imagen) {
 //        this.imagen = imagen;
 //    }
-
 }

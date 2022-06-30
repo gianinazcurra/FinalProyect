@@ -20,15 +20,15 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class ItemCompra implements Serializable {
 
-      @Id
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-      
-      @OneToOne
-      private Producto producto;
-      private int cantidad;
-      private Double totalProducto;
+
+    @OneToOne
+    private Producto producto;
+    private int cantidad;
+    private Double totalProducto;
 
     public ItemCompra() {
     }
@@ -64,8 +64,6 @@ public class ItemCompra implements Serializable {
         this.totalProducto = totalProducto;
     }
 
-      
-      
     public String getId() {
         return id;
     }
@@ -98,5 +96,5 @@ public class ItemCompra implements Serializable {
     public String toString() {
         return "com.vineyarg.demo.entidades.ItemCompra[ id=" + id + " ]";
     }
-    
+
 }

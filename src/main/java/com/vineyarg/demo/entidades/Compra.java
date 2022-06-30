@@ -37,21 +37,19 @@ public class Compra implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-   
 //    @ElementCollection(targetClass=Integer.class)
 //    private List<Integer> cantidades;
     @OneToOne
     private Usuario usuario;
-    
+
 //    @OneToMany
 //    @ElementCollection(targetClass=Producto.class)
 //    @OneToMany(mappedBy = "Compra", cascade = CascadeType.ALL, orphanRemoval = true)
 //   private Set<Producto> listaProductos;
-    
-    @ElementCollection(targetClass=ItemCompra.class)
+    @ElementCollection(targetClass = ItemCompra.class)
     @OneToMany
     private Set<ItemCompra> itemCompra;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
 //    @ElementCollection(targetClass=Double.class)
@@ -79,18 +77,6 @@ public class Compra implements Serializable {
         this.observacionesCompra = observacionesCompra;
     }
 
-    
-    
-
-    
-
-    
-
-    
-
-   
-    
-
     public Compra() {
     }
 
@@ -101,7 +87,6 @@ public class Compra implements Serializable {
 //    public void setSubtotales(List<Double> subtotales) {
 //        this.subtotales = subtotales;
 //    }
-
     public String getFormaDePago() {
         return formaDePago;
     }
@@ -117,10 +102,6 @@ public class Compra implements Serializable {
     public void setEstadoCompra(EstadoCompra estadoCompra) {
         this.estadoCompra = estadoCompra;
     }
-
-    
-
-    
 
     public boolean isCompraEnviadaParaAceptacion() {
         return compraEnviadaParaAceptacion;
@@ -138,10 +119,6 @@ public class Compra implements Serializable {
         this.observacionesCompra = observacionesCompra;
     }
 
-    
-
-    
-
 //    public List<Integer> getCantidades() {
 //        return cantidades;
 //    }
@@ -149,11 +126,6 @@ public class Compra implements Serializable {
 //    public void setCantidades(List<Integer> cantidades) {
 //        this.cantidades = cantidades;
 //    }
-  
-    
-    
-    
-    
     public String getId() {
         return id;
     }
@@ -182,7 +154,6 @@ public class Compra implements Serializable {
         return true;
     }
 
-    
     @Override
     public String toString() {
         return "com.vineyarg.demo.entidades.Compra[ id=" + getId() + " ]";
@@ -191,12 +162,9 @@ public class Compra implements Serializable {
     /**
      * @return the serialVersionUID
      */
-    
-
     /**
      * @return the cantidad
      */
-   
     /**
      * @return the usuario
      */
@@ -218,7 +186,7 @@ public class Compra implements Serializable {
     /**
      * @return the listaProductos
      */
-    public void setItemCompra(Set<ItemCompra> itemCompra) {   
+    public void setItemCompra(Set<ItemCompra> itemCompra) {
         this.itemCompra = itemCompra;
     }
 
@@ -263,6 +231,5 @@ public class Compra implements Serializable {
     public void setDireccionEnvio(String direccionEnvio) {
         this.direccionEnvio = direccionEnvio;
     }
-    
-    
+
 }

@@ -55,10 +55,7 @@ public class ProductorControlador {
     @Autowired
     private ProductoRepositorio productoRepositorio;
 
-    @GetMapping("/registro")
-    public String registro() {
-        return "registro";
-    }
+ 
 
     @GetMapping("/registro-bodega")
     public String guardarProductor(ModelMap modelo) {

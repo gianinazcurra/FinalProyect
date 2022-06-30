@@ -26,11 +26,12 @@ public class Imagenes implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     private String nombre;
     private String mime;
-    
-    @Lob @Basic(fetch = FetchType.LAZY)
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
 
     public Imagenes() {
@@ -104,7 +105,4 @@ public class Imagenes implements Serializable {
         return "Imagenes{" + "id=" + id + ", nombre=" + nombre + ", mime=" + mime + ", contenido=" + contenido + '}';
     }
 
-
-    
-    
 }

@@ -241,7 +241,7 @@ public class ProductoControlador {
     
    
     @GetMapping("/valorar")
-    public String editarproducto(ModelMap modelo, String valoracion, String idProducto, HttpSession session) throws Excepcion {
+    public String valorarProducto(ModelMap modelo, String valoracion, String idProducto, HttpSession session) throws Excepcion {
 
         int valoracionInt = parseInt(valoracion);
         

@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -35,14 +33,13 @@ public class Usuario implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     private String nombre;
     private String apellido;
     private String DNI;
     private String correo;
     private String clave;
-    
-    
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
@@ -51,10 +48,10 @@ public class Usuario implements Serializable {
     private TipoUsuario tipoUsuario;
     private int totalComprasEfectuadas;
     private Double totalDineroComprado;
-    
+
     @OneToOne(cascade = {CascadeType.ALL})
     private Imagenes imagen;
-    
+
     public Usuario() {
     }
 
@@ -72,13 +69,7 @@ public class Usuario implements Serializable {
         this.totalDineroComprado = totalDineroComprado;
         this.imagen = imagen;
     }
-    
-   
 
-    
-    
-    
-    
     public String getId() {
         return id;
     }
@@ -115,8 +106,6 @@ public class Usuario implements Serializable {
     /**
      * @return the serialVersionUID
      */
-   
-
     /**
      * @return the nombre
      */
@@ -264,5 +253,5 @@ public class Usuario implements Serializable {
     public void setImagen(Imagenes imagen) {
         this.imagen = imagen;
     }
-    
+
 }

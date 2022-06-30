@@ -1,4 +1,3 @@
-
 package com.vineyarg.demo.entidades;
 
 import java.io.Serializable;
@@ -16,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
-
 
 @Entity
 public class Producto implements Serializable {
@@ -39,13 +37,13 @@ public class Producto implements Serializable {
     private Double promedioValoraciones;
     @ManyToOne
     private Compra compra;
-    
+
     private boolean alta;
-    
-    @ElementCollection(targetClass=Imagenes.class)
+
+    @ElementCollection(targetClass = Imagenes.class)
     @OneToMany
     private Set<Imagenes> imagenes;
-    
+
     public Producto() {
     }
 
@@ -66,10 +64,6 @@ public class Producto implements Serializable {
         this.imagenes = imagenes;
     }
 
-
-
-  
-
     public Compra getCompra() {
         return compra;
     }
@@ -78,7 +72,6 @@ public class Producto implements Serializable {
         this.compra = compra;
     }
 
-   
     public String getId() {
         return id;
     }
@@ -167,8 +160,6 @@ public class Producto implements Serializable {
         this.promedioValoraciones = promedioValoraciones;
     }
 
- 
-
     public boolean isAlta() {
         return alta;
     }
@@ -185,8 +176,4 @@ public class Producto implements Serializable {
         this.imagenes = imagenes;
     }
 
-
-    
-    
-    
 }

@@ -53,7 +53,7 @@
                     <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
 
-                <a href="/logout"> Cerrar sesión </a><br>
+                <a th:if="${session.usuarioSession != null}" href="/logout"> Cerrar sesión </a><br>
                 <a href="/"> Volver al menú principal</a>
 
                 <ul class="nav__iconos">
@@ -111,9 +111,15 @@
                 <input class="boton-eleccion" type="submit" value="Bodega">
             </a>
             <br>
-            <a href="/registro-admin">
-                <input class="boton-eleccion" type="submit" value="Administrador">
+            
+            <a th:if="${session.usuarioSession != null}">
+           <button th:if="${session.usuarioSession.tipoUsuario.toString() != 'ADMINISTRADOR'}" class="buy-btn" disabled>Esta opción está disponible solo para administradores logueados</button> <input th:if="${session.usuarioSession.tipoUsuario.toString() != 'ADMINISTRADOR'}" class="boton-eleccion" type="submit" value="Administrador">
+                <a th:href="@{/registro-admin}"> <input th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" class="boton-eleccion" type="submit" value="Administrador">
+                </a>  </a> 
+            <a th:if="${session.usuarioSession == null}" >
+               <button class="buy-btn" disabled>Esta opción está disponible solo para administradores logueados</button> <input class="boton-eleccion" type="submit" value="Administrador">
             </a>
+            
 
         </section>
 
