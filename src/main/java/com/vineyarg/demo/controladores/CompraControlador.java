@@ -195,10 +195,17 @@ public class CompraControlador {
                     modelo.put("itemsCompra", productosCompra);
 
                     modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
-
+                    
+                    if((compraAntesDePago.getUsuario().getTotalDineroComprado() > 10000) && (totalSumaProductos > 3000)) {
+                        
+                        modelo.put("descuento", Math.round((totalSumaProductos - 10/100) * 100.0) / 100.0);
+                        totalSumaProductos = Double.valueOf(Math.round(((totalSumaProductos - 10/100) * 100.0) / 100.0));
+                        
+                    }
                     Double envio = 450.00;
                     Double totalCompraConEnvio = (totalSumaProductos + envio);
-
+                        
+                    
                     modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
                 }

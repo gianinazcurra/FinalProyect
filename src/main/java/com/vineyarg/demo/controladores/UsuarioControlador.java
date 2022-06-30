@@ -353,10 +353,17 @@ public class UsuarioControlador {
             compra.setEstadoCompra(EstadoCompra.ACEPTADA);
             compra.setObservacionesCompra(observaciones);
             
+            Usuario usuarioComprador = usuarioRepositorio.getById(compra.getUsuario().getId());
+            usuarioComprador.setTotalComprasEfectuadas(usuarioComprador.getTotalComprasEfectuadas() + 1);
+            usuarioComprador.setTotalDineroComprado(usuarioComprador.getTotalDineroComprado() + compra.getMontoFinal());
+            
             compraRepositorio.save(compra);
+            usuarioRepositorio.save(usuarioComprador);
+                    
             List<Compra> comprasNuevasPre = compraRepositorio.buscarComprasNuevas();
            List<Compra> comprasNuevas = new ArrayList();
 
+           
          System.out.println(decision);
 
         for (Compra compraNueva : comprasNuevasPre) {
