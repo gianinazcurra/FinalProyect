@@ -158,7 +158,7 @@
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Descuento por acumulación de compras anteriores (si sumaste más de $15.000 en compras anteriores y tu compra actual supera los $3.000) </h6>
-                        <p th:if="${descuento != null}" th:text="${'$' + descuento}"></p>
+                        <p th:if="${descuento != null}" th:text="${'-$' + descuento}"></p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
