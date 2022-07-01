@@ -101,7 +101,9 @@ public class ProductorServicio {
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             productor.setClave(encriptada);
 
-            productor.setRegion(region);
+            productor.setDescripcion(descripcion);
+      
+            
             System.out.println(productor.getId());
 
 //            if(archivo != null) {

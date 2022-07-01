@@ -59,164 +59,188 @@
 
     <body>
         <!-- Header -->
+
+
         <nav class="etiqueta__nav">
+
             <div class="nav__container">
+
                 <div class="nav__logo">
                     <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
                                      width="200px"></a>
                 </div>
+
+
                 <label for="menuId" class="nav__label">
-                    <img src="/MENU RESPONSIVE/menu.svg" alt="nav__img" width="40px">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
                 </label>
                 <input type="checkbox" id="menuId" class="nav__input">
+
+
+
                 <ul class="nav__ul">
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="">Regiones</a></li>
-                    <li class="nav__item"><a href="">Bodegas</a></li>
+
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
+
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
+
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
-                    <a th:if="${session.usuarioSession != null}"> 
-                        <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
 
-                            <li class="fa-solid fa-user nav__item"></li>
-                        </a>
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
 
-                        <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
 
-                            <li class="fa-solid fa-user nav__item"></li>
-                        </a>
-                        <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
 
-                            <li class="fa-solid fa-user nav__item"></li>
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
 
-                            <p th:if="${logout != null}" th:text="${'Cerrar sesión'}" th:ref="@{/checkout}" style="color:red"></p>
-                            <p th:if="${login != null}" th:text="${'Iniciar sesión'}" th:ref="@{/login}" style="color:red"></p>
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
 
-                            </ul>
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
+
+                </ul>
+            </div>
+        </nav>
+        <!-- Fin del header -->
+
+        <section class="container producto my-5 pt-5">
+
+
+            <div class="row mt-5">
+                <div class="col-lg-5 col-md-12 col-12">
+
+                    <!--                                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto"> ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS -->
+                    <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
+                    <!--                                   <img th:if="${productoEl.imagen == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">-->
+
+
+                    <div class="small-img-group">
+                        <div class="small-img-col">
+                            <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12 col-12">
+
+                    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+
+
+                    <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
+                        <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
+                        <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
+                        <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
+                    </form>
+
+
+                    <h4 classs="mt-5 mb-5">El producto que elegiste</h4>
+
+
+                    <h6 th:text="${productoElegido.productor.nombre}"></h6>
+                    <h3 class="py-4" th:text="${productoElegido.nombre}"></h3>
+                    <h2 th:text="'$' + ${productoElegido.precio}"></h2>
+                    <h4 classs="mt-5 mb-5">Descripcion</h4>
+                    <span th:text="${productoElegido.descripcion}"></span>
+
+                    <form action="/agregaCarrito" method="POST" enctype="multipart/form-data">  
+
+                        <input type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"> 
+                        <input th:if="${productoElegido.cantidad} > 0" type="number" min="1" th:max="${productoElegido.cantidad}" name="cantidad" class="form-control" placeholder="1" required th:value="1">
+                        <input th:if="${productoElegido.cantidad} <= 0" type="text" name="cantidad" class="form-control" placeholder="Lo sentimos! Este producto esta agotado" required th:value="${cantidad}">
+                        <input type="hidden" name="idProducto" class="form-control" th:value="${productoElegido.id}">
+
+                        <button th:if="${productoElegido.cantidad} > 0" class="buy-btn" type="submit" th:text="${'Agregar al carrito'}"></button>
+                        <button th:if="${productoElegido.cantidad} <= 0" class="buy-btn" type="submit" th:text="${'El producto está agotado'}" disabled></button>
+
+                    </form>
+
+
+
+                </div>
+            </div>
+        </section>
+
+        <!-- productos relacionados -->
+        <section id="destacados" class="my-5 pb-5">
+            <div class="container text-center mt-5 py-5">
+                <h3>Productos relacionados</h3>
+                <hr class="mx-auto">
+            </div>
+            <div class="row mx-auto container-fluid">
+                <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productosSimilares != null}"th:each="productoSimilar : ${productosSimilares}">
+
+                    <img th:if="${productoSimilar.imagenes != null}" th:each="img : ${productoSimilar.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
+
+                    <div class="estrella">
+                        <h6 class="p-nombre" th:text="'Valoración de otros usuarios: ' + ${productoSimilar.promedioValoraciones}"></h6>
+                        <!--                    <a th:href="@{/valorar(valoracion=1 , idProducto=${productoSimilar.id})}">   <i class="fas fa-star"></i></a>
+                                            <a th:href="@{/valorar(valoracion=2 , idProducto=${productoSimilar.id})}">  <i class="fas fa-star"></i></a>
+                                            <a th:href="@{/valorar(valoracion=3 , idProducto=${productoSimilar.id})}">  <i class="fas fa-star"></i></a>
+                                            <a th:href="@{/valorar(valoracion=4 , idProducto=${productoSimilar.id})}"> <i class="fas fa-star"></i></a>
+                                            <a th:href="@{/valorar(valoracion=5 , idProducto=${productoSimilar.id})}"> <i class="fas fa-star"></i></a>-->
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+
+                    </div>
+                    <h5 class="p-nombre" th:text="${productoSimilar.nombre}"></h5>
+                    <h4 class="p-precio" th:text="'$' + ${productoSimilar.precio}"> </h4>
+                    <a th:if="${session.usuarioSession != null and session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/mostrarProducto(idProducto=${productoSimilar.id} , idUsuario=${session.usuarioSession.id})}"><button class="buy-btn">Comprar ahora</button></a> 
+                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a cuenta para poder comprar</button></a>
+                </div>
+                <!--            <div class="producto text-center cl-lg-3 col-md-4 col-12">
+                                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
+                                <div class="estrella">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
+                                <h4 class="p-precio">$ 8010,90</h4>
+                                <button class="buy-btn">Comprar ahora</button>
                             </div>
-                            </nav>
-                            <!-- Fin del header -->
-
-                            <section class="container producto my-5 pt-5">
-
-
-                                <div class="row mt-5">
-                                    <div class="col-lg-5 col-md-12 col-12">
-
-                                        <!--                                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto"> ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS -->
-                                        <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idProducto/' + img.id}}" alt="Foto del producto">
-                                        <!--                                   <img th:if="${productoEl.imagen == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">-->
-
-
-                                        <div class="small-img-group">
-                                            <div class="small-img-col">
-                                                <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
-                                            </div>
-                                            <div class="small-img-col">
-                                                <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
-                                            </div>
-                                            <div class="small-img-col">
-                                                <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
-                                            </div>
-                                            <div class="small-img-col">
-                                                <img class="small-img" src="/imagenes/productos/LB_Malbec_375.png" width="100%" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-5 col-md-12 col-12">
-
-                                        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-
-
-                                        <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
-                                            <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
-                                            <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
-                                            <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
-                                        </form>
-
-
-                                        <h4 classs="mt-5 mb-5">El producto que elegiste</h4>
-
-
-                                        <h6 th:text="${productoElegido.productor.nombre}"></h6>
-                                        <h3 class="py-4" th:text="${productoElegido.nombre}"></h3>
-                                        <h2 th:text="'$' + ${productoElegido.precio}"></h2>
-                                        <h4 classs="mt-5 mb-5">Descripcion</h4>
-                                        <span th:text="${productoElegido.descripcion}"></span>
-
-                                        <form action="/agregaCarrito" method="POST" enctype="multipart/form-data">  
-
-                                            <input type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"> 
-                                            <input th:if="${productoElegido.cantidad} > 0" type="number" min="1" th:max="${productoElegido.cantidad}" name="cantidad" class="form-control" placeholder="1" required th:value="1">
-                                            <input th:if="${productoElegido.cantidad} <= 0" type="text" name="cantidad" class="form-control" placeholder="Lo sentimos! Este producto esta agotado" required th:value="${cantidad}">
-                                            <input type="hidden" name="idProducto" class="form-control" th:value="${productoElegido.id}">
-
-                                            <button th:if="${productoElegido.cantidad} > 0" class="buy-btn" type="submit" th:text="${'Agregar al carrito'}"></button>
-                                            <button th:if="${productoElegido.cantidad} <= 0" class="buy-btn" type="submit" th:text="${'El producto está agotado'}" disabled></button>
-
-                                        </form>
-
-
-
-                                    </div>
+                            <div class="producto text-center cl-lg-3 col-md-4 col-12">
+                                <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
+                                <div class="estrella">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
                                 </div>
-                            </section>
-
-                            <!-- productos relacionados -->
-                            <section id="destacados" class="my-5 pb-5">
-                                <div class="container text-center mt-5 py-5">
-                                    <h3>Productos relacionados</h3>
-                                    <hr class="mx-auto">
-                                </div>
-                                <div class="row mx-auto container-fluid">
-                                    <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productosSimilares != null}"th:each="productoSimilar : ${productosSimilares}">
-                                        <!--                                                            <img class="img-fluid mb-3" th:src="${'/imagen/producto' + producto.id}" alt="">-->
-                                        <div class="estrella">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <h5 class="p-nombre" th:text="${productoSimilar.nombre}"></h5>
-                                        <h4 class="p-precio" th:text="${productoSimilar.precio}"> </h4>
-                                        <button class="buy-btn" th:href="@{/producto.html/(id=${productoSimilar.id})}">Comprar ahora</button>
-                                    </div>
-                                    <!--            <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                                                    <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                                                    <div class="estrella">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </div>
-                                                    <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                                                    <h4 class="p-precio">$ 8010,90</h4>
-                                                    <button class="buy-btn">Comprar ahora</button>
-                                                </div>
-                                                <div class="producto text-center cl-lg-3 col-md-4 col-12">
-                                                    <img class="img-fluid mb-3" src="/imagenes/productos/LB_Malbec_375.png" alt="">
-                                                    <div class="estrella">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </div>
-                                                    <h5 class="p-nombre">Luigi Bosca Malbec</h5>
-                                                    <h4 class="p-precio">$ 8010,90</h4>
-                                                    <button class="buy-btn">Comprar ahora</button>
-                                                </div>-->
-                                </div>
-                            </section>
+                                <h5 class="p-nombre">Luigi Bosca Malbec</h5>
+                                <h4 class="p-precio">$ 8010,90</h4>
+                                <button class="buy-btn">Comprar ahora</button>
+                            </div>-->
+            </div>
+        </section>
 
 
 
@@ -236,65 +260,65 @@
 
 
 
-                            <!-- Footer -->
-                            <div class="footer">
-                                <div class="footer-a">
-                                    <div class="footer-columna-1">
-                                        <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width=<h3>
-                                            ¡Comprá los mejores vinos Aquí!
-                                        </h3>
-                                    </div>
-                                    <div class="footer-columna-2">
-                                        <h3>Navegacion</h3>
-                                        <ul>
-                                            <li><a href="/">Home</a></li>
-                                            <li><a href="">Regiones</a></li>
-                                            <li><a href="">Bodegas</a></li>
-                                            <li><a href="/tienda">Tienda</a></li>
-                                            <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="footer-columna-3">
-                                        <h3>Nuestras Redes</h3>
-                                        <div class="redes">
-                                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
-                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                    <a href="" class="fa-solid fa-at"></a>
-                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer-b">
-                                    <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
-                                </div>
-                            </div>
-                            <!-- Fin del Footer -->
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width=<h3>
+                        ¡Comprá los mejores vinos Aquí!
+                    </h3>
+                </div>
+                <div class="footer-columna-2">
+                    <h3>Navegacion</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
+        </div>
+        <!-- Fin del Footer -->
 
-                            <div class="separador"></div>
+        <div class="separador"></div>
 
-                            <!-- <script>
-                                var MainImg = document.getElementById('mainIMG');
-                                var smallimg = document.getElementsByClassName('small-img');
-                        
-                                smallimg[0].onclick = function ([
-                                    MainImg.src = smallimg[0].src;
-                                ])
-                                
-                                smallimg[1].onclick = function ([
-                                    MainImg.src = smallimg[1].src;
-                                ])
-                        
-                                smallimg[2].onclick = function ([
-                                    MainImg.src = smallimg[2].src;
-                                ])
-                                
-                                smallimg[3].onclick = function ([
-                                    MainImg.src = smallimg[3].src;
-                                ])
-                        
-                        
-                            </script> -->
+        <!-- <script>
+            var MainImg = document.getElementById('mainIMG');
+            var smallimg = document.getElementsByClassName('small-img');
+    
+            smallimg[0].onclick = function ([
+                MainImg.src = smallimg[0].src;
+            ])
+            
+            smallimg[1].onclick = function ([
+                MainImg.src = smallimg[1].src;
+            ])
+    
+            smallimg[2].onclick = function ([
+                MainImg.src = smallimg[2].src;
+            ])
+            
+            smallimg[3].onclick = function ([
+                MainImg.src = smallimg[3].src;
+            ])
+    
+    
+        </script> -->
 
-                            </body>
+    </body>
 
-                            </html>
+</html>

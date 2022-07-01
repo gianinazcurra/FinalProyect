@@ -23,7 +23,7 @@
     </head>
 
     <body>
-        <!-- Header -->
+         <!-- Header -->
 
 
         <nav class="etiqueta__nav">
@@ -45,10 +45,10 @@
 
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="#seccion_regiones">Regiones</a></li>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
 
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
@@ -61,41 +61,38 @@
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-
-
+                    
+                    
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                        <li class="fa-solid fa-user nav__item"></li>
+                            <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-
+                    
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
-
-
-                    <li class="nav__item"><a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br></li>
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
 
                 </ul>
             </div>
         </nav>
         <!-- Fin del header -->
-
         <!-- FORMULARIO -->
-        
+
         <div class="formulario">
             <div class="imagen"> <img class="imagen" src="/imagenes/logoCuadrado.jpg" alt=""></div>
             <section class="cuenta">
-                <div class="p_info"></div> 
+                <div class="p_info"> <br></div> 
                 <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
                 <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
 
-                   <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
-       <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="La imagen de perfil de tu bodega"> 
-        <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
+                <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+                <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="La imagen de perfil de tu bodega"> 
+                <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
 
                 <a class="boton_lista" th:href="@{/editar-productor(idUsuario=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
 
@@ -108,31 +105,39 @@
                 <a class="boton_lista" th:href="@{/verProductos(idProductor=${productor.id})}"> VER TUS PRODUCTOS EN CATÁLOGO</a>
 
                 <div class="p_info">
+                    
                     <div th:if="${sinVentas != null}">
-             <p th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}" </p>
-</div>
-        <div th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
-             <p th:text="${'Producto vendido:'}" </p>
-            <p th:text="${'Producto: ' + item.producto.nombre}" </p>
-            <p th:text="${'Precio de venta:  ' + item.producto.precio}" ></p>
-            <p th:text="${'Cantidad vendida: ' + item.cantidad}" ></p>
-            <p th:text="${'Precio total por esta venta:  ' + item.totalProducto}" ></p>
-<!--            <p th:value="${'Fecha de la venta: ' + compra.fechaCompra}" </p>-->
-</div>
+                        <p th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}" </p>
+                    </div>
+                    <br>
+                    <div th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
+                        
+                        <!--    <p th:text="${'Producto vendido:'}" </p> -->
+                        <p th:text="${'Producto: ' + item.producto.nombre}" </p>
+                        <p th:text="${'Precio de venta:  ' + item.producto.precio}" ></p>
+                        <p th:text="${'Cantidad vendida: ' + item.cantidad}" ></p>
+                        <p th:text="${'Precio total por esta venta:  ' + item.totalProducto}" ></p>
+                        <!--            <p th:value="${'Fecha de la venta: ' + compra.fechaCompra}" </p>-->
+                        <p>_______________________________________________</p>
+                        <br>
+                    </div>
 
-                   <div th:if="${sinProductos != null}">
-            <p th:text="${'Todavía no cargás tu primer producto. Hacelo pronto para que los clientes puedan conocer tus vinos!'}" </p> 
-            <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ TU PRIMER PRODUCTO</a>
-                </div> 
-        <div th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
-            <p th:text="${'Producto en venta:'}" </p>
-        <p th:text="${'Nombre ' + producto.nombre}" </p>
-         <p th:text="${'Precio ' + producto.precio}" </p>
-          <p th:text="${'Stock disponible ' +  producto.cantidad}" </p>
-           <p th:text="${'Descripcion ' +  producto.descripcion}" </p>
-            <p th:text="${'Varietal ' +  producto.varietal}" </p>
-        
-        </div> 
+                    <div th:if="${sinProductos != null}">
+                        <p th:text="${'Todavía no cargás tu primer producto. Hacelo pronto para que los clientes puedan conocer tus vinos!'}" </p> 
+                        <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ TU PRIMER PRODUCTO</a>
+                    </div> 
+                    <div th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
+                      
+                       <br>
+                        <p th:text="${'Producto en venta:'}" </p>
+                        <p th:text="${'Nombre ' + producto.nombre}" </p>
+                        <p th:text="${'Precio ' + producto.precio}" </p>
+                        <p th:text="${'Stock disponible ' +  producto.cantidad}" </p>
+                        <p th:text="${'Descripcion ' +  producto.descripcion}" </p>
+                        <p th:text="${'Varietal ' +  producto.varietal}" </p>
+                        <br>
+                        <p>_______________________________________________</p>
+                    </div> 
                 </div> 
             </section>
         </div>
@@ -164,10 +169,10 @@
                 <div class="footer-columna-3">
                     <h3>Nuestras Redes</h3>
                     <div class="redes">
-                    <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
-                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                    <a href="" class="fa-solid fa-at"></a>
-                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>
             </div>

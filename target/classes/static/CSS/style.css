@@ -9,6 +9,46 @@
 body {
     font-family: 'Montserrat', sans-serif;
 }
+.pag__corta{
+    min-height: 70vh;
+    display: grid;
+    justify-content: center;
+}
+.felicitaciones{
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+}
+.felicitaciones-hijo{
+    text-align: center;
+    position: absolute;
+    border: 3px solid #000;
+    width: 50%;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn-grad {
+    background-image: linear-gradient(to right, #1D976C 0%, #93F9B9  51%, #1D976C  100%);
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
 .separador{
     width: 100%;
     height: 20px;
@@ -201,28 +241,28 @@ hr {
 
 /*----------- FIN NAVBAR-----------*/
 
-    #home {
-        background-image: url(../imagenes/wine-1543170_1920.jpg);
-        width: 100%;
-        height: 100vh;
-        background-size: cover;
-        background-position: top right;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-    }
+#home {
+    background-image: url(../imagenes/wine-1543170_1920.jpg);
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: top right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
 
-    #home span {
-        color: #EC268F;
-    }
-    .container button{
-        transition: 0.5s;
-        border-radius:5px;
-    }
-    .container button:hover{
-        background-color: #EC268F;
-    }
+#home span {
+    color: #EC268F;
+}
+.container button{
+    transition: 0.5s;
+    border-radius:5px;
+}
+.container button:hover{
+    background-color: #EC268F;
+}
 
 /* Regiones */
 
@@ -491,7 +531,7 @@ hr {
     text-align: center;
     color: #fff;
 }
-    
+
 /*-----------FIN FOOTER-----------*/
 
 

@@ -23,7 +23,7 @@
     </head>
 
     <body>
-        <!-- Header -->
+         <!-- Header -->
 
 
         <nav class="etiqueta__nav">
@@ -45,11 +45,11 @@
 
                 <ul class="nav__ul">
 
-                      <li class="nav__item"><a href="/">Home</a></li>
-                   <li class="nav__item"><a href="">Regiones</a></li>
-                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
+
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
@@ -61,23 +61,21 @@
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-
-
+                    
+                    
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                        <li class="fa-solid fa-user nav__item"></li>
+                            <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-
+                    
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
-
-
-                    <li class="nav__item"><a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br></li>
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
 
                 </ul>
             </div>
@@ -86,30 +84,35 @@
 
 
 
-
         <div class="formulario">
-            <div class="imagen imagen-b"> <img class="imagen" src="/imagenes/logoCuadrado.jpg" alt=""></div>
+            <div  class="imagen imagen-b">
+            <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
+            <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
+            </div>
             <section class="cuenta">
-                <div class="p_info"></div> 
+                <div class="p_info"><br></div> 
                 <div>
                     <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
-                    <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="Tu imagen de perfil"> 
-                    <!--                 <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="">-->
+                    <!--<img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="">-->
                 </div>
                 <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
 
                 <a class="boton_lista" th:href="@{/verCompras(id=${session.usuarioSession.id})}"> VER EL ESTADO DE TUS COMPRAS</a>
 
                 <div class="p_info">
+                    
+                    <br>
                     <div th:if="${compras != null}" th:each="compra : ${compras}">
                         <p th:text="${'Identificador de la Compra ' + compra.id}" </p>
                         <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado ' + item.producto.nombre}" </p>
                         <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total pagado ' +  item.totalProducto}" </p>
-                        <p th:value="${'precio total con envío ' +  compra.montoFinal}" </p>
+                        <p th:value="${'precio total con envÃ­o ' +  compra.montoFinal}" </p>
                         <p th:value="${'Fecha de la compra ' +  compra.fechaCompra}" </p>
-                        <p th:text="${'Estado de tu compra ' +  estadoCompra}" </p>
+                        <p th:text="${'Estado de tu compra ' +  compra.estadoCompra}" </p>
                         <p th:text="${'Observaciones ' +  compra.observacionesCompra}" </p>
-
+                        <p>_________________________________________</p>
+                        <br>
+                        
                     </div>
                 </div>
             </section>
@@ -131,7 +134,7 @@
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="">Regiones</a></li>
-<!--                        <li><a href="">Bodegas</a></li>-->
+                        <!--                        <li><a href="">Bodegas</a></li>-->
                         <li><a href="/tienda">Tienda</a></li>
                         <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                     </ul>

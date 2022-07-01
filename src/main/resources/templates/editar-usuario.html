@@ -23,7 +23,7 @@
     </head>
 
     <body>
-        <!-- Header -->
+         <!-- Header -->
 
 
         <nav class="etiqueta__nav">
@@ -45,10 +45,10 @@
 
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="#seccion_regiones">Regiones</a></li>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
 
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
@@ -61,39 +61,33 @@
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-
-
+                    
+                    
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                        <li class="fa-solid fa-user nav__item"></li>
+                            <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-
+                    
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
-
-
-                    <li class="nav__item"><a th:if="${session.usuarioSession != null}" th:href="@{/logout}"> Cerrar sesion </a><br></li>
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
 
                 </ul>
             </div>
         </nav>
         <!-- Fin del header -->
 
-        <a href="/logout"> Cerrar sesion </a><br>
-    <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}">  Volver al menú principal</a>
-    <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}">  Volver al menú principal</a>
-    
         <div class="contenedor__grande">
             <div class="producto__container">
                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                 <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
 
-                    <div class="titulo">Modifica algunos de tus datos</div>
+                    <div class="titulo">Modificá algunos de tus datos</div>
                     <p>(Recordá que los datos personales no puede cambiarse)</p>
                     <div class="input_editar">
                         <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
@@ -109,7 +103,7 @@
                     </div>
                     <input class="control" type="file" name="archivo" placeholder="Podés cambiar tu foto de perfil"  id="">
                     <br><br>
-                    <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                    <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Términos y Condiciones</a></p>
 
                     <input class="boton" type="submit" value="Actualizar perfil">
                 </form>

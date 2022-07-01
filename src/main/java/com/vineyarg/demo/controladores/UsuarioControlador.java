@@ -162,7 +162,7 @@ public class UsuarioControlador {
             return "registro-usuario.html";
         }
 
-        modelo.put("registrado", "Usuario registrado con éxito");
+        modelo.put("registrado", "Usuario registrado con éxito. Ahora podés ingresar con tus datos");
         return "login.html";
     }
 
@@ -265,6 +265,7 @@ public class UsuarioControlador {
             
             usuarioServicio.eliminarUsuario(id, correo, clave);
             
+            return "redirect:/logout";
 
         } } catch (Excepcion ex) {
             modelo.put("error1", ex.getMessage());
