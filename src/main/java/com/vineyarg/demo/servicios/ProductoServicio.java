@@ -47,15 +47,16 @@ public class ProductoServicio {
         //Creamos un nuevo producto y le seteamos los datos
         Producto producto = new Producto();
         producto.setNombre(nombre);
-        producto.setCantidad(cantidad);  
-        producto.setPrecio(precio);
+        producto.setCantidad(cantidad);
+        Double precioProd = (Math.round(precio * 100.0) / 100.0);
+        producto.setPrecio(precioProd);
         producto.setDescripcion(descripcion);
         producto.setVarietal(varietal);
         producto.setProductor(productor);
         producto.setSku(SKU);
         producto.setAlta(true);
-        producto.setCantidadValoraciones(0);
-        producto.setCantidadVecesValorado(0);
+        producto.setCantidadValoraciones(0.00);
+        producto.setCantidadVecesValorado(0.00);
         producto.setPromedioValoraciones(0.00);
 //        producto.setValoraciones(valoraciones);
         //producto.setAlta(true);
@@ -98,7 +99,8 @@ public class ProductoServicio {
 
             producto.setNombre(nombre);
             producto.setCantidad(cantidad);
-            producto.setPrecio(precio);
+            Double precioProd = (Math.round(precio * 100.0) / 100.0);
+        producto.setPrecio(precioProd);
             producto.setDescripcion(descripcion);
         producto.setVarietal(varietal);
 
@@ -140,20 +142,22 @@ public class ProductoServicio {
     }
 
     @Transactional
-    public void valorarProducto(String id, int valoracion) throws Excepcion {
+    public void valorarProducto(String id, Double valoracion) throws Excepcion {
 
         Optional<Producto> respuesta = productoRepositorio.findById(id);
         if (respuesta.isPresent()) {
 
             Producto producto = respuesta.get();
 
-            producto.setCantidadVecesValorado(producto.getCantidadVecesValorado() + 1);
+            producto.setCantidadVecesValorado(producto.getCantidadVecesValorado() + 1.00);
             producto.setCantidadValoraciones(producto.getCantidadValoraciones() + valoracion);
-            Double doble1 = Double.valueOf(producto.getCantidadVecesValorado());
-            Double doble2 = Double.valueOf(producto.getCantidadValoraciones());
-            Double doble3 = Double.valueOf(doble2 / doble1);
-            doble3 = (Double) (Math.round(doble3 * 100.0) / 100.0);
-            producto.setPromedioValoraciones(doble3);
+//           
+            Double promedio = Double.valueOf(producto.getCantidadValoraciones() / producto.getCantidadVecesValorado());
+            
+            Double promedioVal = (Math.round(promedio * 100.0) / 100.0);
+            
+            producto.setPromedioValoraciones(promedioVal);
+            
             productoRepositorio.save(producto);
         }
     }

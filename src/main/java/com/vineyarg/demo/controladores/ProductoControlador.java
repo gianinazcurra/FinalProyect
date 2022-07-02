@@ -241,27 +241,27 @@ public class ProductoControlador {
     
    
     @GetMapping("/valorar")
-    public String valorarProducto(ModelMap modelo, String valoracion, String idProducto, HttpSession session) throws Excepcion {
+    public String valorarProducto(ModelMap modelo, Double valoracion, String idProducto, HttpSession session) throws Excepcion {
 
-        int valoracionInt = parseInt(valoracion);
+        Double valoracionInt = valoracion;
         
         productoServicio.valorarProducto(idProducto, valoracionInt);
         
-        List<Producto> productosT = productoRepositorio.findAll();
-        List<Producto> productos = new ArrayList();
-        
-        
-        
-        for (Producto producto : productosT) {
-            if (producto.isAlta() && producto.getProductor().isAlta()) {
-                productos.add(producto);
-                
-               
-            }
-        }
-        modelo.put("productos", productos);
+//        List<Producto> productosT = productoRepositorio.findAll();
+//        List<Producto> productos = new ArrayList();
+//        
+//        
+//        
+//        for (Producto producto : productosT) {
+//            if (producto.isAlta() && producto.getProductor().isAlta()) {
+//                productos.add(producto);
+//                
+//               
+//            }
+//        }
+//        modelo.put("productos", productos);
 
-        return "tienda.html";
+        return "redirect:/tienda";
     }
     
 }
