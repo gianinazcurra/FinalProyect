@@ -39,7 +39,16 @@ public class ImagenesServicio {
         if (archivo != null) {
             
             try {
+                
+                String imageType = archivo.getContentType().toString();
+                
+                if (!imageType.startsWith("image/")) {
+                    
+                    throw new Excepcion("El archivo que intentas cargar no corresponde a una imagen");
+    
+} 
                 Imagenes imagen = new Imagenes();
+                             
                 imagen.setMime(archivo.getContentType());
                 imagen.setNombre(archivo.getName());
                 imagen.setContenido(archivo.getBytes());
@@ -52,7 +61,7 @@ public class ImagenesServicio {
             }
 
         } if (archivo == null){
-            System.out.println("arhciov nuilo");
+            System.out.println("archivo nulo");
         }
 
         return null;

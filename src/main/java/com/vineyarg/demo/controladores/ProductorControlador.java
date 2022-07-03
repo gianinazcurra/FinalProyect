@@ -251,8 +251,9 @@ public class ProductorControlador {
     public String productorWeb(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
 
         Usuario login = (Usuario) session.getAttribute("usuarioSession");
+        
         if (login == null || !login.getId().equalsIgnoreCase(id)) {
-            return "redirect:/index.html";
+            return "redirect:/";
         }
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);

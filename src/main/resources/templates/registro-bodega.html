@@ -107,10 +107,10 @@
                     <select class="control" name="region"> 
                   <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${region}"></option> 
                   </select>
-                    <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca" required="">
+                    <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca" required="" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff">
                     
                     <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/HTML/terminos-condiciones.html">Terminos y Condiciones</a></p>
-                    <input class="boton" type="submit" value="Registrarme">
+                    <input class="boton" type="submit" value="Registrar bodega o vendedor">
                 </form>
             </section>
 
