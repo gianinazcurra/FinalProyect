@@ -84,8 +84,9 @@
 
     <!-- FORMULARIO -->
 
-    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+    <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
+    <p th:if="${registrado != null}" th:text="${registrado}"  class="exito"></p>
+    
     <div class="formulario">
 
         <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
@@ -108,7 +109,7 @@
                 <a th:href="@{/registro-admin}"> <input th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" class="boton-eleccion" type="submit" value="Administrador">
                 </a>  </a> 
             <a th:if="${session.usuarioSession == null}" >
-               <button class="buy-btn" disabled>Esta opción está disponible solo para administradores logueados</button> <input class="boton-eleccion" type="submit" value="Administrador">
+               <button class="boton-eleccion" disabled>Esta opción está disponible solo para administradores logueados</button> <input class="boton-eleccion" type="submit" value="Administrador">
             </a>
 
         </section>

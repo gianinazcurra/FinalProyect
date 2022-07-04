@@ -22,6 +22,11 @@
     <!-- Links -->
 
 </head>
+<style>
+    .contenedor__grande{
+        height: 65vh;
+    }
+</style>
 
 <body>
 
@@ -89,7 +94,7 @@
             <form action="/agregarProducto" method="POST" enctype="multipart/form-data">
                 
                  <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                  <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+                  <p th:if="${registrado != null}" th:text="${registrado}" style="color:#1D976C"></p>
                  
                    <input class="control" type="hidden" name="idProductor" id="" th:value="${perfil.id}">
 <!--                  <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->

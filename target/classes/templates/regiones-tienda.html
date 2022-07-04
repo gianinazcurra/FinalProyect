@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VineyArg</title>
+
+    <!-- Links -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- JavaScript -->
+    <script src="/JS/script.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" <!-- Iconos -->
+    <script src="https://kit.fontawesome.com/c3d241543d.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+
+<style>
+    .producto img {
+        width: 100%;
+        height: 100;
+        box-sizing: auto;
+        object-fit: cover;
+    }
+
+    #destacados>nav>ul>li.page-item.active>a {
+        background-color: #000000;
+    }
+
+    .pagination a {
+        color: #000;
+    }
+</style>
+
+<body>
+    <!-- Header -->
+    <nav class="etiqueta__nav">
+
+        <div class="nav__container">
+
+            <div class="nav__logo">
+                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                        width="200px"></a>
+            </div>
+
+
+            <label for="menuId" class="nav__label">
+                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+            </label>
+            <input type="checkbox" id="menuId" class="nav__input">
+
+            <div class="hamburguesa">
+                <ul class="nav__ul">
+
+                    <li class="nav__item"><a href="/">Home</a></li>
+                    <li class="nav__item"><a href="">Regiones</a></li>
+                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="">Tienda</a></li>
+                    <li class="nav__item"><a href="">Contacto</a></li>
+                </ul>
+                
+                  <a href="/logout"> Cerrar sesión </a><br>
+     <a href="/"> Volver al menú principal</a>
+
+                <ul class="nav__iconos">
+                    <a href="">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
+                    <a href="">
+                        <li class="fa-solid fa-heart nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    <a th:if="${session.usuarioSession != null}"> 
+                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                       
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                    
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Fin del header -->
+
+    <!-- productos destacados -->
+    
+    
+    <section id="destacados" class="my-5 pb-5">
+        <div class="container mt-5 py-5">
+            
+            
+            
+        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>   
+            <h2 clas="font-weight-bold">Nuestros productos</h3>
+                <hr>
+                <p>De parte de nuestros productores para todo el país.</p>
+                
+                <p th:if="${compraEnCurso!= null}" th:text="${compraEnCurso}" style="color:red"></p>
+               
+                <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
+                   <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
+                    <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
+                <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>
+                </form>
+        </div>
+        <div class="row mx-auto container">
+            <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productos != null}" th:each="producto : ${productos}">
+                <img th:if="${producto.foto != null}" class="img-fluid mb-3" th:src="${'/imagen/producto' + producto.id}" alt="">
+                 <img th:if="${producto.foto == null}" class="img-fluid mb-3" th:text="${Producto sin imágen}">
+               
+                <div class="estrella">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
+                <h4 class="p-precio" th:text="${producto.precio}">$ </h4>
+                <button class="buy-btn" th:href="@{/producto.html/(idProducto=${producto.id})}">Comprar ahora</button>
+            </div>
+ <nav aria-label="...">
+            <ul class="pagination container mt-5">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item" aria-current="page">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+
+
+    <!-- Footer -->
+
+    <div class="footer">
+        <div class="footer-a">
+            <div class="footer-columna-1">
+                <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width=<h3>
+                ¡Comprá los mejores vinos Aquí!
+                </h3>
+            </div>
+            <div class="footer-columna-2">
+                <h3>Navegacion</h3>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Regiones</a></li>
+                    <li><a href="">Bodegas</a></li>
+                    <li><a href="">Tienda</a></li>
+                    <li><a href="">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-columna-3">
+                <h3>Nuestras Redes</h3>
+                <div class="redes">
+                    <a href="" class="fa fa-instagram"></a>
+                    <a href="" class="fa fa-linkedin"></a>
+                    <a href="" class="fa-solid fa-at"></a>
+                    <a href="" class="fa fa-twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-b">
+            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+        </div>
+    </div>
+
+    <!-- Fin del Footer -->
+
+    <div class="separador"></div>
+
+</body>
+
+</html>

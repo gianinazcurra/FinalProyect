@@ -91,7 +91,7 @@
             <h4>Registrate!</h4>
             <form action="/registrarUsuarioComun" method="POST" enctype="multipart/form-data">
                 
-                  <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                  <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
                   
                   
                <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" th:value="${nombre}">
