@@ -11,7 +11,7 @@
 .login{
     background-color: #1d1d1d;
     width: 520px;
-    height: 460px;
+    height: 520px;
     color: white;
     position: absolute;
     left: 75%;
@@ -21,6 +21,9 @@
     padding: 70px 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+}
+.errorRojo{
+    text-align: center;
 }
 
 .login .avatar{

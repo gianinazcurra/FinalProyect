@@ -52,7 +52,7 @@
                     <li class="nav__item"><a href="#home">Home</a></li>
                     <li class="nav__item"><a href="#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
@@ -86,18 +86,19 @@
         </nav>
         <!-- Fin del header -->
 
-        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-        <p th:if="${logout != null}" th:text="${logout}" style="color:red"></p>
-        <p th:if="${compraPendiente != null}" th:text="${compraPendiente}"></p>
+        <p th:if="${error != null}" th:text="${error}" class="errorIndex" ></p>
+        <p th:if="${logout != null}" th:text="${logout}" class="errorIndex" ></p>
+        
 
-        <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="POST">
+        <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="POST" class="formPendiente">
+            <p th:if="${compraPendiente != null}" th:text="${compraPendiente}"></p>
             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="idCompra" th:value="${compraEnCursoInicioSesion.id}">
             <select name="decision">
                 <option th:each="decision : ${decisiones}" th:value="${decision}" th:text="${decision}"></option> 
             </select>
-            <button class="buy-btn" type="submit" th:text="${'Continuar'}"></button> </option> 
-    </form>
+            <button class="botonForm" type="submit" th:text="${'Continuar'}"></button> </option> 
+        </form>
 
 
     <section id="home">

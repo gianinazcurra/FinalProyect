@@ -91,10 +91,10 @@
             </div>
             <section class="cuenta">
                 <div class="p_info"><br></div> 
-                <div>
-                    <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+                
+                    <p th:if="${registrado != null}" th:text="${registrado}" class="exitoUsuario"></p>
                     <!--<img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="">-->
-                </div>
+                
                 <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
 
                 <a class="boton_lista" th:href="@{/verCompras(id=${session.usuarioSession.id})}"> VER EL ESTADO DE TUS COMPRAS</a>

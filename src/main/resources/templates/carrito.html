@@ -10,7 +10,7 @@
 
     <!-- Links -->
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./CSS/style.css">
     <!-- JavaScript -->
     <script src="/JS/script.js"></script>
     <!-- Google Fonts -->
@@ -20,72 +20,70 @@
     <script src="https://kit.fontawesome.com/c3d241543d.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
 </head>
 
 
 <body>
-    <!-- Header -->
-    <nav class="etiqueta__nav">
-
-        <div class="nav__container">
-
-            <div class="nav__logo">
-                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
-                        width="200px"></a>
-            </div>
+     <!-- Header -->
 
 
-            <label for="menuId" class="nav__label">
-                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
-            </label>
-            <input type="checkbox" id="menuId" class="nav__input">
+        <nav class="etiqueta__nav">
 
-           <div class="hamburguesa">
+            <div class="nav__container">
+
+                <div class="nav__logo">
+                    <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                                     width="200px"></a>
+                </div>
+
+
+                <label for="menuId" class="nav__label">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                </label>
+                <input type="checkbox" id="menuId" class="nav__input">
+
+
+
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="">Regiones</a></li>
-                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                </ul>
+                    <li class="nav__item"><a href="">Contacto</a></li>
 
-                <a href="/logout"> Cerrar sesión </a><br>
-                <a href="/"> Volver al menú principal</a>
-
-                <ul class="nav__iconos">
                     <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
+
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
                     </a>
+
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
-                    
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    <a th:if="${session.usuarioSession != null}"> 
-                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
                     
+                    
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                       
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                     
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
-                    
-                        <li class="fa-solid fa-user nav__item"></li>
-                    </a>
-                    </a>
+
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
+
                 </ul>
             </div>
-        </div>
-    </nav>
-    <!-- Fin del header -->
+        </nav>
+        <!-- Fin del header -->
 
     <!-- Titulo carrito -->
     <section id="carrito" class="">
@@ -119,7 +117,7 @@
             <tbody>
                 <tr th:if="${carrito != null}" th:each="item : ${itemsCompra}">
                     <td><a th:href="@{/eliminarProducto(idProductoEliminar=${item.id}, idCompraEnCurso=${carrito.id} )}"><i class="fas fa-trash-alt"></i></a></td>
-                    <td><img th:src="@{${'/imagen/productoimagen/' + item.producto.id}}" alt="Foto del producto"></td>
+                    <td><img src="/imagenes/productos/LB_Malbec_375.png" width="25px" alt=""></td>
                     <td>
                         <h5 th:text="${item.producto.nombre}"></h5>
                     </td>
@@ -168,7 +166,7 @@
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Envío fijo a todo el país </h6>
-                        <p>$ 450,00</p>
+                        <p>$ 850,00</p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
@@ -176,37 +174,38 @@
                         <p th:if="${totalCompra != null}" th:text="${'$' + totalCompra}"> </p>
                     </div>
                    
-                    <a th:href="@{/checkout/(idCompra=${carrito.id})}"> <button id="botonCompra" class="ml-auto" >PROCEDER A LA COMPRA</button></a>
-                    <a th:href="@{/tienda}"> <button id="botonCompra" class="ml-auto" >SEGUIR COMPRANDO</button></a>
-                    <a th:href="@{/anularCompra/(idCompra=${carrito.id})}"> <button id="botonCompra" class="ml-auto" >ANULAR COMPRA</button></a>
+                    <a th:href="@{/checkout/(idCompra=${carrito.id})}" class="text-decoration-none"> <button id="botonCompra" class="ml-auto" >PROCEDER A LA COMPRA</button></a>
+                    <a th:href="@{/anularCompra/(idCompra=${carrito.id})}" class="text-decoration-none"> <button id="botonCompra" class="ml-auto" >ANULAR COMPRA</button></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
+
     <div class="footer">
         <div class="footer-a">
             <div class="footer-columna-1">
-                <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width=<h3>
-                ¡Comprá los mejores vinos Aquí!
+                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                <h3>
+                    ¡Comprá los mejores vinos aquí!
                 </h3>
             </div>
+
             <div class="footer-columna-2">
-                <h3>Navegacion</h3>
+                <h3>Navegación</h3>
                 <ul>
-                  
-                     <li><a href="/">Home</a></li>
-                                <li><a href="">Regiones</a></li>
-                                <li><a href="">Bodegas</a></li>
-                                <li><a href="/tienda">Tienda</a></li>
-                                <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="">Regiones</a></li>
+                    <li><a href="">Bodegas</a></li>
+                    <li><a href="/tienda">Tienda</a></li>
+                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-columna-3">
                 <h3>Nuestras Redes</h3>
                 <div class="redes">
-                 <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                    <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                     <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
                     <a href="" class="fa-solid fa-at"></a>
                     <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
@@ -216,12 +215,15 @@
         <div class="footer-b">
             <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
         </div>
+    
     </div>
-
     <!-- Fin del Footer -->
-
     <div class="separador"></div>
+    
 
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 
 </html>

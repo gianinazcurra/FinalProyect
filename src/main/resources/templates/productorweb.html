@@ -87,8 +87,8 @@
             <div class="imagen"> <img class="imagen" src="/imagenes/logoCuadrado.jpg" alt=""></div>
             <section class="cuenta">
                 <div class="p_info"> <br></div> 
-                <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
-                <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+                <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
+                <p th:if="${exito != null}" th:text="${exito}" class="exito"></p>
 
                 <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
                 <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="La imagen de perfil de tu bodega"> 

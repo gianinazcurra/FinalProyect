@@ -22,10 +22,15 @@
         <!-- Links -->
 
     </head>
+    <style>
+        .contenedor__grande{
+            height: 65vh;
+        }
+    </style>
 
     <body>
 
-         <!-- Header -->
+        <!-- Header -->
 
 
         <nav class="etiqueta__nav">
@@ -63,16 +68,16 @@
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    
-                    
+
+
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                            <li class="fa-solid fa-user nav__item"></li>
+                        <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    
+
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
@@ -90,12 +95,11 @@
                 <div class="titulo">Estos son tus productos, seleccioná uno para editarlo o eliminarlo</div>
                 <form action="/editarProducto1" method="POST" enctype="multipart/form-data">
 
-                    <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
+                    <p th:if="${error != null}" th:text="${error}" style="color:red" ></p>
                     <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
-
+                    <br>
                     <input type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> <!--
                      <input type="hidden" name="correoProductor" th:value="${perfil-productor.correo}"/> -->
-
                     <p th:if="${productos == null and productoElegido == null}" th:text="${'No tenés productos cargados'}" style="color:red"></p>
                     <select th:if="${productos != null}" class="" name="idProducto"> 
                         <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option> 
@@ -106,7 +110,7 @@
                         <option th:each="eleccion : ${opciones}" th:value="${eleccion}" th:text="${eleccion}"></option> 
                     </select>
 
-
+                    <br><br>
 
 
                     <input class="boton" type="submit" value="Editar / Eliminar">
@@ -187,10 +191,10 @@
                 <div class="footer-columna-3">
                     <h3>Nuestras Redes</h3>
                     <div class="redes">
-                       <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
-                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                    <a href="" class="fa-solid fa-at"></a>
-                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>
             </div>

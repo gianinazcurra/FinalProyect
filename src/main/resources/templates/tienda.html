@@ -102,8 +102,8 @@
         <!-- Fin del header -->
 
     <!-- productos destacados -->
-           <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-   <p th:if="${exito != null}" th:text="${exito}" style="color:red"></p>
+        <p th:if="${error != null}" th:text="${error}" class="errorIndex"></p>
+        <p th:if="${exito != null}" th:text="${exito}" class="errorIndex"></p>
     
     <section id="destacados" class="my-5 pb-5">
         <div class="container mt-5 py-5">
@@ -115,7 +115,7 @@
                 <hr>
                 <p>De nuestros productores para todo el país</p>
                 
-                <p th:if="${compraEnCurso!= null}" th:text="${compraEnCurso}" style="color:red"></p>
+                <p th:if="${compraEnCurso!= null}" th:text="${compraEnCurso}"  class="exitoTienda"></p>
                
                 <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
                    <input th:if="${compra != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 

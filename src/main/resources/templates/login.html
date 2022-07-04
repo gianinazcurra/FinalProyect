@@ -90,10 +90,11 @@
         
         <section class="login">
             <div class="login-2">
-            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-            <p th:if="${noLogin != null}" th:text="${xxx}" style="color:red"></p>
-            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
-            
+            <h5>
+            <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
+            <p th:if="${noLogin != null}" th:text="${xxx}" class="errorRojo"></p>
+            <p th:if="${registrado != null}" th:text="${registrado}" class="exito" ></p>
+            </h5>
             <img class="avatar" src="/imagenes/logoCuadrado.jpg" alt="">
             <h2>
                 Inicia Sesion!
