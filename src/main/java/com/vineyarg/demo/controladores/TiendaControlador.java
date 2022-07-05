@@ -86,6 +86,8 @@ public class TiendaControlador {
         modelo.put("productoElegido", productoElegido);
 
         List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoElegido.getVarietal());
+        
+        productosSimilares.remove(productoElegido);
 
         modelo.put("productosSimilares", productosSimilares);
 

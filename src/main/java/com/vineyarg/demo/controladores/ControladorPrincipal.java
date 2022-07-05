@@ -26,43 +26,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping
 public class ControladorPrincipal {
-    
+
     @Autowired
     private CompraRepositorio compraRepositorio;
-    
+
     @GetMapping("/")
     public String index(@RequestParam(required = false) String logout, ModelMap modelo, HttpSession session) {
-        
+
         Usuario login = (Usuario) session.getAttribute("usuarioSession");
-        
-        if(login != null) {
-             Compra compraEnCursoInicioSesion = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getId());
-        
-      
-       
-       if(compraEnCursoInicioSesion != null) {
-           
-           modelo.put("compraEnCursoInicioSesion", compraEnCursoInicioSesion);
-           modelo.put("compraPendiente", "Tenés un compra sin finalizar. ¿Querés continuarla?");
-           
-            List<String> decision = new ArrayList();
-        decision.add("continuar");
-        decision.add("anular");
-        modelo.put("decisiones", decision);
-       }
-       }
+
+        if (login != null) {
+            Compra compraEnCursoInicioSesion = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getId());
+
+            if (compraEnCursoInicioSesion != null) {
+
+                modelo.put("compraEnCursoInicioSesion", compraEnCursoInicioSesion);
+                modelo.put("compraPendiente", "Tenés un compra sin finalizar. ¿Querés continuarla?");
+
+                List<String> decision = new ArrayList();
+                decision.add("continuar");
+                decision.add("anular");
+                modelo.put("decisiones", decision);
+            }
+        }
         if (logout != null) {
             modelo.put("logout", "Has salido de tu cuenta");
-            
 
         }
-        
-       
-        
-       
+
         return "index.html";
-    
-    
-}
-   
+
+    }
+
 }
