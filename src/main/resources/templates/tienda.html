@@ -39,7 +39,39 @@
     .pagination a {
         color: #000;
     }
+    
+    .wrap{
+    max-width: 1100px;
+    width: 100%;
+    margin: auto;
+    }
+
+    #catego{
+        align-items: center;
+    }
+    
+    .btn{
+        background-color: #EC268F;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .card-title{
+        color:aliceblue;
+    }
+    
+    .card-text{
+        color:aliceblue;
+    }
+    
+    #btn-6:hover{
+        background-color:#000;
+    }   
+    
 </style>
+
 
 <body>
      <!-- Header -->
@@ -100,6 +132,132 @@
             </div>
         </nav>
         <!-- Fin del header -->
+
+        <!-- Filtro por regiones -->
+<section id="regionesDestacadas" class="mt-5 my-5 pb-2 wrap">
+   <div class="container pt-5 my-2">
+       <h4 clas="font-weight-bold">Productos por región</h4>
+       <hr>
+   </div>
+   <p class="container" id="catego">
+       <a class="btn btn-dark" data-bs-toggle="collapse" href="#regionPatagonica" role="button" aria-expanded="false" aria-controls="collapseExample">Región Patagónica</a>
+       <a class="btn btn-dark" data-bs-toggle="collapse" href="#regiondeCuyo" role="button" aria-expanded="false" aria-controls="collapseExample">Región Cuyana</a>
+       <a class="btn btn-dark" data-bs-toggle="collapse" href="#regionNO" role="button" aria-expanded="false" aria-controls="collapseExample">Región Noreste</a>
+       <a class="btn btn-dark" data-bs-toggle="collapse" href="#regionPampeana" role="button" aria-expanded="false" aria-controls="collapseExample">Región Pampeana</a>
+       <a class="btn btn-dark" data-bs-toggle="collapse" href="#regionMesopotamica" role="button" aria-expanded="false" aria-controls="collapseExample">Región Mesopotámica</a>
+       <a class="btn btn-dark" data-bs-toggle="collapse" href="#regionChaquenia" role="button" aria-expanded="false" aria-controls="collapseExample">Región Chaqueña</a>
+   </p>
+   <div class="collapse" id="regionPatagonica">            
+       <div class="card mb-2" style="max-width: 540px;">
+           <div class="row g-0">
+             <div class="col-md-12">
+                   <img src="/imagenes/regiones/Cuyocategoria.png" class="img-fluid" alt="...">
+                   </div>
+                       <div class="col-md-4">
+                           <div class="card-body">
+                               <h5 class="card-title">Región Patagónica</h5>
+                               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                               <a href="#" class="btn btn-dark" id="btn-1">Comprar en esta región</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="collapse" id="regiondeCuyo">            
+       <div class="card mb-3" style="max-width: 540px;">
+           <div class="row g-0">
+             <div class="col-md-12">
+                   <img src="/imagenes/regiones/Cuyocategoria.png" class="img-fluid rounded-start" alt="...">
+                   </div>
+                       <div class="col-md-4">
+                           <div class="card-body">
+                               <h5 class="card-title">Región Cuyana</h5>
+                               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                               <a href="#" class="btn btn-dark" id="btn-2">Comprar en esta región</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="collapse" id="regionNO">            
+       <div class="card mb-3" style="max-width: 540px;">
+           <div class="row g-0">
+             <div class="col-md-12">
+                   <img src="/imagenes/regiones/Cuyocategoria.png" class="img-fluid rounded-start" alt="...">
+                   </div>
+                       <div class="col-md-4">
+                           <div class="card-body">
+                               <h5 class="card-title">Region Noroeste</h5>
+                               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                               <a href="#" class="btn btn-dark" id="btn-3">Comprar en esta región</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="collapse" id="regionPampeana">            
+       <div class="card mb-3" style="max-width: 540px;">
+           <div class="row g-0">
+             <div class="col-md-12">
+                   <img src="/imagenes/regiones/Cuyocategoria.png" class="img-fluid rounded-start" alt="...">
+                   </div>
+                       <div class="col-md-4">
+                           <div class="card-body">
+                               <h5 class="card-title">Región Pampeana</h5>
+                               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                               <a href="#" class="btn btn-dark" id="btn-4">Disponible próximamente</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="collapse" id="regionMesopotamica">            
+       <div class="card mb-3" style="max-width: 540px;">
+           <div class="row g-0">
+             <div class="col-md-12">
+                   <img src="/imagenes/regiones/Cuyocategoria.png" class="img-fluid rounded-start" alt="...">
+                   </div>
+                       <div class="col-md-4">
+                           <div class="card-body">
+                               <h5 class="card-title">Región Mesopotámica</h5>
+                               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                               <a href="#" class="btn btn-dark" id="btn-5">Disponible próximamente</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="collapse" id="regionChaquenia">            
+       <div class="card mb-3" style="max-width: 540px;">
+           <div class="row g-0">
+             <div class="col-md-12">
+                   <img src="/imagenes/regiones/Cuyocategoria.png" class="img-fluid rounded-start" alt="...">
+                   </div>
+                       <div class="col-md-4">
+                           <div class="card-body">
+                               <h5 class="card-title">Región Chaqueña</h5>
+                               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                               <a href="#" class="btn btn-dark" id="btn-6">Disponible próximamente</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+   
+<!-- Fin Filtro x regiones-->
 
     <!-- productos destacados -->
         <p th:if="${error != null}" th:text="${error}" class="errorIndex"></p>
