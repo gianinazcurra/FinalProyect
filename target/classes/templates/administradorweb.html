@@ -104,7 +104,7 @@
             <section class="cuenta">
                 <div class="p_info"> <br></div>
 
-                <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIR DATOS DEL ADMINISTRADOR</a>
+                <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZAR DATOS DEL ADMINISTRADOR</a>
 
                 <a class="boton_lista" href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
 
@@ -138,8 +138,6 @@
                         <p>_________________________________________</p>
                         <br>
                     </div>
-
-
 
                     <div th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
                         <p th:text="${'Identificador de la compra: ' + compraAntiguas.id}" </p>
