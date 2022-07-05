@@ -96,10 +96,10 @@
                         <input class="control" type="email" name="correo" placeholder="Podés cargar tu correo de registro"  id="" th:value="${perfil.correo}">
                     </div>
                     <div class="input_editar">
-                        <input class="control"  name="clave1" placeholder="Podés cambiar tu clave"  id="" th:value="${perfil.clave}">
+                        <input class="control" type="password" name="clave1" placeholder="Podés cambiar tu clave"  id="" th:value="${perfil.clave}">
                     </div>
                     <div class="input_editar">
-                        <input class="control"  name="clave2" placeholder="Si cambiaste tu clave, por favor ingresala nuevamente" id="" required="" th:value="${perfil.clave}">
+                        <input class="control" type="password" name="clave2" placeholder="Si cambiaste tu clave, por favor ingresala nuevamente" id="" required="" th:value="${perfil.clave}">
                     </div>
                     <input class="control" type="file" name="archivo" placeholder="Podés cambiar tu foto de perfil"  id="" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff">
                     <br><br>
