@@ -247,19 +247,7 @@ public class ProductoControlador {
         
         productoServicio.valorarProducto(idProducto, valoracionInt);
         
-//        List<Producto> productosT = productoRepositorio.findAll();
-//        List<Producto> productos = new ArrayList();
-//        
-//        
-//        
-//        for (Producto producto : productosT) {
-//            if (producto.isAlta() && producto.getProductor().isAlta()) {
-//                productos.add(producto);
-//                
-//               
-//            }
-//        }
-//        modelo.put("productos", productos);
+
 
         return "redirect:/tienda";
     }
