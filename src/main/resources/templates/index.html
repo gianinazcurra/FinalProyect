@@ -93,7 +93,7 @@
         <p th:if="${logout != null}" th:text="${logout}" class="errorIndex" ></p>
         
 
-        <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="POST" class="formPendiente">
+        <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="GET" class="formPendiente">
             <p th:if="${compraPendiente != null}" th:text="${compraPendiente}"></p>
             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="idCompra" th:value="${compraEnCursoInicioSesion.id}">

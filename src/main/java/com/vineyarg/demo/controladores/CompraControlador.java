@@ -133,7 +133,7 @@ public class CompraControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
-    @PostMapping("/finalizarCompra")
+    @GetMapping("/finalizarCompra")
     public String finalizarCompra(ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCompra, @RequestParam(required = false) String decision) {
 
         if (decision.equalsIgnoreCase("anular")) {
