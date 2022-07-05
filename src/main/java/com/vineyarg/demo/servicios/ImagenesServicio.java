@@ -42,6 +42,9 @@ public class ImagenesServicio {
                 
                 String imageType = archivo.getContentType().toString();
                 
+                Long tamanoImagen = archivo.getSize();
+                
+                
                 if (!imageType.startsWith("image/")) {
                     
                     throw new Excepcion("El archivo que intentas cargar no corresponde a una imagen");

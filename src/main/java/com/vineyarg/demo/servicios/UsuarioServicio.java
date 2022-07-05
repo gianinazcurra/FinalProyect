@@ -190,7 +190,7 @@ public class UsuarioServicio implements UserDetailsService {
 
             //validación para no poder eliminar al usuario Administrador general 
         
-         if (correo.equalsIgnoreCase("administradoradministracion@vineyarg.com.ar")) {
+         if (correo.equalsIgnoreCase("administrador@vineyarg.com.ar")) {
             throw new Excepcion("El administrador general no puede ser eliminado");
         }
          

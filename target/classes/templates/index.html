@@ -54,12 +54,11 @@
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
                     <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
-                    <a href="">
-                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    <a th:if="${compraPendiente != null}"  th:href="@{/finalizarCompra(idUsuario=${session.usuarioSession.id}, idCompra=${compraEnCursoInicioSesion.id}, decision=${'continuar'})}">
+                        <li class="fa-solid fa-cart-shopping nav__item"></li>
                     </a>
-
-                    <a href="">
-                        <li class="fa-solid fa-heart nav__item"></li>
+                    <a th:if="${compraPendiente == null}">
+                        <li class="fa-solid fa-cart-shopping nav__item"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
@@ -90,7 +89,7 @@
         <p th:if="${logout != null}" th:text="${logout}" class="errorIndex" ></p>
         
 
-        <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="POST" class="formPendiente">
+        <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="GET" class="formPendiente">
             <p th:if="${compraPendiente != null}" th:text="${compraPendiente}"></p>
             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="idCompra" th:value="${compraEnCursoInicioSesion.id}">
