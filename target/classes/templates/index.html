@@ -55,13 +55,13 @@
                     <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
                     <a href="">
-                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                        <li class="fa-solid fa-cart-shopping nav__item"></li>
                     </a>
 
-                    <a href="">
+                   <!-- <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
-
+                    </a> -->
+                   
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
