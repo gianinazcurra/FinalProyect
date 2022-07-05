@@ -202,7 +202,7 @@ public class CompraControlador {
                         totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
                         
                     }
-                    Double envio = 450.00;
+                    Double envio = 450.0;
                     Double totalCompraConEnvio = (totalSumaProductos + envio);
                         
                     
@@ -242,7 +242,7 @@ public class CompraControlador {
 
                     modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
-                    Double envio = 450.00;
+                    Double envio = 450.0;
                     Double totalCompraConEnvio = (totalSumaProductos + envio);
 
                     modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
@@ -307,7 +307,7 @@ public class CompraControlador {
                         
                     }
                 
-                Double envio = 450.00;
+                Double envio = 450.0;
                 Double totalCompraConEnvio = (totalSumaProductos + envio);
 
                 modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
@@ -408,7 +408,7 @@ public class CompraControlador {
 
                 modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
-                Double envio = 450.00;
+                Double envio = 450.0;
                 Double totalCompraConEnvio = (totalSumaProductos + envio);
 
                 modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
