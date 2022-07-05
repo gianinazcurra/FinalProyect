@@ -6,8 +6,10 @@
 package com.vineyarg.demo.controladores;
 
 import com.vineyarg.demo.entidades.Compra;
+import com.vineyarg.demo.entidades.Producto;
 import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
+import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -29,12 +31,32 @@ public class ControladorPrincipal {
 
     @Autowired
     private CompraRepositorio compraRepositorio;
+    
+    @Autowired
+    private ProductoRepositorio productoRepositorio;
 
     @GetMapping("/")
     public String index(@RequestParam(required = false) String logout, ModelMap modelo, HttpSession session) {
 
         Usuario login = (Usuario) session.getAttribute("usuarioSession");
 
+        List<Producto> productosT = productoRepositorio.findAll();
+        List<Producto> productos = new ArrayList();
+        
+        
+        
+        for (Producto producto : productosT) {
+            if (producto.isAlta() && producto.getProductor().isAlta()) {
+                
+                if(productos.size() < 3)
+                productos.add(producto);
+                
+                
+               
+            }
+        }
+        modelo.put("productos", productos);
+        
         if (login != null) {
             Compra compraEnCursoInicioSesion = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getId());
 
