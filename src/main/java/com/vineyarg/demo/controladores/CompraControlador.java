@@ -51,10 +51,8 @@ public class CompraControlador {
     @Autowired
     private ItemCompraRepositorio ItemCompraRepositorio;
 
-//    @GetMapping("/crearCompra")
-//    public String iniciarCompra() {
-//        return "carrito.html";
-//    }
+
+    
     @PostMapping("/agregaCarrito")
     public String agregaCarrito(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idProducto, @RequestParam Integer cantidad) {
 
@@ -346,7 +344,7 @@ public class CompraControlador {
             e.getMessage();
             modelo.put("error", "Error al realizar la compra");
         }
-        return "exito-compra.html";
+        return "index.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")

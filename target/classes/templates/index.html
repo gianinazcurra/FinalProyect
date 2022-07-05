@@ -54,7 +54,10 @@
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
                     <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
-                    <a href="">
+                    <a th:if="${compraPendiente != null}"  th:href="@{/finalizarCompra(idUsuario=${session.usuarioSession.id}, idCompra=${compraEnCursoInicioSesion.id}, decision=${'continuar'})}">
+                        <li class="fa-solid fa-bag-shopping nav__item"></li>
+                    </a>
+                    <a th:if="${compraPendiente == null}">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
 
