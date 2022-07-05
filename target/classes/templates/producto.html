@@ -149,7 +149,7 @@
                     <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
 
 
-                    <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="POST">
+                    <form th:if="${compraEnCurso!= null}" action="/finalizarCompra" method="GET">
                         <input th:if="${perfil != null)}" type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"/> 
                         <input th:if="${compra != null}" type="hidden" name="idCompra" th:value="$(compra.id)">
                         <button class="buy-btn" type="submit" th:text="${'Finalizar pedido'}"></button>

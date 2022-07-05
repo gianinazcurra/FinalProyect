@@ -338,7 +338,7 @@ public class CompraControlador {
 
             String exito = "Felicitaciones! Tu compra fue enviada con éxito. Nos encargaremos de procesar el pago y podrás ver la confirmación en tu perfil de usuario cuando tu compra esté finalizada";
 
-            modelo.put("exito", exito);
+            modelo.put("exitocompra", exito);
 
         } catch (Exception e) {
             e.getMessage();
