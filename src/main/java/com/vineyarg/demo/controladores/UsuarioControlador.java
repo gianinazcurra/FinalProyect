@@ -30,6 +30,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
@@ -58,7 +60,16 @@ public class UsuarioControlador {
     private ItemCompraRepositorio itemCompraRepositorio;
 
     @GetMapping("/registro")
-    public String registro(HttpSession session) {
+    public String registro(HttpSession session, ModelMap modelo) {
+
+        //lo de abajo impide que si existe una sesión iniciada se puede registrar un nuevo usuario
+        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+        if (login != null && login.getTipoUsuario() != ADMINISTRADOR) {
+
+            modelo.put("error", "Ya estás registrado");
+            return "index.html";
+        }
+
         return "registro.html";
     }
 
@@ -69,23 +80,15 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/logueo")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String timeout, ModelMap modelo, HttpSession session) {
 
-        //lo de abajo impide que si existe una sesión iniciada se puede acceder a otro login
-        Usuario login = (Usuario) session.getAttribute("usuarioSession");
-        if (login != null) {
-            
-            return "redirect:/";
-        }
-        
-        
         if (error != null) {
             modelo.put("error", "Nombre de usuario o clave incorrectos");
         }
-
-//        if(faltaLogin.equalsIgnoreCase("aa")) {
-//             modelo.put("debeLoguearse", "Debes ingresar a tu cuenta para poder comprar");
+//        if (timeout != null) {
+//            modelo.put("timeout", "Cerramos tu sesiòn por inactividad, por favor ingresá de nuevo");
 //        }
+
         return "login.html";
 
     }

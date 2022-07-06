@@ -159,8 +159,19 @@ public class UsuarioServicio implements UserDetailsService {
                 
             }
             usuario.setCorreo(correo);
-            String encriptada = new BCryptPasswordEncoder().encode(clave1);
-            usuario.setClave(encriptada);
+            
+            
+            
+            
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            
+                if (!passwordEncoder.matches(clave1, usuario.getClave())) {
+
+                    String encriptada = new BCryptPasswordEncoder().encode(clave1);
+                    usuario.setClave(encriptada);
+                } 
+            
+            
             usuario.setAlta(true);
 
             if (!archivo.isEmpty()) {
@@ -303,7 +314,8 @@ public class UsuarioServicio implements UserDetailsService {
    
        
         Usuario usuario = usuarioRepositorio.BuscarUsuarioPorCorreo(correo);
-
+        
+        
         if (usuario != null && usuario.isAlta()) {
 
             if (usuario.getTipoUsuario() == ADMINISTRADOR) {

@@ -90,7 +90,7 @@
 
     <div class="contenedor__grande">
         <div class="producto__container">
-            <div class="titulo">Agregá tu Vino!</div>
+            <div class="titulo">¡Agregá tu Vino!</div>
             <form action="/agregarProducto" method="POST" enctype="multipart/form-data">
                 
                  <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
@@ -112,7 +112,7 @@
                         <input type="number"  step="0.01" min="0" max="1000000" name="precio" th:value="${precio}" placeholder="Ingresa el Precio unitario" required>
                     </div>
                     <div class="input__caja">
-                        <span class="detalles">Descripcion</span>
+                        <span class="detalles">Descripción</span>
                         <input type="text" name="descripcion" th:value="${descripcion}" placeholder="Ingresa la Descripcion" required>
                     </div>
                     <div class="input__caja">
@@ -126,7 +126,7 @@
 
                 </div>
                 <div class="imag">
-                    <span class="detalles">Imagenes:</span>
+                    <span class="detalles">Imágenes:</span>
                     <input class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff" multiple>
                 </div>
                 <input class="boton" type="submit" value="Guardar">
@@ -154,7 +154,7 @@
                 </h3>
             </div>
             <div class="footer-columna-2">
-                <h3>Navegacion</h3>
+                <h3>Navegación</h3>
                 <ul>
                   <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>

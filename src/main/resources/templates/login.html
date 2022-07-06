@@ -93,12 +93,14 @@
             <h5>
             <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
             <p th:if="${noLogin != null}" th:text="${xxx}" class="errorRojo"></p>
+            <p th:if="${timeout != null}" th:text="${timeout}" class="errorRojo"></p>
             <p th:if="${registrado != null}" th:text="${registrado}" class="exito" ></p>
             </h5>
             <img class="avatar" src="/imagenes/logoCuadrado.jpg" alt="">
             <h2>
                 Inicia Sesion!
             </h2>
+            <div>
             <form action="/logincheck" method="POST">
                 <!-- nombre -->
                 <label for="correo">Usuario (correo electrónico con el que te registraste)</label>
@@ -110,7 +112,9 @@
                 
                
                 <input type="submit" value="Ingresá">
+                
             </form>
+                </div>
             <h5>
                 Todavia no tenes una cuenta? <a href="/registro"> Click aqui! </a>
             </h5>

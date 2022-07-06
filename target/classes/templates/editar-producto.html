@@ -105,7 +105,7 @@
                         <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option> 
                     </select>
 
-                    <label> Selecione qué desea hacer</label>
+                    <label> Selecioná qué deseas hacer</label>
                     <select class="" name="eleccion"> 
                         <option th:each="eleccion : ${opciones}" th:value="${eleccion}" th:text="${eleccion}"></option> 
                     </select>
@@ -147,7 +147,7 @@
                             <input step="0.01" min="0" max="1000000"  type="number" name="precio" th:value="${productoElegido.precio}" placeholder="Ingresa el Precio" required>
                         </div>
                         <div class="input__caja">
-                            <span class="detalles">Descripcion</span>
+                            <span class="detalles">Descripción</span>
                             <input type="text" name="descripcion" th:value="${productoElegido.descripcion}" placeholder="Ingresa la Descripcion" required>
                         </div>
                         <div class="input__caja">
@@ -158,7 +158,7 @@
 
                     </div>
                     <div class="imag">
-                        <span class="detalles">Imagenes:</span>
+                        <span class="detalles">Imágenes:</span>
                         <input class="btn__imagen" type="file" name="imagenes" th:value="${imagenes}" placeholder="Ingresa fotos del producto (se reemplazarán las imágenes que ya tengas cargadas)" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff" multiple>
                     </div><!--
                     -->                <input class="boton" type="submit" value="Guardar modificaciones">

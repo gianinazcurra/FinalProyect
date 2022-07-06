@@ -156,7 +156,7 @@
                     </ul>
                 </div>
                 <div class="col-md-8 order-md-1">
-                    <h4 class="mb-3">Direccion de Envío</h4>
+                    <h4 class="mb-3">Dirección de Envío</h4>
                     <form class="needs-validation" novalidate action="/enviarPedido" method="POST" >
 
                         <input th:if="${carrito != null}" type="hidden" class="form-control" name="idCompra" th:value="${carrito.id}"/> 
@@ -193,7 +193,7 @@
                             <label for="correo">Email <span class="text-muted">(Requerido)</span></label>
                             <input type="email" class="form-control" id="email" name="correo" placeholder="" th:value="${usuario.correo}">
                             <div class="invalid-feedback">
-                                Ingrese una dirección de correo electrónico válida para actualizaciones de envío.
+                                Ingresá una dirección de correo electrónico válida para actualizaciones de envío.
                             </div>
                         </div>
 
@@ -201,7 +201,7 @@
                             <label for="direccion">Dirección</label>
                             <input type="text" class="form-control" id="address" name="direccion" placeholder="Ingrese calle y numero" required>
                             <div class="invalid-feedback">
-                                Por favor ingrese una dirección válida.
+                                Por favor ingresá una dirección válida.
                             </div>
                         </div>
 
@@ -237,7 +237,7 @@
                                     <option>Tucumán</option>
                                 </select>
                                 <div class="invalid-feedback">
-                                    Por favor seleccione un estado válido.
+                                    Por favor seleccioná un estado válido.
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -248,7 +248,7 @@
 
                                 </select>
                                 <div class="invalid-feedback">
-                                    <p> Por favor seleccione un País válido (pronto entregas internaciones)</p>
+                                    <p> Por favor seleccioná un País válido (pronto entregas internaciones)</p>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
@@ -323,7 +323,7 @@
                                 <label for="DNI">DNI del titular de la tarjeta</label>
                                 <input type="text" class="form-control" id="cc-cvv" name="DNI" placeholder="" required>
                                 <div class="invalid-feedback">
-                                    Ingrese DNI del titular de la tarjeta.
+                                    Ingresá el DNI del titular de la tarjeta.
                                 </div>
                             </div>
                         </div>

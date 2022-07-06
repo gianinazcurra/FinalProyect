@@ -84,7 +84,7 @@
         <div class="contenedor_division">
             <div class="contenedor__grande">
                 <div class="producto__container">
-                    <div class="titulo">Moificá la bodega!</div>
+                    <div class="titulo">Modificá tu bodega</div>
 
 
                     <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
@@ -115,12 +115,12 @@
                                        required="" th:value="${productor.correo}">
                             </div>
                             <div class="input_caja">
-                                <input class="control" type="password" name="clave1" id="" placeholder="Ingresar una Contraseña"
-                                       required="" th:value="${productor.clave}">
+                                <input class="control" type="password" name="clave1" id="" placeholder="Ingresar tu contraseña o una nueva si querés cambiarla"
+                                       required="" th:value="${clave1}">
                             </div>
                             <div class="input_caja">
-                                <input class="control" type="password" name="clave2" id="" placeholder="Repita la contraseña"
-                                       required="" th:value="${productor.clave}">
+                                <input class="control" type="password" name="clave2" id="" placeholder="Repetí la contraseña"
+                                       required="" th:value="${clave2}">
                             </div>
                             <div class="input_caja">
                                 <input class="control" type="text" name="descripcion" id=""
@@ -140,7 +140,7 @@
 
                         </div>
                         <p><input type="checkbox" required=""> Estoy de acuerdo con <a
-                                href="/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                                href="/terminos-condiciones.html">Términos y Condiciones</a></p>
                        
                         <input class="boton" type="submit" value="Actualizar perfil">
                     </form>
@@ -148,9 +148,9 @@
             </div>      
             <div class="contenedor__grande">
                 <div class="producto__container">
-                    <div class="titulo">Elimina tu bodega</div>
+                    <div class="titulo">Eliminá tu bodega</div>
 
-                    <p> A continuación podés eliminar los datos de la bodega/empresa </p>
+                    <p> A continuación podés eliminar los datos de tu empresa </p>
                     </form>
                     <form action="/eliminarProductor" method="POST" enctype="multipart/form-data">
 
@@ -191,7 +191,7 @@
                     </h3>
                 </div>
                 <div class="footer-columna-2">
-                    <h3>Navegacion</h3>
+                    <h3>Navegación</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="">Regiones</a></li>
