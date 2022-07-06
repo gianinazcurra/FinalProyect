@@ -23,7 +23,11 @@
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
 </head>
-
+<style>
+    .botones a{
+        text-decoration: none;
+    }
+</style>
 
 <body>
      <!-- Header -->
@@ -173,10 +177,11 @@
                         <h6>Total</h6>
                         <p th:if="${totalCompra != null}" th:text="${'$' + totalCompra}"> </p>
                     </div>
-                   
-                      <a th:href="@{/checkout/(idCompra=${carrito.id})}"> <button id="botonCompra" class="ml-auto" >PROCEDER A LA COMPRA</button></a>
+                    <div class="botones">
+                    <a th:href="@{/checkout/(idCompra=${carrito.id})}" > <button id="botonCompra" class="ml-auto" >PROCEDER A LA COMPRA</button></a>
                     <a th:href="@{/tienda}"> <button id="botonCompra" class="ml-auto" >SEGUIR COMPRANDO</button></a>
                     <a th:href="@{/anularCompra/(idCompra=${carrito.id})}"> <button id="botonCompra" class="ml-auto" >ANULAR COMPRA</button></a>
+                    </div>
                 </div>
             </div>
         </div>

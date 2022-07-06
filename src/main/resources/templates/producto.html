@@ -28,7 +28,11 @@
                 display: flex;
                 justify-content: space-between;
             }
-
+            .imagen__producto{
+                height: 300px;
+                margin:auto;
+		    display:block;
+            }
             .small.img-col {
                 flex-basis: 24%;
                 cursor: pointer;
@@ -124,7 +128,7 @@
                 <div class="col-lg-5 col-md-12 col-12">
 
                     <!--                                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto"> ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS -->
-                    <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
+                    <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto" class="imagen__producto">
                     <!--                                   <img th:if="${productoEl.imagen == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">-->
 
 
@@ -192,7 +196,7 @@
             <div class="row mx-auto container-fluid">
                 <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productosSimilares != null}"th:each="productoSimilar : ${productosSimilares}">
 
-                    <img th:if="${productoSimilar.imagenes != null}" th:each="img : ${productoSimilar.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
+                    <img th:if="${productoSimilar.imagenes != null}" th:each="img : ${productoSimilar.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto" height="200px">
 
                     <div class="estrella">
                         <h6 class="p-nombre" th:text="'Valoración de otros usuarios: ' + ${productoSimilar.promedioValoraciones}"></h6>

@@ -84,15 +84,16 @@
         <!-- FORMULARIO -->
 
         <div class="formulario">
-            <div class="imagen"> <img class="imagen" src="/imagenes/logoCuadrado.jpg" alt=""></div>
+            <div  class="imagen imagen-b">
+            <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
+            <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
+            </div>
             <section class="cuenta">
                 <div class="p_info"> <br></div> 
                 <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
                 <p th:if="${exito != null}" th:text="${exito}" class="exito"></p>
 
                 <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
-                <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" alt="La imagen de perfil de tu bodega"> 
-                <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
 
                 <a class="boton_lista" th:href="@{/editar-productor(idUsuario=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
 
