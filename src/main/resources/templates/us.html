@@ -21,53 +21,78 @@
     <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
     <!-- Links -->
 </head>
+<style>
+    h1{
+        text-align: center;
+        text-transform: uppercase;
+    }
+</style>
 
 <body>
-    <!-- Header -->
-
-    
-    <nav class="etiqueta__nav">
-
-        <div class="nav__container">
-
-            <div class="nav__logo">
-                <a href="/index.html"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
-                        width="200px"></a>
-            </div>
+  <!-- Header -->
 
 
-            <label for="menuId" class="nav__label">
-                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
-            </label>
-            <input type="checkbox" id="menuId" class="nav__input">
+        <nav class="etiqueta__nav">
 
-            <div class="hamburguesa">
+            <div class="nav__container">
+
+                <div class="nav__logo">
+                    <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                                     width="200px"></a>
+                </div>
+
+
+                <label for="menuId" class="nav__label">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                </label>
+                <input type="checkbox" id="menuId" class="nav__input">
+
+
+
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/index.html">Home</a></li>
-                    <li class="nav__item"><a href="">Regiones</a></li>
-                    <li class="nav__item"><a href="">Bodegas</a></li>
-                    <li class="nav__item"><a href="">Tienda</a></li>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
                     <li class="nav__item"><a href="">Contacto</a></li>
-                </ul>
 
-                <ul class="nav__iconos">
-                    <a href="">
+                   <!-- <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
-                    <a href="/HTML/registro.html">
+                    </a> -->
+
+                    <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
+                    
+                    
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+                    
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
+                        <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
+
                 </ul>
             </div>
-        </div>
-    </nav>
-    <!-- Fin del header -->
+        </nav>
+        <!-- Fin del header -->
+        
+        
+        <h1>Back-End</h1>
     <section class="carta">
+        
         <div class="contenedor">
+            
             <div class="card">
                 <div class="card-encabezado">
                     <img src="/imagenes/logoCuadrado.jpeg" alt="">
@@ -122,7 +147,7 @@
             </div>
         </div>
     </section>
-   
+        <h1>Front-End</h1>
     <section class="carta">
         <div class="contenedor-2">
             <div class="card">
@@ -153,14 +178,14 @@
             </div>
             <div class="card">
                 <div class="card-encabezado">
-                    <img src="/imagenes/logoCuadrado.jpeg" alt="">
+                    <img src="/imagenes/EmaC.jfif" alt="">
                 </div>
                 <div class="card-iconos">
-                    <li class="agrandar"><a href="#"><span class="fab fa-linkedin"></span></a></li>
+                    <li class="agrandar"><a href="https://www.linkedin.com/in/eleonit/"><span class="fab fa-linkedin"></span></a></li>
                 </div>
                 <div class="card-contenido">
-                    <div class="info-personal desplazar">Nombre</div>
-                    <div class="info-personal desplazar">Mendoza, Argentina</div>
+                    <div class="info-personal desplazar">Emanuel Sivila</div>
+                    <div class="info-personal desplazar">Chubut, Argentina</div>
                     <div class="info-personal desplazar">Front-End Developer</div>
                 </div>
             </div>

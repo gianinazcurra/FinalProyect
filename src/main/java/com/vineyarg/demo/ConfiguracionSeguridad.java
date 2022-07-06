@@ -6,6 +6,7 @@
 package com.vineyarg.demo;
 
 import com.vineyarg.demo.entidades.Usuario;
+import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.io.IOException;
@@ -79,78 +80,64 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 HttpServletResponse response,
                 Authentication authentication
         ) throws IOException {
-            
-           
+
             String targetUrl = determineTargetUrl(authentication);
-            
+
             if (response.isCommitted()) {
                 logger.debug(
                         "Response has already been committed. Unable to redirect to "
                         + targetUrl);
                 return;
             }
-            
-           
+
             redirectStrategy.sendRedirect(request, response, targetUrl);
         }
-}
-        protected void clearAuthenticationAttributes(HttpServletRequest request) {
-            HttpSession session = request.getSession(false);
-            if (session == null) {
-                return;
+    }
+
+    protected void clearAuthenticationAttributes(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return;
+        }
+        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+    }
+
+    protected String determineTargetUrl(final Authentication authentication) {
+
+        User usuario = (User) authentication.getPrincipal();
+        Usuario usuario1 = usuarioRepositorio.BuscarUsuarioPorCorreo(usuario.getUsername());
+        String id = usuario1.getId();
+
+        Map<String, String> roleTargetUrlMap = new HashMap<>();
+
+        roleTargetUrlMap.put("ROLE_ADMINISTRADOR", "/administradorweb?id=" + id);
+        roleTargetUrlMap.put("ROLE_USUARIO_COMUN", "/tienda");
+        roleTargetUrlMap.put("ROLE_PRODUCTOR", "/productorweb?id=" + id);
+
+        final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        for (final GrantedAuthority grantedAuthority : authorities) {
+            String authorityName = grantedAuthority.getAuthority();
+            if (roleTargetUrlMap.containsKey(authorityName)) {
+                return roleTargetUrlMap.get(authorityName);
             }
-            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
 
-        protected String determineTargetUrl(final Authentication authentication) {
+        throw new IllegalStateException();
+    }
 
-             
-           User usuario = (User) authentication.getPrincipal();
-           Usuario usuario1 = usuarioRepositorio.BuscarUsuarioPorCorreo(usuario.getUsername());
-           String id = usuario1.getId();
-            System.out.println(id);
-            Map<String, String> roleTargetUrlMap = new HashMap<>();
-            
-            roleTargetUrlMap.put("ROLE_ADMINISTRADOR", "/administradorweb?id=" + id);
-            roleTargetUrlMap.put("ROLE_USUARIO_COMUN", "/tienda");
-            roleTargetUrlMap.put("ROLE_PRODUCTOR", "/productorweb?id=" + id);
-
-            final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            for (final GrantedAuthority grantedAuthority : authorities) {
-                String authorityName = grantedAuthority.getAuthority();
-                if (roleTargetUrlMap.containsKey(authorityName)) {
-                    return roleTargetUrlMap.get(authorityName);
-                }
-            }
-
-            throw new IllegalStateException();
-        }
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
 
-            http.authorizeRequests().antMatchers("/css/*", "/js/*", "/img/*", "/**").permitAll().and().formLogin()
-                    .loginPage("/logueo").loginProcessingUrl("/logincheck").usernameParameter("correo")
-                    .passwordParameter("clave").successHandler(myAuthenticationSuccessHandler()).failureUrl("/logueo/?error=error")
-                    .permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/?logout=logout").permitAll().and().csrf()
-                    .disable();
-
-            //PRUEBA DIFERENTES USUARIOS:
-//       http.authorizeRequests().antMatchers("/css/*", "/js/*", "/img/*", "/**").access("hasRole('ROLE_ADMINISTRADOR')").and().formLogin()
-//				.loginPage("/logueo").loginProcessingUrl("/logincheck").usernameParameter("correo")
-//				.passwordParameter("clave").defaultSuccessUrl("/administradorweb").failureUrl("/?error=error")
-//				.permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/?logout=logout").permitAll().and()
-//               .authorizeRequests().antMatchers("/css/*", "/js/*", "/img/*", "/**").access("hasRole('ROLE_USUARIO_COMUN')").and().formLogin()
-//				.loginPage("/logueo").loginProcessingUrl("/logincheck").usernameParameter("correo")
-//				.passwordParameter("clave").defaultSuccessUrl("/usuarioweb").failureUrl("/?error=error")
-//				.permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/?logout=logout").permitAll().and()
-//               .authorizeRequests().antMatchers("/css/*", "/js/*", "/img/*", "/**").access("hasRole('ROLE_PRODUCTOR')").and().formLogin()
-//				.loginPage("/logueo").loginProcessingUrl("/logincheck").usernameParameter("correo")
-//				.passwordParameter("clave").defaultSuccessUrl("/productorweb").failureUrl("/?error=error")
-//				.permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/?logout=logout").permitAll()
-//                                .and().csrf().disable();
-        }
-
-
+        http.authorizeRequests().antMatchers("/css/*", "/js/*", "/img/*", "/**").permitAll().and().formLogin()
+                .loginPage("/logueo").loginProcessingUrl("/logincheck").usernameParameter("correo")
+                .passwordParameter("clave").successHandler(myAuthenticationSuccessHandler()).failureUrl("/logueo/?error=error")
+                .permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/?logout=logout").permitAll().and().csrf()
+                .disable();
+                http.sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/?error='Cambió la sesión'");
+      
     }
+
+}

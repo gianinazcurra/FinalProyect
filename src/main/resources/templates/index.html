@@ -32,6 +32,8 @@
             box-sizing: auto;
             object-fit: cover;
         }
+        
+       
     </style>
     <body>
 
@@ -66,7 +68,7 @@
                         <li class="fa-solid fa-cart-shopping nav__item"></li>
                     </a>
                     <a th:if="${compraPendiente == null}">
-                        <li class="fa-solid fa-cart-shopping nav__item"></li>
+                        <li class="fa-solid fa-cart-shopping nav__item1" title="No tenés compras iniciadas"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
@@ -204,7 +206,7 @@
             <div class="container">
                 <h4>Nuevo Merlot</h4>
                 <h1>Nueva Colección<br>IMPERDIBLE</h1>
-                <button class="text-uppercase">Comprar ahora</button>
+                <a href="/tienda"><button>Comprar Ahora</button></a>
             </div>
         </section>
 

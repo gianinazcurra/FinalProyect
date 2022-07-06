@@ -1,185 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VineyArg</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VineyArg</title>
 
-    <!-- Links -->
-    <!-- CSS -->
-    <link rel="stylesheet" href="/CSS/style.css">
-    <link rel="stylesheet" href="/CSS/login.css">
-    <!-- JavaScript -->
-    <script src="/JS/script.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
-    <!-- Links -->
-</head>
+        <!-- Links -->
+        <!-- CSS -->
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/productorWeb.css">
+        <!-- JavaScript -->
+        <script src="/JS/script.js"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+        <!-- Iconos -->
+        <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
+        <!-- Links -->
+    </head>
 
-<body>
-    <!-- Header -->
+    <body>
+        <!-- Header -->
 
 
-    <nav class="etiqueta__nav">
+        <nav class="etiqueta__nav">
 
-        <div class="nav__container">
+            <div class="nav__container">
 
-            <div class="nav__logo">
-                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
-                        width="200px"></a>
-            </div>
-<a href="/logout"> Cerrar sesion </a><br>
-     <a href="/"> Volver al menú principal</a>
+                <div class="nav__logo">
+                    <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                                     width="200px"></a>
+                </div>
 
-            <label for="menuId" class="nav__label">
-                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
-            </label>
-            <input type="checkbox" id="menuId" class="nav__input">
 
-            <div class="hamburguesa">
+                <label for="menuId" class="nav__label">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                </label>
+                <input type="checkbox" id="menuId" class="nav__input">
+
+
+
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="">Regiones</a></li>
-                    <li class="nav__item"><a href="">Bodegas</a></li>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                </ul>
+                    <li class="nav__item"><a href="">Contacto</a></li>
 
-                <a href="/logout"> Cerrar sesión </a><br>
-                <a href="/"> Volver al menú principal</a>
+                    <a href="">
+                        <li class="fa-solid fa-cart-shopping nav__item"></li>
+                    </a>
 
-                <ul class="nav__iconos">
-                    <a href="">
-                        <li class="fa-solid fa-bag-shopping nav__item"></li>
-                    </a>
-                    <a href="">
-                        <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
+                    <!-- <a href="">
+                         <li class="fa-solid fa-heart nav__item"></li>
+                     </a> -->
+
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
-                    
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    <a th:if="${session.usuarioSession != null}"> 
-                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                    
+
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                       
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
-                    
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
-                    
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    </a>
+
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
+
                 </ul>
             </div>
-        </div>
-    </nav>
-    <!-- Fin del header -->
-    
-     <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
- <img th:if="${session.usuarioSession.imagen != null}" th:src="${'/usuarioimagen?id=' + session.usuarioSession.id}" alt="" th:text="aa"> 
-                 <img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="a">
-
-     <a th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIR DATOS DEL ADMINISTRADOR</a>
-    
-   <a href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
-   
-    <a href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS         </a>  
-        
-        <div th:if="${sinNuevas != null}">
-        <p th:text="${'No existen compras nuevas para procesar'}"> </p>
-         </div>
-    <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
-        <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
-         <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
-         <p th:each="item : ${compra.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
-         <p th:each="item : ${compra.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
-         <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
-         <p th:value="${'Precio final con envío: ' + compra.montoFinal}"> </p>
-         <p th:value="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
-         <p th:text="${'Nombre del comprador: ' + compra.usuario.nombre + compra.usuario.apellido}"> </p>
-         
-         <form action="/aceptarCompra" method="POST" >
-             
-             <label th:text="${'El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso'}">  </label>
-              <input type="hidden" class="" name="idCompra" th:value="${compra.id}"/> 
-                <select class="" name="decision" required> 
-                  <option th:text="${'ACEPTAR'}" th:value="${'ACEPTAR'}"></option> 
-                  <option th:text="${'RECHAZAR'}" th:value="${'RECHAZAR'}"></option> 
-                  </select>
-                   <input type="text" name="observaciones" th:value="${observaciones}" placeholder="Indique si la compra fue aprobada o causas del rechazo" required>
-                  <input class="boton" type="submit" value="Aceptar/Rechazar">
-         </form>
-         
-        </div>
-  
-                          
-    <div th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
-        <p th:text="${'Identificador de la compra: ' + compraAntiguas.id}" </p>
-         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
-         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
-         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
-         <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
-         <p th:value="${'Precio final con envío: ' + compraAntiguas.montoFinal}"> </p>
-         <p th:value="${'Fecha de la compra: ' +compraAntiguas.fechaCompra}"> </p>
-         <p th:text="${'Nombre del comprador: ' + compraAntiguas.usuario.nombre + compraAntiguas.usuario.apellido}"> </p>
-         <p th:text="${compraAntiguas.estadoCompra}" </p>
-         <p th:text="${compraAntiguas.observacionesCompra}" </p>
-         
-         
-        </div>
+        </nav>
+        <!-- Fin del header -->
 
 
-    <!-- Footer -->
 
-    <div class="footer">
-        <div class="footer-a">
-            <div class="footer-columna-1">
-                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                <h3>
-                    ¡Comprá los mejores vinos Aquí!
-                </h3>
+
+
+
+
+
+
+
+
+        <div class="formulario">
+            
+            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+
+            <div  class="imagen imagen-b">
+            <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
+            <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
             </div>
-            <div class="footer-columna-2">
-                <h3>Navegacion</h3>
+            
+            <section class="cuenta">
+                <div class="p_info"> <br></div>
+
+                <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZAR DATOS DEL ADMINISTRADOR</a>
+
+                <a class="boton_lista" href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
+
+                <a class="boton_lista" href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS</a>  
+                <div class="p_info"> <br>
+                    <div th:if="${sinNuevas != null}">
+                        <p th:text="${'No existen compras nuevas para procesar'}"> </p>
+                    </div>
+                    <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
+                        <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
+                        <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
+                        <p th:each="item : ${compra.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+                        <p th:each="item : ${compra.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
+                        <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                        <p th:value="${'Precio final con envío: ' + compra.montoFinal}"> </p>
+                        <p th:value="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
+                        <p th:text="${'Nombre del comprador: ' + compra.usuario.nombre + compra.usuario.apellido}"> </p>
+
+                        <form action="/aceptarCompra" method="POST" >
+
+                            <label th:text="${'El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso'}">  </label>
+                            <input type="hidden" class="" name="idCompra" th:value="${compra.id}"/> 
+                            <select class="" name="decision" required> 
+                                <option th:text="${'ACEPTAR'}" th:value="${'ACEPTAR'}"></option> 
+                                <option th:text="${'RECHAZAR'}" th:value="${'RECHAZAR'}"></option> 
+                            </select>
+                            <input type="text" name="observaciones" th:value="${observaciones}" placeholder="Indique si la compra fue aprobada o causas del rechazo" required>
+                            <input class="boton" type="submit" value="Aceptar/Rechazar">
+
+                        </form>
+                        <p>_________________________________________</p>
+                        <br>
+                    </div>
+
+                    <div th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
+                        <p th:text="${'Identificador de la compra: ' + compraAntiguas.id}" </p>
+                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
+                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
+                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                        <p th:value="${'Precio final con envío: ' + compraAntiguas.montoFinal}"> </p>
+                        <p th:value="${'Fecha de la compra: ' +compraAntiguas.fechaCompra}"> </p>
+                        <p th:text="${'Nombre del comprador: ' + compraAntiguas.usuario.nombre + compraAntiguas.usuario.apellido}"> </p>
+                        <p th:text="${compraAntiguas.estadoCompra}" </p>
+                        <p th:text="${compraAntiguas.observacionesCompra}" </p>
+                        <p>_________________________________________</p>
+                        <br>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- Footer -->
+
+        <div class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                    <h3>
+                        ¡Comprá los mejores vinos Aquí!
+                    </h3>
+                </div>
+                <div class="footer-columna-2">
+                    <h3>Navegacion</h3>
                     <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
-                    <li><a href="">Bodegas</a></li>
-                    <li><a href="/tienda">Tienda</a></li>
-                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-columna-3">
-                <h3>Nuestras Redes</h3>
-                <div class="redes">
-                   <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
-                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                    <a href="" class="fa-solid fa-at"></a>
-                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                    </div>
                 </div>
             </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
         </div>
-        <div class="footer-b">
-            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
-        </div>
-    </div>
 
-    <!-- Fin del Footer -->
+        <!-- Fin del Footer -->
 
-    <div class="separador"></div>
+        <div class="separador"></div>
 
-</body>
+    </body>
 
 </html>

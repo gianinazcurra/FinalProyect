@@ -31,7 +31,7 @@ public class ControladorPrincipal {
 
     @Autowired
     private CompraRepositorio compraRepositorio;
-    
+
     @Autowired
     private ProductoRepositorio productoRepositorio;
 
@@ -42,21 +42,18 @@ public class ControladorPrincipal {
 
         List<Producto> productosT = productoRepositorio.findAll();
         List<Producto> productos = new ArrayList();
-        
-        
-        
+
         for (Producto producto : productosT) {
             if (producto.isAlta() && producto.getProductor().isAlta()) {
-                
-                if(productos.size() < 3)
-                productos.add(producto);
-                
-                
-               
+
+                if (productos.size() < 3) {
+                    productos.add(producto);
+                }
+
             }
         }
         modelo.put("productos", productos);
-        
+
         if (login != null) {
             Compra compraEnCursoInicioSesion = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getId());
 
@@ -80,4 +77,15 @@ public class ControladorPrincipal {
 
     }
 
+    @GetMapping("/index.html")
+    public String index1(@RequestParam(required = false) String logout, ModelMap modelo, HttpSession session) {
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/index")
+    public String index2(@RequestParam(required = false) String logout, ModelMap modelo, HttpSession session) {
+
+        return "redirect:/";
+    }
 }

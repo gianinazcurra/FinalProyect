@@ -105,11 +105,12 @@
             </a>
             <br>
              <a th:if="${session.usuarioSession != null}">
-           <button th:if="${session.usuarioSession.tipoUsuario.toString() != 'ADMINISTRADOR'}" class="buy-btn" disabled>Esta opción está disponible solo para administradores logueados</button> <input th:if="${session.usuarioSession.tipoUsuario.toString() != 'ADMINISTRADOR'}" class="boton-eleccion" type="submit" value="Administrador">
-                <a th:href="@{/registro-admin}"> <input th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" class="boton-eleccion" type="submit" value="Administrador">
+           <button title="Esta opción está disponible solo para administradores logueados" th:if="${session.usuarioSession.tipoUsuario.toString() != 'ADMINISTRADOR'}" class="boton-eleccion" disabled>Administrador (No disponible)</button>
+           
+                <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/registro-admin}"> <input class="boton-eleccion" type="submit" value="Administrador">
                 </a>  </a> 
             <a th:if="${session.usuarioSession == null}" >
-               <button class="boton-eleccion" disabled>Esta opción está disponible solo para administradores logueados</button> <input class="boton-eleccion" type="submit" value="Administrador">
+               <button title="Esta opción está disponible solo para administradores logueados" class="boton-eleccion" disabled>Administrador (No disponible)</button> 
             </a>
 
         </section>

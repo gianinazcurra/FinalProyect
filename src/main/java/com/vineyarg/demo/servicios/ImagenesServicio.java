@@ -43,6 +43,10 @@ public class ImagenesServicio {
                 String imageType = archivo.getContentType().toString();
                 
                 Long tamanoImagen = archivo.getSize();
+                System.out.println(tamanoImagen);
+                if(tamanoImagen > 1000000) {
+                     throw new Excepcion("La imagen excede el tamaño permitido de 1MB");
+                }
                 
                 
                 if (!imageType.startsWith("image/")) {
