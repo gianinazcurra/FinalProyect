@@ -64,7 +64,7 @@ public class UsuarioControlador {
 
         //lo de abajo impide que si existe una sesión iniciada se puede registrar un nuevo usuario
         Usuario login = (Usuario) session.getAttribute("usuarioSession");
-        if (login != null) {
+        if (login != null && login.getTipoUsuario() != ADMINISTRADOR) {
 
             modelo.put("error", "Ya estás registrado");
             return "index.html";
