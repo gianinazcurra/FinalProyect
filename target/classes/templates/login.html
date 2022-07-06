@@ -23,7 +23,7 @@
 </head>
 
 <body>
-     <!-- Header -->
+    <!-- Header -->
 
 
         <nav class="etiqueta__nav">
@@ -48,15 +48,14 @@
                     <li class="nav__item"><a href="/#home">Home</a></li>
                     <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
-                    <a href="">
+                   <!-- <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
-
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
+                    </a> -->
 
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
@@ -81,7 +80,6 @@
             </div>
         </nav>
         <!-- Fin del header -->
-
 
     <!-- FORMULARIO -->
     <div class="claseLogin">
@@ -129,16 +127,17 @@
 
     <!-- Footer -->
 
-    <div class="footer">
+    <footer class="footer">
         <div class="footer-a">
             <div class="footer-columna-1">
                 <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
                 <h3>
-                    ¡Comprá los mejores vinos Aquí!
+                    ¡Comprá los mejores vinos aquí!
                 </h3>
             </div>
+
             <div class="footer-columna-2">
-                <h3>Navegacion</h3>
+                <h3>Navegación</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
@@ -150,7 +149,7 @@
             <div class="footer-columna-3">
                 <h3>Nuestras Redes</h3>
                 <div class="redes">
-                 <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                    <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                     <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
                     <a href="" class="fa-solid fa-at"></a>
                     <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
@@ -160,12 +159,9 @@
         <div class="footer-b">
             <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
         </div>
-    </div>
-
+        <div class="separador"></div>
+    </footer>
     <!-- Fin del Footer -->
-
-    <div class="separador"></div>
-
 </body>
 
 </html>
