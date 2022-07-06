@@ -24,13 +24,13 @@
 
 
         <style>
-            
+
             .similares {
-        width: 100px;
-        height: 200px;
-        box-sizing: auto;
-        object-fit: cover;
-    }
+                width: 100px;
+                height: 200px;
+                box-sizing: auto;
+                object-fit: cover;
+            }
             .small-img-group {
                 display: flex;
                 justify-content: space-between;
@@ -38,7 +38,7 @@
             .imagen__producto{
                 height: 300px;
                 margin:auto;
-		    display:block;
+                display:block;
             }
             .small.img-col {
                 flex-basis: 24%;
@@ -134,8 +134,8 @@
             <div class="row mt-5">
                 <div class="col-lg-5 col-md-12 col-12">
 
-                    <!--                                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto"> ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS -->
-                    <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto" class="imagen__producto">
+                    <img th:if="${productoElegido != null}" th:src="@{${'/imagen/productoimagen/' + productoElegido.id}}" alt="Foto del producto" class="imagen__producto"> <!-- ESTE MUESTRA SOLO UNA FOTO DEL PRODUCTO, EL DE ABAJO TODAS -->
+                    <!--                    <img th:if="${productoElegido.imagenes != null}" th:each="img : ${productoElegido.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto" class="imagen__producto">-->
                     <!--                                   <img th:if="${productoEl.imagen == null}" class="img-fluid w-100 pb-1" th:text="${Producto sin imágen">-->
 
 
@@ -255,49 +255,49 @@
 
 
 
-<!-- Footer -->
+        <!-- Footer -->
 
-    <div class="footer">
-        <div class="footer-a">
-            <div class="footer-columna-1">
-                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                <h3>
-                    ¡Comprá los mejores vinos aquí!
-                </h3>
-            </div>
+        <div class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                    <h3>
+                        ¡Comprá los mejores vinos aquí!
+                    </h3>
+                </div>
 
-            <div class="footer-columna-2">
-                <h3>Navegación</h3>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
-                    <li><a href="">Bodegas</a></li>
-                    <li><a href="/tienda">Tienda</a></li>
-                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-columna-3">
-                <h3>Nuestras Redes</h3>
-                <div class="redes">
-                    <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
-                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                    <a href="" class="fa-solid fa-at"></a>
-                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                <div class="footer-columna-2">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
+                        <a href="" class="fa-solid fa-at"></a>
+                        <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                    </div>
                 </div>
             </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
+
         </div>
-        <div class="footer-b">
-            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
-        </div>
-    
-    </div>
-    <!-- Fin del Footer -->
-    <div class="separador"></div>
-    
+        <!-- Fin del Footer -->
+        <div class="separador"></div>
 
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
     </body>
 

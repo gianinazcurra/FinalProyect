@@ -157,21 +157,21 @@
                 </div>
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Dirección de Envío</h4>
-                    <form class="needs-validation" novalidate action="/enviarPedido" method="POST" >
+                    <form class="needs-validation" action="/enviarPedido" method="POST">
 
                         <input th:if="${carrito != null}" type="hidden" class="form-control" name="idCompra" th:value="${carrito.id}"/> 
                         <input th:if="${carrito != null}" type="hidden" class="form-control" name="totalCompra" th:value="${totalCompra}"/> 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="nombre"></label>
-                                <input type="text" class="form-control" id="firstName" name="nombre" placeholder="" th:value="${usuario.nombre}" required>
+                                <input type="text" class="form-control" id="firstName" name="nombre" placeholder="" th:value="${usuario.nombre}" required/>
                                 <div class="invalid-feedback">
                                     Este campo es obligatorio.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="apellido">Apellido</label>
-                                <input type="text" class="form-control" id="lastName" name="apellido" placeholder="" th:value="${usuario.apellido}" required>
+                                <input type="text" class="form-control" id="lastName" name="apellido" placeholder="" th:value="${usuario.apellido}" required/>
                                 <div class="invalid-feedback">
                                     Este campo es obligatorio.
                                 </div>
@@ -199,7 +199,7 @@
 
                         <div class="mb-3">
                             <label for="direccion">Dirección</label>
-                            <input type="text" class="form-control" id="address" name="direccion" placeholder="Ingrese calle y numero" required>
+                            <input type="text" class="form-control" id="address" name="direccion" placeholder="Ingrese calle y numero" required="">
                             <div class="invalid-feedback">
                                 Por favor ingresá una dirección válida.
                             </div>
