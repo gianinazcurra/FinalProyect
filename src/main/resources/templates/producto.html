@@ -24,6 +24,13 @@
 
 
         <style>
+            
+            .similares {
+        width: 100px;
+        height: 200px;
+        box-sizing: auto;
+        object-fit: cover;
+    }
             .small-img-group {
                 display: flex;
                 justify-content: space-between;
@@ -196,7 +203,7 @@
             <div class="row mx-auto container-fluid">
                 <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productosSimilares != null}"th:each="productoSimilar : ${productosSimilares}">
 
-                    <img th:if="${productoSimilar.imagenes != null}" th:each="img : ${productoSimilar.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto" height="200px">
+                    <img class="similares" th:if="${productoSimilar.imagenes != null}" th:each="img : ${productoSimilar.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
 
                     <div class="estrella">
                         <h6 class="p-nombre" th:text="'Valoración de otros usuarios: ' + ${productoSimilar.promedioValoraciones}"></h6>
