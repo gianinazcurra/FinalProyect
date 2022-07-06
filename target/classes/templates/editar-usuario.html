@@ -87,8 +87,8 @@
                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                 <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
 
-                    <div class="titulo">Modificá algunos de tus datos</div>
-                    <p>(Recordá que los datos personales no puede cambiarse)</p>
+                    <div class="titulo">Modificá tus datos</div>
+                    <p>(Recordá que los datos personales no pueden cambiarse)</p>
                     <div class="input_editar">
                         <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
                     </div>

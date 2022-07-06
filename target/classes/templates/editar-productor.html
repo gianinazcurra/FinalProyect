@@ -49,13 +49,12 @@
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
                     <li class="nav__item"><a href="">Contacto</a></li>
 
-                    <a href="">
+                   <!-- <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
-
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
+                    </a> -->
 
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
@@ -81,14 +80,11 @@
         </nav>
         <!-- Fin del header -->
 
-
-        <a href="/logout"> Cerrar sesion </a><br>
-        <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> Volver al menú principal</a>
-
+        
         <div class="contenedor_division">
             <div class="contenedor__grande">
                 <div class="producto__container">
-                    <div class="titulo">Moificá la bodega!</div>
+                    <div class="titulo">Modificá tu bodega</div>
 
 
                     <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
@@ -144,7 +140,7 @@
 
                         </div>
                         <p><input type="checkbox" required=""> Estoy de acuerdo con <a
-                                href="/terminos-condiciones.html">Terminos y Condiciones</a></p>
+                                href="/terminos-condiciones.html">Términos y Condiciones</a></p>
                        
                         <input class="boton" type="submit" value="Actualizar perfil">
                     </form>
@@ -152,9 +148,9 @@
             </div>      
             <div class="contenedor__grande">
                 <div class="producto__container">
-                    <div class="titulo">Elimina tu bodega</div>
+                    <div class="titulo">Eliminá tu bodega</div>
 
-                    <p> A continuación podés eliminar los datos de la bodega/empresa </p>
+                    <p> A continuación podés eliminar los datos de tu empresa </p>
                     </form>
                     <form action="/eliminarProductor" method="POST" enctype="multipart/form-data">
 
@@ -195,7 +191,7 @@
                     </h3>
                 </div>
                 <div class="footer-columna-2">
-                    <h3>Navegacion</h3>
+                    <h3>Navegación</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="">Regiones</a></li>

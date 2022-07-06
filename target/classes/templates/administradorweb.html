@@ -93,6 +93,16 @@
 
 
         <div class="formulario">
+<<<<<<< HEAD
+            
+            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+
+            <div  class="imagen imagen-b">
+            <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
+            <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
+            </div>
+            
+=======
 
             <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
 
@@ -101,12 +111,16 @@
                 <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
             </div>
 
+>>>>>>> developJP
             <section class="cuenta">
                 <div class="p_info"> <br></div>
 
                 <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZAR DATOS DEL ADMINISTRADOR</a>
+<<<<<<< HEAD
+=======
                 <a class="boton_lista" th:href="@{/registro}">REGISTRAR NUEVO ADMINISTRADOR</a>
 
+>>>>>>> developJP
 
                 <a class="boton_lista" href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
 
@@ -171,7 +185,7 @@
                     </h3>
                 </div>
                 <div class="footer-columna-2">
-                    <h3>Navegacion</h3>
+                    <h3>Navegación</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="">Regiones</a></li>
