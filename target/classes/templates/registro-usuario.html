@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VineyArg</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VineyArg</title>
 
-    <!-- Links -->
-    <!-- CSS -->
-    <link rel="stylesheet" href="./CSS/style.css">
-    <link rel="stylesheet" href="/CSS/registros.css">
-    <!-- JavaScript -->
-    <script src="/JS/script.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
-    <!-- Links -->
-</head>
+        <!-- Links -->
+        <!-- CSS -->
+        <link rel="stylesheet" href="./CSS/style.css">
+        <link rel="stylesheet" href="/CSS/registros.css">
+        <!-- JavaScript -->
+        <script src="/JS/script.js"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+        <!-- Iconos -->
+        <script src="https://kit.fontawesome.com/0bb0724c06.js" crossorigin="anonymous"></script>
+        <!-- Links -->
+    </head>
 
-<body>
-     <!-- Header -->
+    <body>
+        <!-- Header -->
 
 
         <nav class="etiqueta__nav">
@@ -48,29 +48,28 @@
                     <li class="nav__item"><a href="/#home">Home</a></li>
                     <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
-                    <a href="">
-                        <li class="fa-solid fa-bag-shopping nav__item"></li>
-                    </a>
-
-                    <a href="">
-                        <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
+                    <!-- <a href="">
+                         <li class="fa-solid fa-bag-shopping nav__item"></li>
+                     </a>
+                     <a href="">
+                         <li class="fa-solid fa-heart nav__item"></li>
+                     </a> -->
 
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    
-                    
+
+
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
-                            <li class="fa-solid fa-user nav__item"></li>
+                        <li class="fa-solid fa-user nav__item"></li>
                     </a>
 
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    
+
                     <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
@@ -81,80 +80,80 @@
             </div>
         </nav>
         <!-- Fin del header -->
-    <!-- FORMULARIO -->
 
-    <div class="formulario">
 
-        <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
+        <!-- FORMULARIO -->
 
-        <section class="form-registro">
-            <h4>Registrate!</h4>
-            <form action="/registrarUsuarioComun" method="POST" enctype="multipart/form-data">
-                
-                  <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
-                  
-                  
-               <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" th:value="${nombre}">
-                <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" th:value="${apellido}">
-                <input class="control" type="number" min="0" name="DNI" id="" placeholder="Ingresar su DNI" required="" th:value="${DNI}">
-                <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" th:value="${fechaNacimiento}">
-                <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="" th:value="${correo}">
-                <input class="control" type="password" name="clave1" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave1}">
-                <input class="control" type="password" name="clave2" id="" placeholder="Vuelva a ingresar su Contraseña" required="" th:value="${clave2}">
-                <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto de perfil" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff" required="">
-                <input class="control" type="hidden" name="tipoUsuario" id="" value="USUARIOCOMUN"
-                <br>
-                <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/terminos-condiciones">Terminos y Condiciones</a></p>
-                <input class="boton" type="submit" value="Registrarme">
+        <div class="formulario">
+
+            <div class="imagen"> <img src="/imagenes/bottles-final.jpg" alt="" width="100%"></div>
+
+            <section class="form-registro">
+                <h4>Registrate!</h4>
+                <form action="/registrarUsuarioComun" method="POST" enctype="multipart/form-data">
+
+                    <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
+
+
+                    <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" th:value="${nombre}">
+                    <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" th:value="${apellido}">
+                    <input class="control" type="number" min="0" name="DNI" id="" placeholder="Ingresar su DNI" required="" th:value="${DNI}">
+                    <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" th:value="${fechaNacimiento}">
+                    <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="" th:value="${correo}">
+                    <input class="control" type="password" name="clave1" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave1}">
+                    <input class="control" type="password" name="clave2" id="" placeholder="Vuelva a ingresar su Contraseña" required="" th:value="${clave2}">
+                    <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto de perfil" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff" required="">
+                    <input class="control" type="hidden" name="tipoUsuario" id="" value="USUARIOCOMUN"
+                           <br>
+                    <p><input type="checkbox" required=""> Estoy de acuerdo con <a href="/terminos-condiciones">Terminos y Condiciones</a></p>
+                    <input class="boton" type="submit" value="Registrarme">
                 </form>
-        </section>
+            </section>
 
-    </div>
-    <!-- FIN DEL FORMULARIO -->
-
-
-    <hr>
+        </div>
+        <!-- FIN DEL FORMULARIO -->
 
 
-    <!-- Footer -->
+        <hr>
 
-    <div class="footer">
-        <div class="footer-a">
-            <div class="footer-columna-1">
-                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                <h3>
-                    ¡Comprá los mejores vinos aquí!
-                </h3>
-            </div>
-            <div class="footer-columna-2">
-                <h3>Navegación</h3>
-                <ul>
-                     <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
-                    <li><a href="">Bodegas</a></li>
-                    <li><a href="/tienda">Tienda</a></li>
-                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-columna-3">
-                <h3>Nuestras Redes</h3>
-                <div class="redes">
-                       <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+        <!-- Footer -->
+
+        <footer class="footer">
+            <div class="footer-a">
+                <div class="footer-columna-1">
+                    <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                    <h3>
+                        ¡Comprá los mejores vinos aquí!
+                    </h3>
+                </div>
+
+                <div class="footer-columna-2">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="">Regiones</a></li>
+                        <li><a href="">Bodegas</a></li>
+                        <li><a href="/tienda">Tienda</a></li>
+                        <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-columna-3">
+                    <h3>Nuestras Redes</h3>
+                    <div class="redes">
+                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                         <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
                         <a href="" class="fa-solid fa-at"></a>
                         <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="footer-b">
-            <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
-        </div>
-    </div>
+            <div class="footer-b">
+                <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
+            </div>
+            <div class="separador"></div>
+        </footer>
+        <!-- Fin del Footer -->
 
-    <!-- Fin del Footer -->
-
-    <div class="separador"></div>
-
-</body>
+    </body>
 
 </html>

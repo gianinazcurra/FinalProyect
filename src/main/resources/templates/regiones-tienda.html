@@ -43,66 +43,64 @@
 
 <body>
     <!-- Header -->
-    <nav class="etiqueta__nav">
-
-        <div class="nav__container">
-
-            <div class="nav__logo">
-                <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
-                        width="200px"></a>
-            </div>
 
 
-            <label for="menuId" class="nav__label">
-                <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
-            </label>
-            <input type="checkbox" id="menuId" class="nav__input">
+        <nav class="etiqueta__nav">
 
-            <div class="hamburguesa">
+            <div class="nav__container">
+
+                <div class="nav__logo">
+                    <a href="/"><img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg"
+                                     width="200px"></a>
+                </div>
+
+
+                <label for="menuId" class="nav__label">
+                    <img src="/Menu-responsive/menu.svg" alt="nav__img" width="40px">
+                </label>
+                <input type="checkbox" id="menuId" class="nav__input">
+
+
+
                 <ul class="nav__ul">
 
-                    <li class="nav__item"><a href="/">Home</a></li>
-                    <li class="nav__item"><a href="">Regiones</a></li>
-                    <li class="nav__item"><a href="">Bodegas</a></li>
-                    <li class="nav__item"><a href="">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
-                </ul>
-                
-                  <a href="/logout"> Cerrar sesión </a><br>
-     <a href="/"> Volver al menú principal</a>
+                    <li class="nav__item"><a href="/#home">Home</a></li>
+                    <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
+                    <li class="nav__item"><a href="/tienda">Tienda</a></li>
+                    <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
-                <ul class="nav__iconos">
-                    <a href="">
+                   <!-- <a href="">
                         <li class="fa-solid fa-bag-shopping nav__item"></li>
                     </a>
                     <a href="">
                         <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
+                    </a> -->
+
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
-                    
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                    <a th:if="${session.usuarioSession != null}"> 
-                     <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
                     
+                    
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'ADMINISTRADOR'}" th:href="@{/administradorweb(id=${session.usuarioSession.id})}"> 
+                            <li class="fa-solid fa-user nav__item"></li>
+                    </a>
+
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                       
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/usuarioweb(id=${session.usuarioSession.id})}"> 
                     
+                    <a th:if="${session.usuarioSession != null && session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
                         <li class="fa-solid fa-user nav__item"></li>
                     </a>
-                          <a th:if="${session.usuarioSession.tipoUsuario.toString() == 'PRODUCTOR'}" th:href="@{/productorweb(id=${session.usuarioSession.id})}"> 
-                    
-                        <li class="fa-solid fa-user nav__item"></li>
-                    </a>
-                    </a>
+
+                    <a th:if="${session.usuarioSession != null}" th:href="@{/logout}"><li class="fa-solid fa-right-from-bracket nav__item"></li> </a>
+
                 </ul>
             </div>
-        </div>
-    </nav>
-    <!-- Fin del header -->
-
+        </nav>
+        <!-- Fin del header -->
+        
+        
     <!-- productos destacados -->
     
     
@@ -158,43 +156,43 @@
     </section>
 
 
-    <!-- Footer -->
+   <!-- Footer -->
 
-    <div class="footer">
+    <footer class="footer">
         <div class="footer-a">
             <div class="footer-columna-1">
-                <img src="imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width=<h3>
-                ¡Comprá los mejores vinos aquí!
+                <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
+                <h3>
+                    ¡Comprá los mejores vinos aquí!
                 </h3>
             </div>
+
             <div class="footer-columna-2">
                 <h3>Navegación</h3>
                 <ul>
-                    <li><a href="">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
-                    <li><a href="">Tienda</a></li>
-                    <li><a href="">Contacto</a></li>
+                    <li><a href="/tienda">Tienda</a></li>
+                    <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-columna-3">
                 <h3>Nuestras Redes</h3>
                 <div class="redes">
-                    <a href="" class="fa fa-instagram"></a>
-                    <a href="" class="fa fa-linkedin"></a>
+                    <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
+                    <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
                     <a href="" class="fa-solid fa-at"></a>
-                    <a href="" class="fa fa-twitter"></a>
+                    <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                 </div>
             </div>
         </div>
         <div class="footer-b">
             <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
         </div>
-    </div>
-
+        <div class="separador"></div>
+    </footer>
     <!-- Fin del Footer -->
-
-    <div class="separador"></div>
 
 </body>
 
