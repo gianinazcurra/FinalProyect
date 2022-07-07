@@ -9,7 +9,7 @@
 
 .login{
     background-color: #1d1d1d;
-    width: 520px;
+    width: 450px;
     height: 450px;
     color: white;
     position: absolute;
@@ -17,7 +17,8 @@
     top: 50%;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
-    padding: 70px 20px;
+    padding:60px 20px;
+    margin-top: 45px;
     margin-bottom: 20px;
     border-radius: 10px;
 }

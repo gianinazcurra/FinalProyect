@@ -80,7 +80,6 @@
         </nav>
         <!-- Fin del header -->
         
-        <div class="contenedor_division">
             <div class="contenedor__grande">
                 <div class="producto__container">
                     <div class="titulo">Modificá tu bodega</div>
@@ -132,25 +131,25 @@
                                             placeholder="Ingresar una región" required="" th:text="${region}"></option>
                                 </select>
                             </div>
-                            <div class="input_caja">
-                                <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff">
-                            </div>
-
+                            <br>
+                            
+                            
+                            
 
                         </div>
+                        <input  type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff">
+                       <br><br>
                         <p><input type="checkbox" required=""> Estoy de acuerdo con <a
                                 href="/terminos-condiciones">Términos y Condiciones</a></p>
                        
                         <input class="boton" type="submit" value="Actualizar perfil">
                     </form>
-                </div>
-            </div>      
-            <div class="contenedor__grande">
-                <div class="producto__container">
+                    <br>
                     <div class="titulo">Eliminá tu bodega</div>
 
                     <p> A continuación podés eliminar los datos de tu empresa </p>
-                    </form>
+                    </
+                    
                     <form action="/eliminarProductor" method="POST" enctype="multipart/form-data">
 
                         <p th:if="${error1 != null}" th:text="${error1}" style="color:red"; ></p>
@@ -176,8 +175,8 @@
                         <input class="boton" type="submit" value="Eliminar perfil">
                     </form>
                 </div>
-            </div>
-        </div>
+            </div>      
+            
 
         <!-- Footer -->
 

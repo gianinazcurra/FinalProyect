@@ -11,8 +11,8 @@
 }
 .contenedor__grande {
     display: flex;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     justify-content: center;
     align-items: center;
 }
