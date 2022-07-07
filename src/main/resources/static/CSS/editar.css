@@ -11,8 +11,8 @@
 }
 .contenedor__grande {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     justify-content: center;
     align-items: center;
 }
@@ -20,6 +20,8 @@
 .producto__container {
     max-width: 700px;
     width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
     background-color: #fff;
     padding: 25px 30px;
     border-radius: 5px;

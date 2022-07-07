@@ -5,13 +5,12 @@
     background-image: url(/imagenes/37780.png);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    
 }
 
 .login{
     background-color: #1d1d1d;
     width: 520px;
-    height: 520px;
+    height: 450px;
     color: white;
     position: absolute;
     left: 75%;
