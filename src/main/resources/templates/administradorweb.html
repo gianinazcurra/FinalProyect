@@ -94,9 +94,7 @@
         <div> <p class="errorIndex" th:if="${registrado != null}" th:text="${registrado}"></p></div>
         <div class="formulario">
 
-
-
-            <div  class="imagen imagen-b">
+            <div  class=" imagen-b">
                 <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
                 <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
             </div>
