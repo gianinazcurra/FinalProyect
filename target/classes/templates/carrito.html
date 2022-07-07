@@ -141,7 +141,7 @@
                     <td>
                         <h5  th:text="'$' + ${#numbers.formatDecimal(item.producto.precio, 1, 'POINT', 2, 'COMMA')}"></h5>
                     </td>
-                    <td><input th:value="${item.cantidad}" type="number" disabled></td>
+                    <td><input style="text-align:right" th:value="${item.cantidad}" type="number" disabled></td>
                     <td>
                         <h5 th:text="'$' + ${#numbers.formatDecimal(item.producto.precio * item.cantidad, 1, 'POINT', 2, 'COMMA')}"></h5>
                     </td>
