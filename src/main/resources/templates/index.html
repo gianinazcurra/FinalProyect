@@ -206,7 +206,7 @@
                     <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
                     <h4 class="p-precio" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"> </h4>
                     <a th:if="${session.usuarioSession != null and session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/mostrarProducto(idProducto=${producto.id} , idUsuario=${session.usuarioSession.id})}"><button class="buy-btn">Comprar ahora</button></a> 
-                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a cuenta para poder comprar</button></a>
+                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a tu cuenta para poder comprar</button></a>
                 </div>
         </section>
 
