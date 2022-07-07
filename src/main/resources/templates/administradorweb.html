@@ -91,10 +91,10 @@
 
 
 
-
+        <div> <p class="errorIndex" th:if="${registrado != null}" th:text="${registrado}"></p></div>
         <div class="formulario">
 
-            <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+
 
             <div  class="imagen imagen-b">
                 <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
@@ -106,7 +106,7 @@
 
                 <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZAR DATOS DEL ADMINISTRADOR</a>
 
-                <a class="boton_lista" th:href="@{/registro}">REGISTRAR NUEVO ADMINISTRADOR</a>
+                <a class="boton_lista" th:href="@{/registro-admin}">REGISTRAR NUEVO ADMINISTRADOR</a>
 
 
                 <a class="boton_lista" href="/verNuevasCompras">VER NUEVAS COMPRAS</a>
@@ -117,19 +117,30 @@
                         <p th:text="${'No existen compras nuevas para procesar'}"> </p>
                     </div>
                     <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
-                        <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
-                        <p th:value="${'Precio final con envío: ' + compra.montoFinal}"> </p>
-                        <p th:value="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
-                        <p th:text="${'Nombre del comprador: ' + compra.usuario.nombre + compra.usuario.apellido}"> </p>
 
+
+                        <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
+
+
+                        <div th:each="item : ${compra.itemCompra}">
+                            <p th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
+                            <p th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+                            <p th:text="${'Cantidad: ' +item.cantidad}"> </p>
+                            <p th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                            
+                        </div>
+                        <p th:value="${'Precio final con envío: ' + compra.montoFinal}"> </p>
+                            <p th:value="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
+                            <p th:text="${'Nombre del comprador: ' + compra.usuario.nombre + compra.usuario.apellido}"> </p>
+                            <br>
+                            <p th:text="${'Forma de pago: ' + compra.formaDePago}"> </p>
+                             <p th:text="${'Dirección de envío: ' + compra.direccionEnvio}"> </p>
+                           
                         <form action="/aceptarCompra" method="POST" >
 
                             <label th:text="${'El Administrador debe procesar el pago y aceptar la compra en caso de que el pago resulte exitoso'}">  </label>
                             <input type="hidden" class="" name="idCompra" th:value="${compra.id}"/> 
+                             <br>
                             <select class="" name="decision" required> 
                                 <option th:text="${'ACEPTAR'}" th:value="${'ACEPTAR'}"></option> 
                                 <option th:text="${'RECHAZAR'}" th:value="${'RECHAZAR'}"></option> 
