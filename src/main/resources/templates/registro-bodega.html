@@ -95,16 +95,16 @@
                     <p th:if="${error != null}" th:text="${error}" style="color:red";></p>
 
 
-                    <input class="control" type="text" name="nombre" id="" placeholder="Ingresar el Nombre" required="" th:value="${nombre}">
-                    <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresar la Razon Social" required="" th:value="${razonSocial}">
-                    <input class="control" type="text" name="domicilio" id="" placeholder="Ingresar el Domicilio" required="" th:value="${domicilio}">
-                    <input class="control" type="email" name="correo" id="" placeholder="Ingresar un Email" required="" th:value="${correo}">
-                    <input class="control" type="password" name="clave1" id="" placeholder="Ingresar una contraseña" required="" th:value="${clave1}">
-                    <input class="control" type="password" name="clave2" id="" placeholder="Repita la contraseña ingresada" required="" th:value="${clave2}">
-                    <input class="control" type="text" name="descripcion" id="" placeholder="Ingresar una descripción de su bodega" required="" th:value="${descripcion}">
+                    <input class="control" type="text" name="nombre" id="" placeholder="Ingresá el Nombre de tu bodega" required="" th:value="${nombre}">
+                    <input class="control" type="text" name="razonSocial" id="" placeholder="Ingresá la Razón Social" required="" th:value="${razonSocial}">
+                    <input class="control" type="text" name="domicilio" id="" placeholder="Ingresá el Domicilio" required="" th:value="${domicilio}">
+                    <input class="control" type="email" name="correo" id="" placeholder="Ingresá un Email válido" required="" th:value="${correo}">
+                    <input class="control" type="password" name="clave1" id="" placeholder="Ingresá una contraseña" required="" th:value="${clave1}">
+                    <input class="control" type="password" name="clave2" id="" placeholder="Repetí la contraseña ingresada" required="" th:value="${clave2}">
+                    <input class="control" type="text" name="descripcion" id="" placeholder="Ingresá una descripción de su bodega" required="" th:value="${descripcion}">
                     
                     <select class="control" name="region"> 
-                  <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresar una región" required="" th:text="${region}"></option> 
+                  <option th:each="region : ${regiones}" name="region" th:value="${region}" placeholder="Ingresá una región" required="" th:text="${region}"></option> 
                   </select>
                     <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto que identifique a tu marca" required="" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff">
                     
@@ -126,7 +126,7 @@
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                    <h3>
+                    <h3 style="font-size: medium">
                         ¡Comprá los mejores vinos aquí!
                     </h3>
                 </div>
@@ -145,7 +145,7 @@
                     <div class="redes">
                         <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                         <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                        <a href="" class="fa-solid fa-at"></a>
+                       <a class="fa-solid fa-at" href="mailto:joaquinperdichizzi@gmail.com"></a>
                         <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>

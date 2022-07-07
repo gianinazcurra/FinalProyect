@@ -101,7 +101,7 @@
 
                 <a class="boton_lista" th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ PRODUCTOS</a>
 
-                <a class="boton_lista" th:href="@{/editar-producto(idProductor=${productor.id})}">EDITAR PRODUCTOS</a>
+                <a class="boton_lista" th:href="@{/editar-producto(idProductor=${productor.id})}">EDITÁ TUS PRODUCTOS</a>
 
                 <a class="boton_lista" th:href="@{/verVentas(idProductor=${productor.id})}"> REVISÁ QUÉ PRODUCTOS HAS VENDIDO</a>
 
@@ -110,7 +110,7 @@
                 <div class="p_info">
 
                     <div th:if="${sinVentas != null}">
-                        <p style="font-size: medium" th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}"> </p>
+                        <p style="font-size: medium; margin-top: 15px" th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}"> </p>
                     </div>
                     <br>
                     <div style="font-size: medium" th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
@@ -126,7 +126,7 @@
                     </div>
 
                     <div th:if="${sinProductos != null}">
-                        <p th:text="${'Todavía no cargás tu primer producto. Hacelo pronto para que los clientes puedan conocer tus vinos!'}" </p> 
+                        <p style="font-size: medium; margin-top: 15px" th:text="${'Todavía no cargás tu primer producto. Hacelo pronto para que los clientes puedan conocer tus vinos!'}" </p> 
                         <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ TU PRIMER PRODUCTO</a>
                     </div> 
                     <div style="font-size: medium" th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
@@ -154,7 +154,7 @@
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                    <h3>
+                    <h3 style="font-size: medium">
                         ¡Comprá los mejores vinos aquí!
                     </h3>
                 </div>
@@ -173,7 +173,7 @@
                     <div class="redes">
                         <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                         <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                        <a href="" class="fa-solid fa-at"></a>
+                        <a class="fa-solid fa-at" href="mailto:joaquinperdichizzi@gmail.com"></a>
                         <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>

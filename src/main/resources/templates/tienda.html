@@ -211,7 +211,7 @@
                     <!--                 <img th:if="${producto.imagen == null}" class="img-fluid mb-3" th:text="${'Producto sin imágen'}">-->
 
                     <div class="estrella">
-                        <h6 class="p-nombre" th:text="'Valoración de otros usuarios: ' + ${producto.promedioValoraciones}"></h6>
+                        <h6 class="p-nombre" th:text="'Valoración de otros clientes: ' + ${producto.promedioValoraciones}"></h6>
                         <a th:href="@{/valorar(valoracion=1,0 , idProducto=${producto.id})}" style="color:white"><i th:if="${producto.promedioValoraciones >= 0}" class="fas fa-star"></i></a>
                         <a th:href="@{/valorar(valoracion=2,0, idProducto=${producto.id})}" style="color:white">
                             <i th:if="${producto.promedioValoraciones > 1.5}" class="fas fa-star"></i>
@@ -258,7 +258,7 @@
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                    <h3>
+                    <h3 style="font-size: medium">
                         ¡Comprá los mejores vinos aquí!
                     </h3>
                 </div>
@@ -277,7 +277,7 @@
                     <div class="redes">
                         <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                         <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                        <a href="" class="fa-solid fa-at"></a>
+                        <a class="fa-solid fa-at" href="mailto:joaquinperdichizzi@gmail.com"></a>
                         <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>

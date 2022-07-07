@@ -87,7 +87,7 @@
                 <form action="/editarUsuario" method="POST" enctype="multipart/form-data">
 
                     <div class="titulo">Modificá tus datos</div>
-                    <p>(Recordá que los datos personales no pueden cambiarse)</p>
+                    <p>(Recordá que los datos personales como el nombre, apellido y DNI, no pueden cambiarse)</p>
                     <div class="input_editar">
                         <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
                     </div>
@@ -95,7 +95,7 @@
                         <input class="control" type="email" name="correo" placeholder="Podés cargar tu correo de registro"  id="" th:value="${perfil.correo}">
                     </div>
                     <div class="input_editar">
-                        <input class="control" type="password" name="clave1" id="" th:value="${clave1}" placeholder="Ingresar tu contraseña o una nueva si querés cambiarla">
+                        <input class="control" type="password" name="clave1" id="" th:value="${clave1}" placeholder="Ingresá tu contraseña o una nueva si querés cambiarla">
                     </div>
                     <div class="input_editar">
                         <input class="control" type="password" name="clave2" id="" required="" th:value="${clave2}" placeholder="Repetí la contraseña">
@@ -117,13 +117,13 @@
                         <input type="hidden" class="form-control" name="id" th:value="${perfil.id}"/> 
                     </div>
                     <div class="input_editar">
-                        <input class="control" type="email" name="correo" placeholder="Ingresar su Email"  id="" required=""  th:value="${perfil.correo}">
+                        <input class="control" type="email" name="correo" placeholder="Ingresá tu Email"  id="" required=""  th:value="${perfil.correo}">
                     </div>
                     <div class="input_editar">
                         <input class="control" type="password" name="clave" id="" placeholder="Ingresá tu Contraseña" required="" th:value="${clave}">
                     </div>
                     <br>
-                    <p><input type="checkbox" required=""> Quiero darme de baja </p>
+                    <p><input type="checkbox" required="">Quiero darme de baja </p>
 
                     <input class="boton" type="submit" value="Eliminar perfil">
                 </form>
@@ -137,7 +137,7 @@
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                    <h3>
+                    <h3 style="font-size: medium">
                         ¡Comprá los mejores vinos aquí!
                     </h3>
                 </div>
@@ -156,7 +156,7 @@
                     <div class="redes">
                         <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                         <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                        <a href="" class="fa-solid fa-at"></a>
+                       <a class="fa-solid fa-at" href="mailto:joaquinperdichizzi@gmail.com"></a>
                         <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>

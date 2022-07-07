@@ -95,13 +95,13 @@
                     <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
 
 
-                    <input class="control" type="text" name="nombre" id="" placeholder="Ingresar su Nombre" required="" th:value="${nombre}">
-                    <input class="control" type="text" name="apellido" id="" placeholder="Ingresar su Apellido" required="" th:value="${apellido}">
-                    <input class="control" type="number" min="0" name="DNI" id="" placeholder="Ingresar su DNI" required="" th:value="${DNI}">
-                    <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresar su Fecha de nacimiento" required="" th:value="${fechaNacimiento}">
-                    <input class="control" type="email" name="correo" id="" placeholder="Ingresar su Email" required="" th:value="${correo}">
-                    <input class="control" type="password" name="clave1" id="" placeholder="Ingresar su Contraseña" required="" th:value="${clave1}">
-                    <input class="control" type="password" name="clave2" id="" placeholder="Vuelva a ingresar su Contraseña" required="" th:value="${clave2}">
+                    <input class="control" type="text" name="nombre" id="" placeholder="Ingresá tu Nombre" required="" th:value="${nombre}">
+                    <input class="control" type="text" name="apellido" id="" placeholder="Ingresá tu Apellido" required="" th:value="${apellido}">
+                    <input class="control" type="number" min="0" name="DNI" id="" placeholder="Ingresá tu DNI" required="" th:value="${DNI}">
+                    <input class="control" type="date" name="fechaNacimiento" id="" placeholder="Ingresá tu Fecha de nacimiento (mayor de 18 años)" required="" th:value="${fechaNacimiento}">
+                    <input class="control" type="email" name="correo" id="" placeholder="Ingresá un Email válido" required="" th:value="${correo}">
+                    <input class="control" type="password" name="clave1" id="" placeholder="Ingresá una Contraseña" required="" th:value="${clave1}">
+                    <input class="control" type="password" name="clave2" id="" placeholder="Repetí la contraseá elegida" required="" th:value="${clave2}">
                     <input class="control" type="file" name="archivo" id="" placeholder="Podés cargar una foto de perfil" accept=".jpg,.jpeg, .png, .bmp, .tif, .tiff" required="">
                     <input class="control" type="hidden" name="tipoUsuario" id="" value="USUARIOCOMUN"
                            <br>
@@ -122,7 +122,7 @@
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
-                    <h3>
+                    <h3 style="font-size: medium">
                         ¡Comprá los mejores vinos aquí!
                     </h3>
                 </div>
@@ -141,7 +141,7 @@
                     <div class="redes">
                         <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
                         <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                        <a href="" class="fa-solid fa-at"></a>
+                        <a class="fa-solid fa-at" href="mailto:joaquinperdichizzi@gmail.com"></a>
                         <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
                     </div>
                 </div>
