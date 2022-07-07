@@ -114,7 +114,7 @@
                 <a class="boton_lista" href="/verComprasHistoricas">VER COMPRAS HISTÓRICAS</a>  
                 <div class="p_info"> <br>
                     <div th:if="${sinNuevas != null}">
-                        <p th:text="${'No existen compras nuevas para procesar'}"> </p>
+                        <p style="font-size: medium" th:text="${'No existen compras nuevas para procesar'}"> </p>
                     </div>
                     <div style="font-size: medium" th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
 

@@ -63,7 +63,6 @@ public class UsuarioServicio implements UserDetailsService {
             Usuario admin = new Usuario();
 
 //            validar(nombre, apellido, DNI, correo, clave1, clave2, fechaNacimiento);
-
             admin.setNombre(nombre);
             admin.setApellido(apellido);
             admin.setDNI(DNI);
@@ -126,7 +125,7 @@ public class UsuarioServicio implements UserDetailsService {
             imagen = imagenesServicio.guardarNueva(archivo);
 
             usuarioProductor.setImagen(imagen);
-            
+
             usuarioProductor.setImagen(imagen);
             usuarioRepositorio.save(usuarioProductor);
 
@@ -143,35 +142,29 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario usuario = respuesta.get();
 
-            if(!usuario.getTipoUsuario().equals(TipoUsuario.PRODUCTOR)) {
-                
-                
-            if(usuario.getCorreo().equalsIgnoreCase(correo)) {
-                
-                String correoEstaOk = "estaok@estaok.com";
-                
-                validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correoEstaOk, clave1, clave2, usuario.getFechaNacimiento());
-                
-            } else {
-                validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correo, clave1, clave2, usuario.getFechaNacimiento());
-            }
+            if (!usuario.getTipoUsuario().equals(TipoUsuario.PRODUCTOR)) {
 
-                
+                if (usuario.getCorreo().equalsIgnoreCase(correo)) {
+
+                    String correoEstaOk = "estaok@estaok.com";
+
+                    validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correoEstaOk, clave1, clave2, usuario.getFechaNacimiento());
+
+                } else {
+                    validar(usuario.getNombre(), usuario.getApellido(), usuario.getDNI(), correo, clave1, clave2, usuario.getFechaNacimiento());
+                }
+
             }
             usuario.setCorreo(correo);
-            
-            
-            
-            
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            
-                if (!passwordEncoder.matches(clave1, usuario.getClave())) {
 
-                    String encriptada = new BCryptPasswordEncoder().encode(clave1);
-                    usuario.setClave(encriptada);
-                } 
-            
-            
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            if (!passwordEncoder.matches(clave1, usuario.getClave())) {
+
+                String encriptada = new BCryptPasswordEncoder().encode(clave1);
+                usuario.setClave(encriptada);
+            }
+
             usuario.setAlta(true);
 
             if (!archivo.isEmpty()) {
@@ -200,14 +193,12 @@ public class UsuarioServicio implements UserDetailsService {
             Usuario usuario = respuesta.get();
 
             //validación para no poder eliminar al usuario Administrador general 
-        
-         if (correo.equalsIgnoreCase("administrador@vineyarg.com.ar")) {
-            throw new Excepcion("El administrador general no puede ser eliminado");
-        }
-         
+            if (correo.equalsIgnoreCase("administrador@vineyarg.com.ar")) {
+                throw new Excepcion("El administrador general no puede ser eliminado");
+            }
+
             if (usuario.getCorreo().equalsIgnoreCase(correo)) {
 
-                
                 PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
                 if (passwordEncoder.matches(clave, usuario.getClave())) {
 
@@ -220,14 +211,12 @@ public class UsuarioServicio implements UserDetailsService {
                 }
 
             }
-           
+
         }
     }
 
     public void validar(String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento) throws Excepcion {
 
-        
-         
         //Validaciones nombre, apellido y DNI
         if (nombre.trim() == null || nombre.trim().isEmpty()) {
             throw new Excepcion("nombre inválido");
@@ -311,11 +300,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-   
-       
+
         Usuario usuario = usuarioRepositorio.BuscarUsuarioPorCorreo(correo);
-        
-        
+
         if (usuario != null && usuario.isAlta()) {
 
             if (usuario.getTipoUsuario() == ADMINISTRADOR) {

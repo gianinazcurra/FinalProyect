@@ -64,8 +64,6 @@ public class Producto implements Serializable {
         this.imagenes = imagenes;
     }
 
-   
-
     public Compra getCompra() {
         return compra;
     }
@@ -154,7 +152,6 @@ public class Producto implements Serializable {
         this.cantidadValoraciones = cantidadValoraciones;
     }
 
-    
     public Double getPromedioValoraciones() {
         return promedioValoraciones;
     }

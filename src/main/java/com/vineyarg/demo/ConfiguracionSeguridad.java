@@ -134,10 +134,10 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .passwordParameter("clave").successHandler(myAuthenticationSuccessHandler()).failureUrl("/logueo/?error=error")
                 .permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/?logout=logout").permitAll().and().csrf()
                 .disable();
-                http.sessionManagement()
+        http.sessionManagement()
                 .maximumSessions(1)
                 .expiredUrl("/?error='Cambió la sesión'");
-      
+
     }
 
 }

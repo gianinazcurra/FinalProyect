@@ -51,8 +51,6 @@ public class CompraControlador {
     @Autowired
     private ItemCompraRepositorio ItemCompraRepositorio;
 
-
-    
     @PostMapping("/agregaCarrito")
     public String agregaCarrito(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idProducto, @RequestParam Integer cantidad) {
 
@@ -173,7 +171,6 @@ public class CompraControlador {
 
                 Compra compraAntesDePago = compraRepositorio.buscarComprasSinEnviarPorUsuario(idUsuario);
 
-                System.out.println(compraAntesDePago.getId());
                 if (compraAntesDePago != null) {
 
                     modelo.put("carrito", compraAntesDePago);
@@ -193,19 +190,18 @@ public class CompraControlador {
                     modelo.put("itemsCompra", productosCompra);
 
                     modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
-                    
-                    if((compraAntesDePago.getUsuario().getTotalDineroComprado() > 15000) && (totalSumaProductos > 3000)) {
-                        
-                        Double descuento = totalSumaProductos * 10/100;
+
+                    if ((compraAntesDePago.getUsuario().getTotalDineroComprado() > 15000) && (totalSumaProductos > 3000)) {
+
+                        Double descuento = totalSumaProductos * 10 / 100;
                         modelo.put("descuento", descuento);
-                        
+
                         totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
-                        
+
                     }
                     Double envio = 450.0;
                     Double totalCompraConEnvio = (totalSumaProductos + envio);
-                        
-                    
+
                     modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
                 }
@@ -296,17 +292,15 @@ public class CompraControlador {
 
                 modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
-                
-                if((compraDef.getUsuario().getTotalDineroComprado() > 15000) && (totalSumaProductos > 3000)) {
-                        
-                         Double descuento = totalSumaProductos * 10/100;
-                        modelo.put("descuento", descuento);
-                        
-                        totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
-                        
-                        
-                    }
-                
+                if ((compraDef.getUsuario().getTotalDineroComprado() > 15000) && (totalSumaProductos > 3000)) {
+
+                    Double descuento = totalSumaProductos * 10 / 100;
+                    modelo.put("descuento", descuento);
+
+                    totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
+
+                }
+
                 Double envio = 450.0;
                 Double totalCompraConEnvio = (totalSumaProductos + envio);
 
@@ -330,8 +324,8 @@ public class CompraControlador {
             @RequestParam String pais, @RequestParam String CP, @RequestParam String modoPago, @RequestParam String numTarjeta, @RequestParam String titTarjeta,
             @RequestParam String vencimiento, @RequestParam String CVV, @RequestParam String DNI, @RequestParam Double totalCompra) {
 
-        String direccionEnvio = "" + direccion + "\r\n" + " Detalles para el envío: " + detalles + "\r\n" +" Provincia: " + provincia + "\r\n" +" País:" + pais + "\r\n" + " CP: " + CP;
-        String formaDePago = "" + modoPago + "\r\n" +" Número tarjeta: " + numTarjeta +"\r\n" + " Titular Tarjeta: " + titTarjeta + "\r\n" +" Vencimiento: " + vencimiento + "\r\n" +" CVV: " + CVV + "\r\n" +" DNI titular de la tarjeta: " + DNI;
+        String direccionEnvio = "" + direccion + "\r\n" + " Detalles para el envío: " + detalles + "\r\n" + " Provincia: " + provincia + "\r\n" + " País:" + pais + "\r\n" + " CP: " + CP;
+        String formaDePago = "" + modoPago + "\r\n" + " Número tarjeta: " + numTarjeta + "\r\n" + " Titular Tarjeta: " + titTarjeta + "\r\n" + " Vencimiento: " + vencimiento + "\r\n" + " CVV: " + CVV + "\r\n" + " DNI titular de la tarjeta: " + DNI;
 
         try {
             compraServicio.enviarPedido(idCompra, direccionEnvio, formaDePago, totalCompra);

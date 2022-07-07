@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 public class TerminosCondicionesControlador {
-    
+
     @GetMapping("/terminos-condiciones")
     public String terminosCondiciones() {
         return "terminos-condiciones.html";
     }
-    
-     @GetMapping("/aboutUs")
+
+    @GetMapping("/aboutUs")
     public String nosotros() {
         return "us.html";
     }
-        
+
 }

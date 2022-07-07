@@ -102,8 +102,7 @@ public class ProductorServicio {
             productor.setClave(encriptada);
 
             productor.setDescripcion(descripcion);
-      
-            
+
             System.out.println(productor.getId());
 
 //            if(archivo != null) {

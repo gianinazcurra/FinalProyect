@@ -15,11 +15,11 @@ import org.springframework.data.repository.query.Param;
  * @author joaqu
  */
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
-    
+
     @Query("SELECT a from Usuario a where a.correo = :correo AND a.clave = :clave")
     public Usuario BuscarUsuarioPorCorreoYClave(@Param("correo") String correo, @Param("clave") String clave);
-    
+
     @Query("SELECT a from Usuario a where a.correo = :correo")
     public Usuario BuscarUsuarioPorCorreo(@Param("correo") String correo);
-    
+
 }

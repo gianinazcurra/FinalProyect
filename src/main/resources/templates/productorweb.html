@@ -96,7 +96,7 @@
                 <p th:if="${error != null}" th:text="${error}" class="errorRojo"></p>
                 <p th:if="${exito != null}" th:text="${exito}" class="exito"></p>
 
-                <p th:if="${registrado != null}" th:text="${registrado}" style="color:red"></p>
+                <p th:if="${registrado != null}" th:text="${registrado}" class="errorIndex"></p>
 
                 <a class="boton_lista" th:href="@{/editar-productor(idUsuario=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
 
@@ -111,7 +111,7 @@
                 <div class="p_info">
                     
                     <div th:if="${sinVentas != null}">
-                        <p th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}"> </p>
+                        <p style="font-size: medium" th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}"> </p>
                     </div>
                     <br>
                     <div style="font-size: medium" th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">

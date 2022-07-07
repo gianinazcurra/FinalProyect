@@ -13,5 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author joaqu
  */
 public interface ItemCompraRepositorio extends JpaRepository<ItemCompra, String> {
-    
+
 }

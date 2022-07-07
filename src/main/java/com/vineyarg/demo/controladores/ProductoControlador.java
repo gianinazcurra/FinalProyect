@@ -152,36 +152,35 @@ public class ProductoControlador {
                 productoServicio.bajaProducto(idProducto);
 
                 modelo.put("exito", "El producto se quitó del catálogo");
-                
+
                 List<Producto> productos = productoRepositorio.buscarTodosPorProductor(productoRepositorio.getById(idProducto).getProductor().getId());
 
-            modelo.put("productos", productos);
+                modelo.put("productos", productos);
 
-            Producto productoElegido;
-            modelo.put("productoElegido", null);
+                Producto productoElegido;
+                modelo.put("productoElegido", null);
 
-            List<String> opciones = new ArrayList();
-            opciones.add("editar");
-            opciones.add("eliminar");
-            modelo.put("opciones", opciones);
-
+                List<String> opciones = new ArrayList();
+                opciones.add("editar");
+                opciones.add("eliminar");
+                modelo.put("opciones", opciones);
 
             } catch (Exception e) {
 
                 e.getMessage();
                 modelo.put("error", "No se han podido eliminar el producto");
-                
+
                 List<Producto> productos = productoRepositorio.buscarTodosPorProductor(productoRepositorio.getById(idProducto).getProductor().getId());
 
-            modelo.put("productos", productos);
+                modelo.put("productos", productos);
 
-            Producto productoElegido;
-            modelo.put("productoElegido", null);
+                Producto productoElegido;
+                modelo.put("productoElegido", null);
 
-            List<String> opciones = new ArrayList();
-            opciones.add("editar");
-            opciones.add("eliminar");
-            modelo.put("opciones", opciones);
+                List<String> opciones = new ArrayList();
+                opciones.add("editar");
+                opciones.add("eliminar");
+                modelo.put("opciones", opciones);
 
             }
 
@@ -220,9 +219,7 @@ public class ProductoControlador {
         } catch (Exception e) {
 
             e.getMessage();
-            modelo.put("error",e.getMessage());
-            
-           
+            modelo.put("error", e.getMessage());
 
             List<Producto> productos = productoRepositorio.buscarTodosPorProductor(productoRepositorio.getById(idProductoElegido).getProductor().getId());
 
@@ -238,18 +235,15 @@ public class ProductoControlador {
         }
         return "editar-producto.html";
     }
-    
-   
+
     @GetMapping("/valorar")
     public String valorarProducto(ModelMap modelo, Double valoracion, String idProducto, HttpSession session) throws Excepcion {
 
         Double valoracionInt = valoracion;
-        
-        productoServicio.valorarProducto(idProducto, valoracionInt);
-        
 
+        productoServicio.valorarProducto(idProducto, valoracionInt);
 
         return "redirect:/tienda";
     }
-    
+
 }

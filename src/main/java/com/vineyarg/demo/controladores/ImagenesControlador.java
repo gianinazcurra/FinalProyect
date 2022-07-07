@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/imagen")
 public class ImagenesControlador {
 
-      @Autowired
+    @Autowired
     private ProductoServicio productoServicio;
 
     @Autowired
@@ -51,11 +51,10 @@ public class ImagenesControlador {
 
     @Autowired
     private ProductorRepositorio productorRepositorio;
-    
+
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
-    
     //EL DE ABAJO MUESTRA SOLO LA PRIMERA IMAGEN DEL PRODUCTO
     @GetMapping("/productoimagen/{idProducto}")
     public ResponseEntity<byte[]> fotoProductoPorIdProducto(@PathVariable String idProducto) {
@@ -89,9 +88,9 @@ public class ImagenesControlador {
         }
         return null;
     }
-    
+
     //ESTE MUESTRA TODAS LAS IMAGENES QUE EL PRODUCTO TIENE CARGADAS    
-     @GetMapping("/productoimagen-idImagen/{idImagen}")
+    @GetMapping("/productoimagen-idImagen/{idImagen}")
     public ResponseEntity<byte[]> fotoProducto(@PathVariable String idImagen) {
 
         Imagenes imagen = imagenesRepositorio.getById(idImagen);
@@ -99,10 +98,8 @@ public class ImagenesControlador {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(foto, headers, HttpStatus.OK);
-       
+
     }
-    
-    
 
     @GetMapping("/usuarioimagen/{id}")
     public ResponseEntity<byte[]> fotoUsuarioComun(@PathVariable String id) {

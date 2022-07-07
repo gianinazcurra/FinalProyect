@@ -13,8 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author joaqu
  */
-
-@Repository 
+@Repository
 public interface ImagenesRepositorio extends JpaRepository<Imagenes, String> {
-    
+
 }

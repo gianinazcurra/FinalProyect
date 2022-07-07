@@ -55,8 +55,6 @@ public class ProductorControlador {
     @Autowired
     private ProductoRepositorio productoRepositorio;
 
- 
-
     @GetMapping("/registro-bodega")
     public String guardarProductor(ModelMap modelo) {
 
@@ -69,7 +67,6 @@ public class ProductorControlador {
             @RequestParam String clave1, @RequestParam String clave2, @RequestParam String descripcion, @RequestParam String region, @RequestParam MultipartFile archivo) throws Exception {
         try {
 
-            
             productorServicio.guardar(nombre, razonSocial, domicilio, correo, clave1, clave2, descripcion, region, archivo);
 
             usuarioServicio.registrarUsuario(archivo, nombre, null, null, correo, clave1, clave2, null, TipoUsuario.PRODUCTOR);
@@ -112,7 +109,6 @@ public class ProductorControlador {
 
             Productor productor = new Productor();
             productor = productorRepositorio.BuscarProductorPorCorreo(usuario.getCorreo());
-            
 
             modelo.put("regiones", Regiones.values());
 
@@ -251,7 +247,7 @@ public class ProductorControlador {
     public String productorWeb(ModelMap modelo, HttpSession session, @RequestParam String id) throws Excepcion {
 
         Usuario login = (Usuario) session.getAttribute("usuarioSession");
-        
+
         if (login == null || !login.getId().equalsIgnoreCase(id)) {
             return "redirect:/";
         }
@@ -279,17 +275,15 @@ public class ProductorControlador {
 
         List<Compra> listaComprasTotales = compraRepositorio.findAll();
         List<Compra> listaComprasCompletadas = new ArrayList();
-        
-        
 
         for (Compra listaCompras : listaComprasTotales) {
-            
-            if(listaCompras.getEstadoCompra().equals(EstadoCompra.ACEPTADA)) {
-                
+
+            if (listaCompras.getEstadoCompra().equals(EstadoCompra.ACEPTADA)) {
+
                 listaComprasCompletadas.add(listaCompras);
             }
         }
-        
+
         Set<ItemCompra> itemsProductor = new HashSet();
         for (Compra compras : listaComprasTotales) {
 
@@ -305,11 +299,11 @@ public class ProductorControlador {
             }
         }
         Productor productor = productorRepositorio.getById(idProductor);
-        
-          if(itemsProductor.isEmpty()) {
+
+        if (itemsProductor.isEmpty()) {
             modelo.put("sinVentas", "sinVentas");
         }
-          
+
         modelo.put("productor", productor);
         modelo.put("itemsProductor", itemsProductor);
         return "productorweb.html";
@@ -320,11 +314,9 @@ public class ProductorControlador {
     public String verProductos(ModelMap modelo, HttpSession session, @RequestParam String idProductor) {
 
         List<Producto> listaProductosProductor = productoRepositorio.buscarTodosPorProductor(idProductor);
-        
-        
+
         List<Producto> productosProductor = new ArrayList();
 
-        
         for (Producto producto : listaProductosProductor) {
 
             if (producto.isAlta()) {
@@ -333,15 +325,15 @@ public class ProductorControlador {
         }
 
         Productor productor = productorRepositorio.getById(idProductor);
-        
-        if(productosProductor.isEmpty()) {
+
+        if (productosProductor.isEmpty()) {
             modelo.put("sinProductos", "sinProductos");
         }
-        
+
         modelo.put("ProductosProductor", productosProductor);
         modelo.put("productor", productor);
 
-         return "productorweb.html";
+        return "productorweb.html";
     }
 
 }

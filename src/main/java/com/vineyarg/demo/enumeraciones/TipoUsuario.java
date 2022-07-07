@@ -23,6 +23,5 @@ public enum TipoUsuario {
     public static TipoUsuario getPRODUCTOR() {
         return PRODUCTOR;
     }
-    
-    
+
 }

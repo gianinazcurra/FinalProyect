@@ -215,7 +215,7 @@
                 <hr class="mx-auto">
             </div>
             <div class="row mx-auto container-fluid">
-                <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productosSimilares != null}"th:each="productoSimilar : ${productosSimilares}">
+                <div class="producto text-center cl-lg-3 col-md-4 col-12" th:if="${productosSimilares != null}" th:each="productoSimilar : ${productosSimilares}">
 
                     <img class="similares" th:if="${productoSimilar.imagenes != null}" th:each="img : ${productoSimilar.imagenes}" th:src="@{${'/imagen/productoimagen-idImagen/' + img.id}}" alt="Foto del producto">
 
@@ -226,15 +226,22 @@
                                             <a th:href="@{/valorar(valoracion=3 , idProducto=${productoSimilar.id})}">  <i class="fas fa-star"></i></a>
                                             <a th:href="@{/valorar(valoracion=4 , idProducto=${productoSimilar.id})}"> <i class="fas fa-star"></i></a>
                                             <a th:href="@{/valorar(valoracion=5 , idProducto=${productoSimilar.id})}"> <i class="fas fa-star"></i></a>-->
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-
+                      <i th:if="${productoSimilar.promedioValoraciones >= 0}" class="fas fa-star"></i>
+                   
+                        <i th:if="${productoSimilar.promedioValoraciones > 1.5}" class="fas fa-star"></i>
+                        <i th:if="${productoSimilar.promedioValoraciones <= 1.5}" class="fas fa-star" style="color:black"></i>
+                    
+                        <i th:if="${productoSimilar.promedioValoraciones > 2.5}" class="fas fa-star"></i>
+                        <i th:if="${productoSimilar.promedioValoraciones <= 2.5}" class="fas fa-star" style="color:black"></i>
+                   
+                        <i th:if="${productoSimilar.promedioValoraciones > 3.5}" class="fas fa-star"></i>
+                        <i th:if="${productoSimilar.promedioValoraciones <= 3.5}" class="fas fa-star" style="color:black"></i>
+                  
+                        <i th:if="${productoSimilar.promedioValoraciones > 4.5}" class="fas fa-star"></i>
+                        <i th:if="${productoSimilar.promedioValoraciones <= 4.5}" class="fas fa-star" style="color:black"></i>
                     </div>
                     <h5 class="p-nombre" th:text="${productoSimilar.nombre}"></h5>
-                    <h4 class="p-precio" th:text="'$' + ${#numbers.formatDecimal(producto.Similar, 1, 'POINT', 2, 'COMMA')}"> </h4>
+                    <h4 class="p-precio" th:text="'$' + ${#numbers.formatDecimal(productoSimilar.precio, 1, 'POINT', 2, 'COMMA')}"> </h4>
                     <a th:if="${session.usuarioSession != null and session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/mostrarProducto(idProducto=${productoSimilar.id} , idUsuario=${session.usuarioSession.id})}"><button class="buy-btn">Comprar ahora</button></a> 
                     <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a cuenta para poder comprar</button></a>
                 </div>

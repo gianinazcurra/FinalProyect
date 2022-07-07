@@ -55,5 +55,5 @@ public class Proo implements Serializable {
     public String toString() {
         return "com.vineyarg.demo.entidades.Proo[ id=" + id + " ]";
     }
-    
+
 }

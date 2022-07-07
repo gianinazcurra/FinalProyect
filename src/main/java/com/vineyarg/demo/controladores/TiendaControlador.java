@@ -41,18 +41,14 @@ public class TiendaControlador {
     @GetMapping("/tienda")
     public String tienda(ModelMap modelo, HttpSession session) {
 
-    
-        
         List<Producto> productosT = productoRepositorio.findAll();
         List<Producto> productos = new ArrayList();
-        
-        
+
         //con el forEach descartamos productos dados de baja o que correspondan a productores dados de baja
         for (Producto producto : productosT) {
             if (producto.isAlta() && producto.getProductor().isAlta()) {
                 productos.add(producto);
-                
-               
+
             }
         }
         modelo.put("productos", productos);
@@ -90,25 +86,24 @@ public class TiendaControlador {
         productosSimilares.remove(productoElegido);
 
         modelo.put("productosSimilares", productosSimilares);
+        for (Producto productosSimilare : productosSimilares) {
+            System.out.println(productosSimilare);   
+        }
 
         return "producto.html";
     }
-    
-     @GetMapping("/tiendaRegiones")
-    public String tiendaRegiones(ModelMap modelo, HttpSession session,@RequestParam String region) {
 
-    
-        
+    @GetMapping("/tiendaRegiones")
+    public String tiendaRegiones(ModelMap modelo, HttpSession session, @RequestParam String region) {
+
         List<Producto> productosT = productoRepositorio.buscarPorRegion(region);
         List<Producto> productos = new ArrayList();
-        
-        
+
         //con el forEach descartamos productos dados de baja o que correspondan a productores dados de baja
         for (Producto producto : productosT) {
             if (producto.isAlta() && producto.getProductor().isAlta()) {
                 productos.add(producto);
-                
-               
+
             }
         }
         modelo.put("productos", productos);
