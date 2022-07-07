@@ -48,13 +48,12 @@
                     <li class="nav__item"><a href="/#home">Home</a></li>
                     <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
-
-                    <a href="">
-                        <li class="fa-solid fa-cart-shopping nav__item"></li>
-                    </a>
+                    <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
                     <!-- <a href="">
+                         <li class="fa-solid fa-bag-shopping nav__item"></li>
+                     </a>
+                     <a href="">
                          <li class="fa-solid fa-heart nav__item"></li>
                      </a> -->
 
@@ -94,9 +93,7 @@
         <div> <p class="errorIndex" th:if="${registrado != null}" th:text="${registrado}"></p></div>
         <div class="formulario">
 
-
-
-            <div  class="imagen imagen-b">
+            <div  class=" imagen-b">
                 <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
                 <img th:if="${session.usuarioSession.imagen != null}" th:src="@{${'/imagen/usuarioimagen/' + session.usuarioSession.id}}" class="imagen" alt="Tu imagen de perfil"> 
             </div>
@@ -176,24 +173,25 @@
                 </div>
             </section>
         </div>
-
+        
+        <hr>
 
         <!-- Footer -->
 
-        <div class="footer">
+        <footer class="footer">
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
                     <h3>
-                        ¡Comprá los mejores vinos Aquí!
+                        ¡Comprá los mejores vinos aquí!
                     </h3>
                 </div>
+
                 <div class="footer-columna-2">
                     <h3>Navegación</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#seccion_regiones">Regiones</a></li>
-                        <li><a href="">Bodegas</a></li>
                         <li><a href="/tienda">Tienda</a></li>
                         <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                     </ul>
@@ -211,11 +209,9 @@
             <div class="footer-b">
                 <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
             </div>
-        </div>
-
+            <div class="separador"></div>
+        </footer>
         <!-- Fin del Footer -->
-
-        <div class="separador"></div>
 
     </body>
 

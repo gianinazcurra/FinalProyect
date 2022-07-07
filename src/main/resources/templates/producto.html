@@ -94,15 +94,14 @@
                     <li class="nav__item"><a href="/#home">Home</a></li>
                     <li class="nav__item"><a href="/#seccion_regiones">Regiones</a></li>
                     <li class="nav__item"><a href="/tienda">Tienda</a></li>
-                    <li class="nav__item"><a href="">Contacto</a></li>
+                    <li class="nav__item"><a href="/aboutUs">Contacto</a></li>
 
-                    <a href="">
-                        <li class="fa-solid fa-bag-shopping nav__item"></li>
-                    </a>
-
-                    <a href="">
-                        <li class="fa-solid fa-heart nav__item"></li>
-                    </a>
+                    <!-- <a href="">
+                         <li class="fa-solid fa-bag-shopping nav__item"></li>
+                     </a>
+                     <a href="">
+                         <li class="fa-solid fa-heart nav__item"></li>
+                     </a> -->
 
                     <a th:if="${session.usuarioSession == null}" th:href="@{/logueo}"> 
                         <li class="fa-solid fa-user nav__item"></li>
@@ -243,7 +242,7 @@
                     <h5 class="p-nombre" th:text="${productoSimilar.nombre}"></h5>
                     <h4 class="p-precio" th:text="'$' + ${#numbers.formatDecimal(productoSimilar.precio, 1, 'POINT', 2, 'COMMA')}"> </h4>
                     <a th:if="${session.usuarioSession != null and session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/mostrarProducto(idProducto=${productoSimilar.id} , idUsuario=${session.usuarioSession.id})}"><button class="buy-btn">Comprar ahora</button></a> 
-                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a cuenta para poder comprar</button></a>
+                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a tu cuenta para poder comprar</button></a>
                 </div>
 
             </div>
@@ -251,9 +250,9 @@
 
 
 
-        <!-- Footer -->
+         <!-- Footer -->
 
-        <div class="footer">
+        <footer class="footer">
             <div class="footer-a">
                 <div class="footer-columna-1">
                     <img src="/imagenes/logofinalTransparente.png" alt="Logo VineyArg Footer" width="300px">
@@ -267,7 +266,6 @@
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#seccion_regiones">Regiones</a></li>
-                        <li><a href="">Bodegas</a></li>
                         <li><a href="/tienda">Tienda</a></li>
                         <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                     </ul>
@@ -285,10 +283,9 @@
             <div class="footer-b">
                 <small>&copy; <b>VineyArg</b> - Todos los Derechos Reservados. </small>
             </div>
-
-        </div>
+            <div class="separador"></div>
+        </footer>
         <!-- Fin del Footer -->
-        <div class="separador"></div>
 
 
 

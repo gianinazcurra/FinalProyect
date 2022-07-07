@@ -206,7 +206,7 @@
                     <h5 class="p-nombre" th:text="${producto.nombre}"></h5>
                     <h4 class="p-precio" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"> </h4>
                     <a th:if="${session.usuarioSession != null and session.usuarioSession.tipoUsuario.toString() == 'USUARIOCOMUN'}" th:href="@{/mostrarProducto(idProducto=${producto.id} , idUsuario=${session.usuarioSession.id})}"><button class="buy-btn">Comprar ahora</button></a> 
-                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a cuenta para poder comprar</button></a>
+                    <a th:if="${session.usuarioSession == null or session.usuarioSession.tipoUsuario.toString() != 'USUARIOCOMUN'}" th:href="@{/logueo}"><button class="buy-btn">Ingresá a tu cuenta para poder comprar</button></a>
                 </div>
         </section>
 
@@ -224,7 +224,7 @@
 
 
         <!-- Footer -->
-
+        <div class="separador"></div>
         <div class="footer">
             <div class="footer-a">
                 <div class="footer-columna-1">
@@ -238,8 +238,7 @@
                     <h3>Navegación</h3>
                     <ul>
                         <li><a href="#home">Home</a></li>
-                        <li><a href="/#seccion_regiones">Regiones</a></li>
-                        <li><a href="">Bodegas</a></li>
+                        <li><a href="#seccion_regiones">Regiones</a></li>
                         <li><a href="/tienda">Tienda</a></li>
                         <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
                     </ul>
@@ -247,10 +246,10 @@
                 <div class="footer-columna-3">
                     <h3>Nuestras Redes</h3>
                     <div class="redes">
-                        <a href="https://www.instagram.com/vineyarg/" class="fa fa-instagram"></a>
-                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" class="fa fa-linkedin"></a>
-                        <a href="" class="fa-solid fa-at"></a>
-                        <a href="mailto:vineyarg@vineyargentina.com.ar" class="fa fa-twitter"></a>
+                        <a href="https://www.instagram.com/vineyarg/" target="_blank" class="fa fa-instagram"></a>
+                        <a href="https://www.linkedin.com/in/vine-yarg-a05440240/" target="_blank" class="fa fa-linkedin"></a>
+                        <a class="fa-solid fa-at"></a>
+                        <a class="fa fa-twitter"></a>
                     </div>
                 </div>
             </div>
@@ -259,8 +258,9 @@
             </div>
 
         </div>
-        <!-- Fin del Footer -->
         <div class="separador"></div>
+        <!-- Fin del Footer -->
+        
 
 
 
