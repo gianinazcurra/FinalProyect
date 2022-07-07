@@ -18,27 +18,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @Service
 public class ProductoServicio {
 
-
-    
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
 
-     @Autowired
+    @Autowired
     private ImagenesServicio imagenesServicio;
 
-     
     @Autowired
     private ProductoRepositorio productoRepositorio;
 
     @Autowired
-     private ProductorRepositorio productorRepositorio;
+    private ProductorRepositorio productorRepositorio;
 
     @Transactional
-    public void agregarProducto(Set<MultipartFile> imagenes, /*si no funciona probar así: MutiplepartFile[] imagenes*/String nombre, Integer cantidad, Double precio, String descripcion,
+    public void agregarProducto(Set<MultipartFile> imagenes, /*si no funciona probar así: MutiplepartFile[] imagenes*/ String nombre, Integer cantidad, Double precio, String descripcion,
             String varietal, Productor productor, String SKU) throws Excepcion {
         /*Antes de persistir el objeto tenemos que validar que los atributos lleguen*/
         validar(nombre, cantidad, precio, descripcion,
@@ -63,9 +59,9 @@ public class ProductoServicio {
 
         Set<Imagenes> imagenesCargadas = new HashSet();
         Set<MultipartFile> imagenesInput = imagenes;
-        
+
         for (MultipartFile multipartFile : imagenesInput) {
-            
+
             Imagenes imagen = new Imagenes();
             imagen = imagenesServicio.guardarNueva(multipartFile);
 
@@ -86,41 +82,41 @@ public class ProductoServicio {
 
             Producto producto = respuesta.get();
 
-            if(producto.getNombre().equalsIgnoreCase(nombre)) {
-                
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+
                 String nombreEstaOk = "nombreOk";
                 validar(nombreEstaOk, cantidad, precio, descripcion,
-                    producto.getVarietal(), producto.getProductor(), producto.getSku());
-                
-            } else {validar(nombre, cantidad, precio, descripcion,
-                    producto.getVarietal(), producto.getProductor(), producto.getSku());
+                        producto.getVarietal(), producto.getProductor(), producto.getSku());
+
+            } else {
+                validar(nombre, cantidad, precio, descripcion,
+                        producto.getVarietal(), producto.getProductor(), producto.getSku());
             }
-            
 
             producto.setNombre(nombre);
             producto.setCantidad(cantidad);
             Double precioProd = (Math.round(precio * 100.0) / 100.0);
-        producto.setPrecio(precioProd);
+            producto.setPrecio(precioProd);
             producto.setDescripcion(descripcion);
-        producto.setVarietal(varietal);
+            producto.setVarietal(varietal);
 
-        if(!imagenes.isEmpty()) {
-            
-             Set<Imagenes> imagenesCargadas = new HashSet();
-        
-             Set<MultipartFile> imagenesInput = imagenes;
-        
-        for (MultipartFile multipartFile : imagenesInput) {
-            
-            Imagenes imagen = new Imagenes();
-            imagen = imagenesServicio.guardarNueva(multipartFile);
+            if (!imagenes.isEmpty()) {
 
-            imagenesCargadas.add(imagen);
+                Set<Imagenes> imagenesCargadas = new HashSet();
 
-        }
-        
-            producto.setImagenes(imagenesCargadas);
-        }
+                Set<MultipartFile> imagenesInput = imagenes;
+Imagenes imagen = new Imagenes();
+                for (MultipartFile multipartFile : imagenesInput) {
+
+                    
+                    imagen = imagenesServicio.guardarNueva(multipartFile);
+
+                    imagenesCargadas.add(imagen);
+
+                }
+
+                producto.setImagenes(imagenesCargadas);
+            }
             productoRepositorio.save(producto);
 
         }
@@ -153,11 +149,11 @@ public class ProductoServicio {
             producto.setCantidadValoraciones(producto.getCantidadValoraciones() + valoracion);
 //           
             Double promedio = Double.valueOf(producto.getCantidadValoraciones() / producto.getCantidadVecesValorado());
-            
+
             Double promedioVal = (Math.round(promedio * 100.0) / 100.0);
-            
+
             producto.setPromedioValoraciones(promedioVal);
-            
+
             productoRepositorio.save(producto);
         }
     }
@@ -219,15 +215,16 @@ public class ProductoServicio {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Excepcion("El nombre no puede estar vacío");
         }
-        
+
         List<Producto> productos = productoRepositorio.findAll();
-        
+
         for (Producto producto : productos) {
-            
-            if(producto.getNombre().equalsIgnoreCase(nombre))
-            throw new Excepcion("Ya hay un producto registrado con ese nombre");
+
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+                throw new Excepcion("Ya hay un producto registrado con ese nombre");
+            }
         }
-        
+
         if (cantidad < 0) {
             throw new Excepcion("No puedes agregar un stock negativo");
         }

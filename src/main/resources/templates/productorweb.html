@@ -83,7 +83,9 @@
         
         
         <!-- FORMULARIO -->
-
+        
+        <p th:if="${exito != null}" th:text="${exito}" class="errorIndex"></p>
+        
         <div class="formulario">
             <div  class="imagen imagen-b">
             <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
@@ -132,11 +134,11 @@
                       
                        <br>
                         <p th:text="${'Producto en venta:'}" </p>
-                        <p th:text="${'Nombre ' + producto.nombre}" </p>
-                        <p th:text="${'Precio ' + producto.precio}" </p>
-                        <p th:text="${'Stock disponible ' +  producto.cantidad}" </p>
-                        <p th:text="${'Descripcion ' +  producto.descripcion}" </p>
-                        <p th:text="${'Varietal ' +  producto.varietal}" </p>
+                        <p th:text="${'Nombre: ' + producto.nombre}" </p>
+                        <p th:text="${'Precio: ' + producto.precio}" </p>
+                        <p th:text="${'Stock disponible: ' +  producto.cantidad}" </p>
+                        <p th:text="${'Descripcion: ' +  producto.descripcion}" </p>
+                        <p th:text="${'Varietal: ' +  producto.varietal}" </p>
                         <br>
                         <p>_____________________________</p>
                     </div> 

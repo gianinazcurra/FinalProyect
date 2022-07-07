@@ -82,7 +82,7 @@
         <!-- Fin del header -->
 
 
-
+         <p th:if="${registrado != null}" th:text="${registrado}" class="errorIndex"></p>
         <div class="formulario">
             <div  class="imagen imagen-b">
             <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
@@ -91,7 +91,7 @@
             <section class="cuenta">
                 <div class="p_info"><br></div> 
                 
-                    <p th:if="${registrado != null}" th:text="${registrado}" class="exitoUsuario"></p>
+                   
                     <!--<img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="">-->
                 
                 <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
@@ -103,9 +103,11 @@
                     <br>
                     <div th:if="${compras != null}" th:each="compra : ${compras}">
                         <p th:text="${'Identificador de la Compra ' + compra.id}" </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado ' + item.producto.nombre}" </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total pagado ' +  item.totalProducto}" </p>
-                        <p th:value="${'precio total con envÃ­o ' +  compra.montoFinal}" </p>
+                        <div th:each="item : ${compra.itemCompra}" >
+                        <p th:text="${'Producto comprado ' + item.producto.nombre}" </p>
+                        <p th:text="${'Precio total pagado ' +  item.totalProducto}" </p>
+                        </div>
+                        <p th:value="${'precio total con envío ' +  compra.montoFinal}" </p>
                         <p th:value="${'Fecha de la compra ' +  compra.fechaCompra}" </p>
                         <p th:text="${'Estado de tu compra ' +  compra.estadoCompra}" </p>
                         <p th:text="${'Observaciones ' +  compra.observacionesCompra}" </p>
