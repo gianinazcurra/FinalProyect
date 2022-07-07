@@ -102,10 +102,11 @@ public class ProductoServicio {
 
             if (!imagenes.isEmpty()) {
 
-                Set<Imagenes> imagenesCargadas = new HashSet();
+                Set<Imagenes> imagenesCargadas = producto.getImagenes();
 
                 Set<MultipartFile> imagenesInput = imagenes;
-Imagenes imagen = new Imagenes();
+                
+                Imagenes imagen = new Imagenes();
                 for (MultipartFile multipartFile : imagenesInput) {
 
                     

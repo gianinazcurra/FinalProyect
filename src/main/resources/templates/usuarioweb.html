@@ -101,16 +101,16 @@
                 <div class="p_info">
                     
                     <br>
-                    <div th:if="${compras != null}" th:each="compra : ${compras}">
-                        <p th:text="${'Identificador de la Compra ' + compra.id}" </p>
+                    <div style="font-size: medium" th:if="${compras != null}" th:each="compra : ${compras}">
+                        <p th:text="${'Identificador de la Compra: ' + compra.id}"> </p>
                         <div th:each="item : ${compra.itemCompra}" >
-                        <p th:text="${'Producto comprado ' + item.producto.nombre}" </p>
-                        <p th:text="${'Precio total pagado ' +  item.totalProducto}" </p>
+                        <p th:text="${'Producto comprado: ' + item.producto.nombre}"> </p>
+                        <p th:text="${'Precio total pagado: $' + #numbers.formatDecimal(item.totalProducto, 1, 'POINT', 2, 'COMMA')}" ></p>
                         </div>
-                        <p th:value="${'precio total con envío ' +  compra.montoFinal}" </p>
-                        <p th:value="${'Fecha de la compra ' +  compra.fechaCompra}" </p>
-                        <p th:text="${'Estado de tu compra ' +  compra.estadoCompra}" </p>
-                        <p th:text="${'Observaciones ' +  compra.observacionesCompra}" </p>
+                        <p th:text="${'precio total con envío: $' +  #numbers.formatDecimal(compra.montoFinal, 1, 'POINT', 2, 'COMMA')}"> </p>
+                        <p th:text="${'Fecha de la compra: ' +  compra.fechaCompra}" ></p>
+                        <p th:text="${'Estado de tu compra: ' +  compra.estadoCompra}" ></p>
+                        <p th:text="${'Observaciones: ' +  compra.observacionesCompra}" ></p>
                         <p>_____________________________</p>
                         <br>
                         
@@ -135,7 +135,7 @@
                 <h3>Navegación</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
+                    <li><a href="/#seccion_regiones">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>
                     <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>

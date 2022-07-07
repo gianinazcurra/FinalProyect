@@ -124,13 +124,13 @@
                         <li th:if="${carrito != null}" th:each="item : ${itemsCompra}"class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="my-0" th:text="${item.producto.nombre}"></h6>
-                                <small class="text-muted">Nombre Bodega</small>
+                                <small class="text-muted">Nombre Producto</small>
                             </div>
                             <div>
-                                <h6 class="my-0" th:text="${item.totalProducto}"></h6>
-
+                                <h6 class="my-0" th:text="${'$' + #numbers.formatDecimal(item.totalProducto, 1, 'POINT', 2, 'COMMA')}"></h6>
+                                    
                             </div>
-                            <span class="text-muted" th:value="${item.producto.precio * item.cantidad}"></span>
+<!--                            <span class="text-muted" th:value="${item.producto.precio * item.cantidad}"></span>-->
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between bg-light">
@@ -139,7 +139,7 @@
                                 <small>CODIGO_PROMO</small>
                             </div>
                             <span th:if="${cupon == null}" class="text-success" th:text="${'-$0,00'}"></span>
-                            <span th:if="${cupon != null}" class="text-success" th:text="${'-$ ' + cupon}"></span>
+                            <span th:if="${cupon != null}" class="text-success" th:text="${'-$' + cupon}"></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between bg-light">
                             <div class="text-success">
@@ -147,11 +147,11 @@
 
                             </div>
                             <span th:if="${descuento == null}" class="text-success" th:text="${'-$0,00'}"></span>
-                            <span th:if="${descuento != null}" class="text-success" th:text="${'-$ ' + descuento}"></span>
+                            <span th:if="${descuento != null}" class="text-success" th:text="${'-$' + #numbers.formatDecimal(descuento, 1, 'POINT', 2, 'COMMA')}"></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total con envío incluído (ARS)</span>
-                            <strong th:text="${totalCompra}"></strong>
+                            <strong th:text="${'$' + #numbers.formatDecimal(totalCompra, 1, 'POINT', 2, 'COMMA')}"></strong>
                         </li>
                     </ul>
                 </div>
@@ -274,15 +274,15 @@
 
                         <div class="d-block my-3">
                             <div class="custom-control custom-radio">
-                                <input id="modoPago" name="modoPago" type="radio" class="custom-control-input" checked required>
+                                <input id="modoPago" name="modoPago" value="Tarjeta de Credito" type="radio" class="custom-control-input" checked required>
                                 <label class="custom-control-label" for="credit">Tarjeta de Crédito</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input id="debit" name="modoPago" type="radio" class="custom-control-input" required>
+                                <input id="debit" name="modoPago" value="Tarjeta de Débito" type="radio" class="custom-control-input" required>
                                 <label class="custom-control-label" for="debit">Tarjeta de Débito</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input id="paypal" name="modoPago" type="radio" class="custom-control-input" required>
+                                <input id="paypal" name="modoPago" value="Mercado Pago" type="radio" class="custom-control-input" required>
                                 <label class="custom-control-label" for="paypal">Mercado Pago</label>
                             </div>
                         </div>
@@ -354,7 +354,7 @@
                 <h3>Navegación</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
+                    <li><a href="/#seccion_regiones">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>
                     <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
