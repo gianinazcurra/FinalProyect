@@ -116,7 +116,7 @@
                     <div th:if="${sinNuevas != null}">
                         <p th:text="${'No existen compras nuevas para procesar'}"> </p>
                     </div>
-                    <div th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
+                    <div style="font-size: medium" th:if="${comprasNuevas != null}" th:each="compra : ${comprasNuevas}">
 
 
                         <p th:text="${'Identificador de la compra: ' + compra.id}"> </p>
@@ -124,13 +124,13 @@
 
                         <div th:each="item : ${compra.itemCompra}">
                             <p th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
-                            <p th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
-                            <p th:text="${'Cantidad: ' +item.cantidad}"> </p>
-                            <p th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                            <p th:text="${'Precio del producto: $' + #numbers.formatDecimal(item.producto.precio, 1, 'POINT', 2, 'COMMA')}"> </p>
+                            <p th:text="${'Cantidad: ' + item.cantidad}"> </p>
+                            <p th:text="${'Precio total por este producto: $' + #numbers.formatDecimal(item.totalProducto, 1, 'POINT', 2, 'COMMA')}"> </p>
                             
                         </div>
-                        <p th:value="${'Precio final con envío: ' + compra.montoFinal}"> </p>
-                            <p th:value="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
+                        <p th:text="${'Precio final con envío: $' + #numbers.formatDecimal(compra.montoFinal, 1, 'POINT', 2, 'COMMA')}"> </p>
+                            <p th:text="${'Fecha de la compra: ' +compra.fechaCompra}"> </p>
                             <p th:text="${'Nombre del comprador: ' + compra.usuario.nombre + compra.usuario.apellido}"> </p>
                             <br>
                             <p th:text="${'Forma de pago: ' + compra.formaDePago}"> </p>
@@ -153,7 +153,7 @@
                         <br>
                     </div>
 
-                    <div th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
+                    <div style="font-size: medium" th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
                         <p th:text="${'Identificador de la compra: ' + compraAntiguas.id}" </p>
                         
                          <div th:each="item : ${compraAntiguas.itemCompra}" >
@@ -161,12 +161,12 @@
                             
                         
                         <p th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
-                        <p th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+                        <p th:text="${'Precio del producto: $' + #numbers.formatDecimal(item.producto.precio, 1, 'POINT', 2, 'COMMA')}"> </p>
                         <p th:text="${'Cantidad: ' +item.cantidad}"> </p>
-                        <p th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                        <p th:text="${'Precio total por este producto: $' + #numbers.formatDecimal(item.totalProducto, 1, 'POINT', 2, 'COMMA')}"> </p>
                         </div>
-                        <p th:value="${'Precio final con envío: ' + compraAntiguas.montoFinal}"> </p>
-                        <p th:value="${'Fecha de la compra: ' +compraAntiguas.fechaCompra}"> </p>
+                        <p th:text="${'Precio final con envío: $' + #numbers.formatDecimal(compraAntiguas.montoFinal, 1, 'POINT', 2, 'COMMA')}"> </p>
+                        <p th:text="${'Fecha de la compra: ' +compraAntiguas.fechaCompra}"> </p>
                         <p th:text="${'Nombre del comprador: ' + compraAntiguas.usuario.nombre + compraAntiguas.usuario.apellido}"> </p>
                         <p th:text="${'Estado: ' + compraAntiguas.estadoCompra}" </p>
                         <p th:text="${'Observaciones: ' + compraAntiguas.observacionesCompra}" </p>
@@ -192,7 +192,7 @@
                     <h3>Navegación</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="">Regiones</a></li>
+                        <li><a href="/#seccion_regiones">Regiones</a></li>
                         <li><a href="">Bodegas</a></li>
                         <li><a href="/tienda">Tienda</a></li>
                         <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>

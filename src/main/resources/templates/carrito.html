@@ -32,6 +32,14 @@
         overflow: hidden;
         font-size: medium;
     }
+    
+/*    td img {
+        width: 100px;
+        height: 200px;
+        box-sizing: auto;
+        object-fit: scale-down;
+    }*/
+
 
 </style>
 
@@ -131,11 +139,11 @@
                         <h5 th:text="${item.producto.nombre}"></h5>
                     </td>
                     <td>
-                        <h5  th:text="${item.producto.precio}"></h5>
+                        <h5  th:text="'$' + ${#numbers.formatDecimal(item.producto.precio, 1, 'POINT', 2, 'COMMA')}"></h5>
                     </td>
-                    <td><input th:value="${item.cantidad}" type="number" disabled></td>
+                    <td><input style="text-align:right" th:value="${item.cantidad}" type="number" disabled></td>
                     <td>
-                        <h5 th:text="${item.producto.precio * item.cantidad}"></h5>
+                        <h5 th:text="'$' + ${#numbers.formatDecimal(item.producto.precio * item.cantidad, 1, 'POINT', 2, 'COMMA')}"></h5>
                     </td>
                 </tr>
                 
@@ -160,27 +168,27 @@
                     <h5>TOTAL DE LA COMPRA</h5>
                     <div class="d-flex justify-content-between">
                         <h6>Subtotal antes del envío</h6>
-                        <p th:if="${subtotal != null}" th:text="${'$' +subtotal}"></p>
+                        <p th:if="${subtotal != null}" th:text="'$' + ${#numbers.formatDecimal(subtotal, 1, 'POINT', 2, 'COMMA')}"></p>
                     </div>
                      <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Descuento por acumulación de compras anteriores (si sumaste más de $15.000 en compras anteriores y tu compra actual supera los $3.000) </h6>
-                        <p th:if="${descuento != null}" th:text="${'-$' + descuento}"></p>
+                        <p th:if="${descuento != null}" th:text="'-$' + ${#numbers.formatDecimal(descuento, 1, 'POINT', 2, 'COMMA')}"></p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Descuento por cupón </h6>
-                        <p th:if="${cupon != null}" th:text="${'-$' + cupon}"></p>
+                        <p th:if="${cupon != null}" th:text="'-$' + ${#numbers.formatDecimal(cupon, 1, 'POINT', 2, 'COMMA')}"></p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Envío fijo a todo el país </h6>
-                        <p>$ 450.0</p>
+                        <p>$450.0</p>
                     </div>
                     <hr class="second-hr">
                     <div class="d-flex justify-content-between">
                         <h6>Total</h6>
-                        <p th:if="${totalCompra != null}" th:text="${'$' + totalCompra}"> </p>
+                        <p th:if="${totalCompra != null}" th:text="'$' + ${#numbers.formatDecimal(totalCompra, 1, 'POINT', 2, 'COMMA')}"> </p>
                     </div>
                     <div class="botones">
                     <a th:href="@{/checkout/(idCompra=${carrito.id})}" > <button id="botonCompra" class="ml-auto" >PROCEDER A LA COMPRA</button></a>
@@ -207,7 +215,7 @@
                 <h3>Navegación</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
+                    <li><a href="/#seccion_regiones">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>
                     <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>

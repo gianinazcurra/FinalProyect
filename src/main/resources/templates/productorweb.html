@@ -83,7 +83,9 @@
         
         
         <!-- FORMULARIO -->
-
+        
+        <p th:if="${exito != null}" th:text="${exito}" class="errorIndex"></p>
+        
         <div class="formulario">
             <div  class="imagen imagen-b">
             <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
@@ -109,16 +111,16 @@
                 <div class="p_info">
                     
                     <div th:if="${sinVentas != null}">
-                        <p th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}" </p>
+                        <p th:text="${'Todavía no vendiste ningún producto, pero seguramente pronto harás tu primera venta!'}"> </p>
                     </div>
                     <br>
-                    <div th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
+                    <div style="font-size: medium" th:if="${itemsProductor != null}" th:each="item: ${itemsProductor}">
                         
                         <!--    <p th:text="${'Producto vendido:'}" </p> -->
-                        <p th:text="${'Producto: ' + item.producto.nombre}" </p>
-                        <p th:text="${'Precio de venta:  ' + item.producto.precio}" ></p>
+                        <p th:text="${'Producto: ' + item.producto.nombre}"> </p>
+                        <p th:text="${'Precio de venta: $' +  #numbers.formatDecimal(item.producto.precio, 1, 'POINT', 2, 'COMMA')}"></p>
                         <p th:text="${'Cantidad vendida: ' + item.cantidad}" ></p>
-                        <p th:text="${'Precio total por esta venta:  ' + item.totalProducto}" ></p>
+                        <p th:text="${'Precio total por esta venta: $' + #numbers.formatDecimal(item.totalProducto, 1, 'POINT', 2, 'COMMA')}"></p>
                         <!--            <p th:value="${'Fecha de la venta: ' + compra.fechaCompra}" </p>-->
                         <p>_____________________________</p>                        
                         <br>
@@ -128,15 +130,15 @@
                         <p th:text="${'Todavía no cargás tu primer producto. Hacelo pronto para que los clientes puedan conocer tus vinos!'}" </p> 
                         <a th:href="@{/agregar-producto(idUsuario=${session.usuarioSession.id})}">AGREGÁ TU PRIMER PRODUCTO</a>
                     </div> 
-                    <div th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
+                    <div style="font-size: medium" th:if="${ProductosProductor != null}" th:each="producto : ${ProductosProductor}">
                       
                        <br>
-                        <p th:text="${'Producto en venta:'}" </p>
-                        <p th:text="${'Nombre ' + producto.nombre}" </p>
-                        <p th:text="${'Precio ' + producto.precio}" </p>
-                        <p th:text="${'Stock disponible ' +  producto.cantidad}" </p>
-                        <p th:text="${'Descripcion ' +  producto.descripcion}" </p>
-                        <p th:text="${'Varietal ' +  producto.varietal}" </p>
+                        <p th:text="${'Producto en venta:'}"> </p>
+                        <p th:text="${'Nombre: ' + producto.nombre}"> </p>
+                        <p th:text="${'Precio: $' + #numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"> </p>
+                        <p th:text="${'Stock disponible: ' +  producto.cantidad}"> </p>
+                        <p th:text="${'Descripcion: ' +  producto.descripcion}"> </p>
+                        <p th:text="${'Varietal: ' +  producto.varietal}" </p>
                         <br>
                         <p>_____________________________</p>
                     </div> 
@@ -162,7 +164,7 @@
                 <h3>Navegación</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
+                    <li><a href="/#seccion_regiones">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>
                     <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>

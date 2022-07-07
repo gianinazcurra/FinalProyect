@@ -330,8 +330,8 @@ public class CompraControlador {
             @RequestParam String pais, @RequestParam String CP, @RequestParam String modoPago, @RequestParam String numTarjeta, @RequestParam String titTarjeta,
             @RequestParam String vencimiento, @RequestParam String CVV, @RequestParam String DNI, @RequestParam Double totalCompra) {
 
-        String direccionEnvio = "Direccion de envío " + direccion + " detalles para el envío " + detalles + " provincia " + provincia + " país" + pais + " CP: " + CP;
-        String formaDePago = "Modo " + modoPago + " número tarjeta " + numTarjeta + " titular Tarjeta " + titTarjeta + " vencimiento " + vencimiento + " CVV " + CVV + " DNI titular de la tarjeta " + DNI;
+        String direccionEnvio = "" + direccion + "\r\n" + " Detalles para el envío: " + detalles + "\r\n" +" Provincia: " + provincia + "\r\n" +" País:" + pais + "\r\n" + " CP: " + CP;
+        String formaDePago = "" + modoPago + "\r\n" +" Número tarjeta: " + numTarjeta +"\r\n" + " Titular Tarjeta: " + titTarjeta + "\r\n" +" Vencimiento: " + vencimiento + "\r\n" +" CVV: " + CVV + "\r\n" +" DNI titular de la tarjeta: " + DNI;
 
         try {
             compraServicio.enviarPedido(idCompra, direccionEnvio, formaDePago, totalCompra);

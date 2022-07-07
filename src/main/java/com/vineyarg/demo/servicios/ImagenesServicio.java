@@ -36,7 +36,7 @@ public class ImagenesServicio {
     @Transactional
     public Imagenes guardarNueva(MultipartFile archivo) throws Excepcion {
 
-        if (archivo != null) {
+        if (!archivo.isEmpty()) {
             
             try {
                 

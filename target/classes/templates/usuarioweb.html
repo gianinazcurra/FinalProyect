@@ -82,7 +82,7 @@
         <!-- Fin del header -->
 
 
-
+         <p th:if="${registrado != null}" th:text="${registrado}" class="errorIndex"></p>
         <div class="formulario">
             <div  class="imagen imagen-b">
             <img th:if="${session.usuarioSession.imagen == null}" class="imagen" src="/imagenes/logoCuadrado.jpg" alt="">
@@ -91,7 +91,7 @@
             <section class="cuenta">
                 <div class="p_info"><br></div> 
                 
-                    <p th:if="${registrado != null}" th:text="${registrado}" class="exitoUsuario"></p>
+                   
                     <!--<img th:if="${session.usuarioSession.imagen == true}" class="img-fluid mb-3" th:text="">-->
                 
                 <a class="boton_lista" th:href="@{/editar-usuario(id=${session.usuarioSession.id})}">ACTUALIZÁ TUS DATOS</a>
@@ -101,14 +101,16 @@
                 <div class="p_info">
                     
                     <br>
-                    <div th:if="${compras != null}" th:each="compra : ${compras}">
-                        <p th:text="${'Identificador de la Compra ' + compra.id}" </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Producto comprado ' + item.producto.nombre}" </p>
-                        <p th:each="item : ${compra.itemCompra}" th:text="${'Precio total pagado ' +  item.totalProducto}" </p>
-                        <p th:value="${'precio total con envÃ­o ' +  compra.montoFinal}" </p>
-                        <p th:value="${'Fecha de la compra ' +  compra.fechaCompra}" </p>
-                        <p th:text="${'Estado de tu compra ' +  compra.estadoCompra}" </p>
-                        <p th:text="${'Observaciones ' +  compra.observacionesCompra}" </p>
+                    <div style="font-size: medium" th:if="${compras != null}" th:each="compra : ${compras}">
+                        <p th:text="${'Identificador de la Compra: ' + compra.id}"> </p>
+                        <div th:each="item : ${compra.itemCompra}" >
+                        <p th:text="${'Producto comprado: ' + item.producto.nombre}"> </p>
+                        <p th:text="${'Precio total pagado: $' + #numbers.formatDecimal(item.totalProducto, 1, 'POINT', 2, 'COMMA')}" ></p>
+                        </div>
+                        <p th:text="${'precio total con envío: $' +  #numbers.formatDecimal(compra.montoFinal, 1, 'POINT', 2, 'COMMA')}"> </p>
+                        <p th:text="${'Fecha de la compra: ' +  compra.fechaCompra}" ></p>
+                        <p th:text="${'Estado de tu compra: ' +  compra.estadoCompra}" ></p>
+                        <p th:text="${'Observaciones: ' +  compra.observacionesCompra}" ></p>
                         <p>_____________________________</p>
                         <br>
                         
@@ -133,7 +135,7 @@
                 <h3>Navegación</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="">Regiones</a></li>
+                    <li><a href="/#seccion_regiones">Regiones</a></li>
                     <li><a href="">Bodegas</a></li>
                     <li><a href="/tienda">Tienda</a></li>
                     <li><a href="mailto:vineyarg@vineyargentina.com.ar">Contacto</a></li>
