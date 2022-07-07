@@ -155,15 +155,21 @@
 
                     <div th:if="${comprasHistoricas != null}" th:each="compraAntiguas : ${comprasHistoricas}">
                         <p th:text="${'Identificador de la compra: ' + compraAntiguas.id}" </p>
-                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
-                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
-                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Cantidad: ' +item.cantidad}"> </p>
-                        <p th:each="item : ${compraAntiguas.itemCompra}" th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                        
+                         <div th:each="item : ${compraAntiguas.itemCompra}" >
+                           
+                            
+                        
+                        <p th:text="${'Producto comprado: ' +item.producto.nombre}"> </p>
+                        <p th:text="${'Precio del producto: ' +item.producto.precio}"> </p>
+                        <p th:text="${'Cantidad: ' +item.cantidad}"> </p>
+                        <p th:text="${'Precio total por este producto: ' +item.totalProducto}"> </p>
+                        </div>
                         <p th:value="${'Precio final con envío: ' + compraAntiguas.montoFinal}"> </p>
                         <p th:value="${'Fecha de la compra: ' +compraAntiguas.fechaCompra}"> </p>
                         <p th:text="${'Nombre del comprador: ' + compraAntiguas.usuario.nombre + compraAntiguas.usuario.apellido}"> </p>
-                        <p th:text="${compraAntiguas.estadoCompra}" </p>
-                        <p th:text="${compraAntiguas.observacionesCompra}" </p>
+                        <p th:text="${'Estado: ' + compraAntiguas.estadoCompra}" </p>
+                        <p th:text="${'Observaciones: ' + compraAntiguas.observacionesCompra}" </p>
                         <p>_________________________________________</p>
                         <br>
                     </div>
