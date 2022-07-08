@@ -192,7 +192,7 @@
                     <form action="/agregaCarrito" method="POST" enctype="multipart/form-data">  
 
                         <input type="hidden" class="form-control" name="idUsuario" th:value="${perfil.id}"> 
-                        <input th:if="${productoElegido.cantidad} > 0" type="number" min="1" th:max="${productoElegido.cantidad}" name="cantidad" class="form-control" placeholder="1" required th:value="1">
+                        <input style="width: 70px" th:if="${productoElegido.cantidad} > 0" type="number" min="1" th:max="${productoElegido.cantidad}" name="cantidad" class="form-control" placeholder="1" required th:value="1">
                         <input th:if="${productoElegido.cantidad} <= 0" type="text" name="cantidad" class="form-control" placeholder="Lo sentimos! Este producto esta agotado" required th:value="${cantidad}">
                         <input type="hidden" name="idProducto" class="form-control" th:value="${productoElegido.id}">
 
