@@ -24,14 +24,15 @@ public class MailServicio {
     
     @Async //el programa se sigue ejecutando mientras ejecuta esta acción
     public void enviar(String correo, String asunto, String contenido){
-        SimpleMailMessage mensaje= new SimpleMailMessage ();//es un objeto de mailSender
-        mensaje.setTo(correo);
-        mensaje.setFrom("noreplay@vineyarg.com.ar");
-        mensaje.setSubject(asunto);
-        mensaje.setText(contenido);
+        SimpleMailMessage email = new SimpleMailMessage ();//es un objeto de mailSender
+        email.setTo(correo);
+        email.setFrom("noreplay@vineyarg.com.ar");
+        
+        email.setSubject(asunto);
+        email.setText(contenido);
     //se le puede agregar fecha o demas cosas
         
-        mailServicio.send(mensaje);
+        mailServicio.send(email);
     }
       }  
 

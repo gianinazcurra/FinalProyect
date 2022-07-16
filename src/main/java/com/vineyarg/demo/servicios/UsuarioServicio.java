@@ -14,12 +14,14 @@ import static com.vineyarg.demo.enumeraciones.TipoUsuario.USUARIOCOMUN;
 import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.ImagenesRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private ImagenesRepositorio imagenesRepositorio;
+    
+    @Autowired
+    MailServicio mailServicio;
 
     @Transactional
     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento, TipoUsuario tipoUsuario) throws Excepcion {
@@ -176,7 +181,7 @@ public class UsuarioServicio implements UserDetailsService {
             }
 
             usuarioRepositorio.save(usuario);
-            
+
         } else {
 
             throw new Excepcion("Usuario o clave no hallada");
@@ -216,7 +221,52 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
-    public void validar(String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento) throws Excepcion {
+    @Transactional
+    public void recuperarClave(@RequestParam Usuario usuario) throws Excepcion {
+
+        int length = 10;
+
+        final char[] lowercase = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        final char[] uppercase = "ABCDEFGJKLMNPRSTUVWXYZ".toCharArray();
+        final char[] numbers = "0123456789".toCharArray();
+        final char[] symbols = "^$?!@#%&".toCharArray();
+        final char[] allAllowed = "abcdefghijklmnopqrstuvwxyzABCDEFGJKLMNPRSTUVWXYZ0123456789^$?!@#%&".toCharArray();
+
+        //Use cryptographically secure random number generator
+        Random random = new SecureRandom();
+
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            password.append(allAllowed[random.nextInt(allAllowed.length)]);
+        }
+
+        //Ensure password policy is met by inserting required random chars in random positions
+        password.insert(random.nextInt(password.length()), lowercase[random.nextInt(lowercase.length)]);
+        password.insert(random.nextInt(password.length()), uppercase[random.nextInt(uppercase.length)]);
+        password.insert(random.nextInt(password.length()), numbers[random.nextInt(numbers.length)]);
+        password.insert(random.nextInt(password.length()), symbols[random.nextInt(symbols.length)]);
+
+        String nuevaClave = password.toString();
+
+        String encriptada = new BCryptPasswordEncoder().encode(nuevaClave);
+            usuario.setClave(encriptada);
+
+            usuarioRepositorio.save(usuario);
+            
+            String asunto = "Tu nueva clave para ingresar en Vineyarg";
+            String contenido = "Hola " + usuario.getNombre() + ". Solicitaste recuperar tu contraseña de usuario de Vineyarg. Tu nueva contraseña es: " + nuevaClave + 
+                ". Te aconsejamos cambiar tu contraseña a través de tu página de perfil tan pronto como ingreses con esta nueva clave. Si no solicitaste el cambio de clave, igualmente "
+                    + "te sugerimos cambiarla ahora y frecuentemente";
+                    
+              mailServicio.enviar(usuario.getCorreo(), asunto, contenido);
+            
+
+    }
+
+
+
+public void validar(String nombre, String apellido, String DNI, String correo, String clave1, String clave2, Date fechaNacimiento) throws Excepcion {
 
         //Validaciones nombre, apellido y DNI
         if (nombre.trim() == null || nombre.trim().isEmpty()) {
@@ -300,7 +350,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
 
         Usuario usuario = usuarioRepositorio.BuscarUsuarioPorCorreo(correo);
 
@@ -378,4 +428,6 @@ public class UsuarioServicio implements UserDetailsService {
         return user;
     }
 
+    
+    
 }
