@@ -172,7 +172,7 @@
                         </div>
                         <hr class="second-hr">
                         <div class="d-flex justify-content-between">
-                            <h6>Descuento cliente frecuente <br> (si sumaste más de $15.000 en compras anteriores <br> y tu compra actual supera los $3.000) </h6>
+                            <h6>Descuento cliente frecuente (10% off) <br> (si sumaste más de $15.000 en compras anteriores <br> y tu compra actual supera los $3.000) </h6>
                             <p th:if="${descuento != null}" th:text="'-$' + ${#numbers.formatDecimal(descuento, 1, 'POINT', 2, 'COMMA')}"></p>
                         </div>
                         <hr class="second-hr">
@@ -182,8 +182,9 @@
                         </div>
                         <hr class="second-hr">
                         <div class="d-flex justify-content-between">
-                            <h6>Envío fijo a todo el país </h6>
-                            <p>$450.0</p>
+                            <h6>Envío fijo a todo el país (compras mayores a $4.500 no pagan envío!)</h6>
+                            <p th:if="${envio != null}">$450.0</p>
+                            <p th:if="${envio == null}">GRATIS</p>
                         </div>
                         <hr class="second-hr">
                         <div class="d-flex justify-content-between">

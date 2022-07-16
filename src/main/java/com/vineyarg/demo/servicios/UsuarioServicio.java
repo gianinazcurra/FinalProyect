@@ -176,6 +176,7 @@ public class UsuarioServicio implements UserDetailsService {
             }
 
             usuarioRepositorio.save(usuario);
+            
         } else {
 
             throw new Excepcion("Usuario o clave no hallada");

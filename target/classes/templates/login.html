@@ -93,6 +93,8 @@
             <p th:if="${noLogin != null}" th:text="${xxx}" class="errorRojo"></p>
             <p th:if="${timeout != null}" th:text="${timeout}" class="errorRojo"></p>
             <p th:if="${registrado != null}" th:text="${registrado}" class="exito" ></p>
+            <p th:if="${expiro != null}" th:text="${expiro}" class="errorRojo" ></p>
+            
             </h5>
             <img class="avatar" src="/imagenes/logoCuadrado.jpg" alt="">
             <h2>
@@ -100,22 +102,28 @@
             </h2>
             <div>
             <form action="/logincheck" method="POST">
+              
                 <!-- nombre -->
                 <label for="correo">Usuario (correo electrónico con el que te registraste)</label>
-                <input type="text" name="correo" placeholder="Nombre de Usuario" required>
+                <input type="text" name="correo" placeholder="Nombre de Usuario" required> 
+              
                 
                 <!-- contraseña -->
                 <label for="clave">Contraseña</label>
-                <input type="password" name="clave" placeholder="Ingresa tu contraseña" required>
-                
+               <input type="password" name="clave" placeholder="Ingresa tu contraseña" required>  
                
                 <input type="submit" value="Ingresá">
+                
                 
             </form>
                 </div>
             <h5>
                 ¿Todavía no tenés una cuenta? <a href="/registro"> Click aquí! </a>
             </h5>
+            <h5>
+                <a href="/recuperar"> Olvidé mi contraseña </a>
+            </h5>
+            
         </div>
         </section>
     </div>

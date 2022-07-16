@@ -7,12 +7,21 @@ import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
+import com.vineyarg.demo.servicios.MailServicio;
 import com.vineyarg.demo.servicios.ProductoServicio;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +38,10 @@ public class TiendaControlador {
 
     @Autowired
     ProductoServicio productoServicio;
+    
+    @Autowired
+    MailServicio  mailServicio;
+    
     @Autowired
     private CompraRepositorio compraRepositorio;
 
@@ -39,7 +52,7 @@ public class TiendaControlador {
     UsuarioRepositorio usuarioRepositorio;
 
     @GetMapping("/tienda")
-    public String tienda(ModelMap modelo, HttpSession session) {
+    public String tienda(ModelMap modelo, HttpSession session) throws MessagingException {
 
         List<Producto> productosT = productoRepositorio.findAll();
         List<Producto> productos = new ArrayList();
@@ -51,8 +64,28 @@ public class TiendaControlador {
 
             }
         }
+
+        
+      
+
         modelo.put("productos", productos);
 
+        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+          if (login != null) {
+            Compra compraEnCursoInicioSesion = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getId());
+
+            if (compraEnCursoInicioSesion != null) {
+
+                modelo.put("compraEnCursoInicioSesion", compraEnCursoInicioSesion);
+                modelo.put("compraPendiente", "Tenés un compra sin finalizar, cuando quieras podés continuar");
+
+                List<String> decision = new ArrayList();
+                decision.add("continuar");
+                decision.add("anular");
+                modelo.put("decisiones", decision);
+            }
+        }
+          
         return "tienda.html";
 
     }
@@ -82,12 +115,12 @@ public class TiendaControlador {
         modelo.put("productoElegido", productoElegido);
 
         List<Producto> productosSimilares = productoRepositorio.buscarTodosPorVarietal(productoElegido.getVarietal());
-        
+
         productosSimilares.remove(productoElegido);
 
         modelo.put("productosSimilares", productosSimilares);
         for (Producto productosSimilare : productosSimilares) {
-            System.out.println(productosSimilare);   
+            System.out.println(productosSimilare);
         }
 
         return "producto.html";
@@ -108,6 +141,22 @@ public class TiendaControlador {
         }
         modelo.put("productos", productos);
 
+        Usuario login = (Usuario) session.getAttribute("usuarioSession");
+          if (login != null) {
+            Compra compraEnCursoInicioSesion = compraRepositorio.buscarComprasSinEnviarPorUsuario(login.getId());
+
+            if (compraEnCursoInicioSesion != null) {
+
+                modelo.put("compraEnCursoInicioSesion", compraEnCursoInicioSesion);
+                modelo.put("compraPendiente", "Tenés un compra sin finalizar, cuando quieras podés continuar");
+
+                List<String> decision = new ArrayList();
+                decision.add("continuar");
+                decision.add("anular");
+                modelo.put("decisiones", decision);
+            }
+        }
+          
         return "tienda.html";
 
     }

@@ -50,6 +50,10 @@ public class CompraControlador {
     private ItemCompraServicio itemCompraServicio;
     @Autowired
     private ItemCompraRepositorio ItemCompraRepositorio;
+    
+    private final Double costoEnvio = 450.00;
+    private final Double gratisEnvio = 0.00;
+    
 
     @PostMapping("/agregaCarrito")
     public String agregaCarrito(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idProducto, @RequestParam Integer cantidad) {
@@ -132,7 +136,7 @@ public class CompraControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_COMUN')")
     @GetMapping("/finalizarCompra")
-    public String finalizarCompra(ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCompra, @RequestParam(required = false) String decision) {
+    public String finalizarCompra(ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCompra, @RequestParam(required = false) String decision, @RequestParam(required = false) String cupon) {
 
         if (decision.equalsIgnoreCase("anular")) {
 
@@ -199,8 +203,17 @@ public class CompraControlador {
                         totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
 
                     }
-                    Double envio = 450.0;
-                    Double totalCompraConEnvio = (totalSumaProductos + envio);
+//                    Double envio = 450.0;
+                    Double totalCompraConEnvio;
+                        
+                   if(totalSumaProductos < 4500) {
+                        totalCompraConEnvio = (totalSumaProductos + costoEnvio);
+                        modelo.put("envio", "envio");
+                   } else 
+                   {
+                       totalCompraConEnvio = (totalSumaProductos + gratisEnvio);
+                   }
+                   
 
                     modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
@@ -237,9 +250,26 @@ public class CompraControlador {
                     modelo.put("itemsCompra", productosCompra);
 
                     modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
+                    
+                    if ((compraAntesDePago.getUsuario().getTotalDineroComprado() > 15000) && (totalSumaProductos > 3000)) {
 
-                    Double envio = 450.0;
-                    Double totalCompraConEnvio = (totalSumaProductos + envio);
+                        Double descuento = totalSumaProductos * 10 / 100;
+                        modelo.put("descuento", descuento);
+
+                        totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
+
+                    }
+
+//                    Double envio = 450.0;
+                        Double totalCompraConEnvio;
+                        
+                   if(totalSumaProductos < 4500) {
+                        totalCompraConEnvio = (totalSumaProductos + costoEnvio);
+                         modelo.put("envio", "envio");
+                   } else 
+                   {
+                       totalCompraConEnvio = (totalSumaProductos + gratisEnvio);
+                   }
 
                     modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
@@ -296,14 +326,22 @@ public class CompraControlador {
 
                     Double descuento = totalSumaProductos * 10 / 100;
                     modelo.put("descuento", descuento);
-
+                    
                     totalSumaProductos = Double.valueOf(Math.round(totalSumaProductos - descuento));
 
                 }
 
-                Double envio = 450.0;
-                Double totalCompraConEnvio = (totalSumaProductos + envio);
-
+//                uble envio = 450.0;
+                        Double totalCompraConEnvio;
+                        
+                   if(totalSumaProductos < 4500) {
+                        totalCompraConEnvio = (totalSumaProductos + costoEnvio);
+                         modelo.put("envio", "envio");
+                   } else 
+                   {
+                       totalCompraConEnvio = (totalSumaProductos + gratisEnvio);
+                   }
+                
                 modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
 //                modelo.put("subtotal", subtotal);
@@ -402,8 +440,8 @@ public class CompraControlador {
 
                 modelo.put("subtotal", Math.round(totalSumaProductos * 100.0) / 100.0);
 
-                Double envio = 450.0;
-                Double totalCompraConEnvio = (totalSumaProductos + envio);
+//                Double envio = 450.0;
+                Double totalCompraConEnvio = (totalSumaProductos + costoEnvio);
 
                 modelo.put("totalCompra", Math.round(totalCompraConEnvio * 100.0) / 100.0);
 
@@ -415,4 +453,6 @@ public class CompraControlador {
         }
         return "carrito.html";
     }
+    
+    
 }

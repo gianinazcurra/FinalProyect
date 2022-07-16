@@ -124,29 +124,5 @@ public class ImagenesControlador {
 
         }
     }
-//        @GetMapping("/productor/{id}")
-//        public ResponseEntity<byte[]> fotoProductor(@PathVariable String id){
-//        
-//        try {
-//            Productor productor = productorRepositorio.getById(id);
-//            
-//            if(productor.getImagen() == null) {
-//                throw new Excepcion("Usuario sin imágen");
-//            } else {
-//                 byte[] imagen = productor.getImagen().getContenido();
-//        
-//        HttpHeaders headers = new HttpHeaders();
-//        
-//      
-//        headers.setContentType(MediaType.IMAGE_JPEG);
-//        return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
-//        }
-//        }
-//       catch (Excepcion e) {
-//           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            
-//       
-//       }
-//        }
 
 }
