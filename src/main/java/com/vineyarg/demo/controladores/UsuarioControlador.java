@@ -75,6 +75,8 @@ public class UsuarioControlador {
 
         return "registro.html";
     }
+    
+    
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/registro-admin")
@@ -83,7 +85,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/logueo")
-    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String expiro, @RequestParam(required = false) String timeout, ModelMap modelo, HttpSession session) {
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String expiro, ModelMap modelo, HttpSession session) {
 
         if (error != null) {
             modelo.put("error", "Nombre de usuario o clave incorrectos");
@@ -102,6 +104,38 @@ public class UsuarioControlador {
 
     }
 
+    @GetMapping("/recuperar")
+    public String recuperar(ModelMap modelo) {
+
+            modelo.put("recuperar", "");
+           
+
+        return "login.html";
+    }
+    
+    @PostMapping("/recuperarClave")
+    public String recuperarClave(ModelMap modelo, @RequestParam String correo) throws Excepcion {
+
+       
+        Usuario usuarioRecuperar = usuarioRepositorio.BuscarUsuarioPorCorreo(correo);
+        
+        if(usuarioRecuperar != null) {
+            
+            usuarioServicio.recuperarClave(usuarioRecuperar);
+            
+             modelo.put("cambioClave", "Por favor revisá tu correo electrónico (cambio de clave)");
+            
+            
+        } else {
+            
+            modelo.put("error", "No existe un usuario registrado con ese correo electrónico");
+        }
+           
+
+        return "login.html";
+    }
+    
+    
     //El de abajo es para manejar el input DATE que reciben los formularios de registro
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
