@@ -184,11 +184,30 @@
         <!-- productos destacados -->
         <p th:if="${error != null}" th:text="${error}" class="errorIndex"></p>
         <p th:if="${exito != null}" th:text="${exito}" class="errorIndex"></p>
-
+         <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="GET" class="formPendiente">
+            <p th:if="${compraPendiente != null}" th:text="${compraPendiente}"></p>
+            <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
+            <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="idCompra" th:value="${compraEnCursoInicioSesion.id}">
+             <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="decision" th:value="${'continuar'}">
+            <!--            <select name="decision">-->
+            <button class="botonForm" type="submit" th:value="${'continuar'}" th:text="${'Continuar'}"> </button> 
+           
+            
+        </form>
+         <form th:if="${compraPendiente != null}" action="/finalizarCompra" method="GET" class="formPendiente">
+         
+            <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" class="form-control" name="idUsuario" th:value="${session.usuarioSession.id}"/> 
+            <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="idCompra" th:value="${compraEnCursoInicioSesion.id}">
+           <input th:if="${compraEnCursoInicioSesion != null}" type="hidden" name="decision" th:value="${'anular'}">
+            <button class="botonForm" type="submit" th:text="${'Anular'}"> </button> 
+           
+         
+        </form>
+        
         <section id="destacados" class="my-5 pb-5">
             <div class="container mt-5 py-5">
 
-
+          
 
                 <p th:if="${error != null}" th:text="${error}" style="color:red"></p>   
                 <h2 clas="font-weight-bold">Nuestros productos</h3>

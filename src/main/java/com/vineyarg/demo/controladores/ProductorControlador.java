@@ -13,6 +13,7 @@ import com.vineyarg.demo.repositorios.CompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
+import com.vineyarg.demo.servicios.MailServicio;
 import com.vineyarg.demo.servicios.ProductorServicio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ public class ProductorControlador {
     @Autowired
     private ProductoRepositorio productoRepositorio;
 
+    @Autowired
+    MailServicio mailServicio;
+
     @GetMapping("/registro-bodega")
     public String guardarProductor(ModelMap modelo) {
 
@@ -86,6 +90,11 @@ public class ProductorControlador {
 
             return "registro-bodega";
         }
+
+        String asunto = "Felicidades" + nombre + "! La Bodega ya está registrada";
+        String contenido = "tu bodega ya está dada de alta y podés empezar a cargar tus productos para la venta.";
+
+        mailServicio.enviar(correo, asunto, contenido);
 
         modelo.put("registrado", "Productor registrado con éxito");
         return "login.html";

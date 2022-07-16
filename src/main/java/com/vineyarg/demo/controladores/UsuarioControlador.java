@@ -18,6 +18,7 @@ import com.vineyarg.demo.repositorios.ItemCompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
 import com.vineyarg.demo.servicios.ItemCompraServicio;
+import com.vineyarg.demo.servicios.MailServicio;
 import com.vineyarg.demo.servicios.UsuarioServicio;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,6 +59,8 @@ public class UsuarioControlador {
     private ItemCompraServicio itemCompraServicio;
     @Autowired
     private ItemCompraRepositorio itemCompraRepositorio;
+    @Autowired
+    MailServicio mailServicio;
 
     @GetMapping("/registro")
     public String registro(HttpSession session, ModelMap modelo) {
@@ -80,15 +83,21 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/logueo")
-    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String timeout, ModelMap modelo, HttpSession session) {
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String expiro, @RequestParam(required = false) String timeout, ModelMap modelo, HttpSession session) {
 
         if (error != null) {
             modelo.put("error", "Nombre de usuario o clave incorrectos");
+
         }
+
+        if (expiro != null) {
+            modelo.put("expiro", "Cerramos tu sesión por seguridad");
+
+        }
+
 //        if (timeout != null) {
 //            modelo.put("timeout", "Cerramos tu sesiòn por inactividad, por favor ingresá de nuevo");
 //        }
-
         return "login.html";
 
     }
@@ -131,6 +140,10 @@ public class UsuarioControlador {
         }
 
         modelo.put("registrado", "Administrador registrado con éxito");
+
+        String bienvenida = "El nuevo administrador se registró con éxito.";
+
+        mailServicio.enviar(correo, "Nuevo administrador registrado con éxito", bienvenida);
         return "login.html";
     }
     //FALTA MÉTODO MODIFICAR ADMINSITRADOR - SUGIERO ACEPTAR SOLO MODIFICACIÓN DE MAIL Y CLAVE
@@ -166,6 +179,12 @@ public class UsuarioControlador {
         }
 
         modelo.put("registrado", "Usuario registrado con éxito. Ahora podés ingresar con tus datos");
+
+        String asuntoBienvenida = "Hola, " + nombre + "bienvenido a Vineyarg!";
+        String bienvenida = "" + nombre + "te registaste con éxito y ya podés empezar a comprar.";
+
+        mailServicio.enviar(correo, asuntoBienvenida, bienvenida);
+
         return "login.html";
     }
 
@@ -341,6 +360,8 @@ public class UsuarioControlador {
             compra.setEstadoCompra(EstadoCompra.ACEPTADA);
             compra.setObservacionesCompra(observaciones);
 
+            
+
             Usuario usuarioComprador = usuarioRepositorio.getById(compra.getUsuario().getId());
             usuarioComprador.setTotalComprasEfectuadas(usuarioComprador.getTotalComprasEfectuadas() + 1);
             usuarioComprador.setTotalDineroComprado(usuarioComprador.getTotalDineroComprado() + compra.getMontoFinal());
@@ -348,10 +369,15 @@ public class UsuarioControlador {
             compraRepositorio.save(compra);
             usuarioRepositorio.save(usuarioComprador);
 
+            String asunto = "Felicidades" + usuarioComprador.getNombre() +"! Tu compra finalizó con éxito";
+            String contenido = "La compra que realizaste en Vineyarg fue procesada. En el plazo de 10 dias recibiràs tu pedido. Ante cualquier duda, por favor comunicate a administrador@gmail.com";
+
+            mailServicio.enviar(usuarioComprador.getCorreo(), asunto, contenido);
+            
+            
+            
             List<Compra> comprasNuevasPre = compraRepositorio.buscarComprasNuevas();
             List<Compra> comprasNuevas = new ArrayList();
-
-            System.out.println(decision);
 
             for (Compra compraNueva : comprasNuevasPre) {
 
@@ -387,6 +413,13 @@ public class UsuarioControlador {
 
             }
 
+             Usuario usuarioComprador = usuarioRepositorio.getById(compra.getUsuario().getId());
+             
+            String asunto = "Es una pena" + usuarioComprador.getNombre() +"! Tu compra no pudo ser procesada";
+            String contenido = "La compra que realizaste en Vineyarg presentò errores al momento del pago. Por favor intentá nuevamente y aboná de otra forma. Ante cualquier duda, por favor comunicate a administrador@gmail.com";
+
+            mailServicio.enviar(usuarioComprador.getCorreo(), asunto, contenido);
+            
             List<Compra> comprasNuevasPre = compraRepositorio.buscarComprasNuevas();
             List<Compra> comprasNuevas = new ArrayList();
 

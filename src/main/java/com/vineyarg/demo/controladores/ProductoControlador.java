@@ -9,6 +9,7 @@ import com.vineyarg.demo.errores.Excepcion;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import com.vineyarg.demo.repositorios.ProductorRepositorio;
 import com.vineyarg.demo.repositorios.UsuarioRepositorio;
+import com.vineyarg.demo.servicios.MailServicio;
 import com.vineyarg.demo.servicios.ProductoServicio;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ public class ProductoControlador {
 
     @Autowired
     ProductorRepositorio productorRepositorio;
+
+    @Autowired
+    MailServicio mailServicio;
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -93,6 +97,11 @@ public class ProductoControlador {
 
                 productoServicio.agregarProducto(imagenes, nombre, cantidad, precio, descripcion, varietal, productorDelProducto, SKU);
 
+                String asunto = "Felicidades" + productorDelProducto.getNombre() + "! Tenés un nuevo produco en catálogo";
+                String contenido = "Los clientes de Vineyarg ya pueden conocer tu nuevo producto " + nombre;
+
+                mailServicio.enviar(productorDelProducto.getCorreo(), asunto, contenido);
+
             }
 
         } catch (Exception e) {
@@ -100,6 +109,7 @@ public class ProductoControlador {
             e.getMessage();
             modelo.put("error", "No se ha podido guardar el producto");
         }
+
         modelo.put("registrado", "Producto agregado correctamente al catálogo y disponible para la venta");
 
         return "agregar-producto.html";

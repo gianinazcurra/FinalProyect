@@ -143,14 +143,15 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between bg-light">
                             <div class="text-success">
-                                <h6 class="my-0">Descuento cliente frecuente</h6>
+                                <h6 class="my-0">Descuento cliente frecuente (10% off)</h6>
 
                             </div>
                             <span th:if="${descuento == null}" class="text-success" th:text="${'-$0,00'}"></span>
                             <span th:if="${descuento != null}" class="text-success" th:text="${'-$' + #numbers.formatDecimal(descuento, 1, 'POINT', 2, 'COMMA')}"></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>Total con envío incluído (ARS)</span>
+                            <span th:if="${envio == null}">Total (ARS) (tenés envío gratis!)</span>
+                            <span th:if="${envio != null}">Total con envío incluído (ARS)</span>
                             <strong th:text="${'$' + #numbers.formatDecimal(totalCompra, 1, 'POINT', 2, 'COMMA')}"></strong>
                         </li>
                     </ul>

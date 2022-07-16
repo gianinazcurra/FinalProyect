@@ -11,6 +11,7 @@ import com.vineyarg.demo.entidades.Usuario;
 import com.vineyarg.demo.repositorios.CompraRepositorio;
 import com.vineyarg.demo.repositorios.ProductoRepositorio;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,15 @@ public class ControladorPrincipal {
         List<Producto> productosT = productoRepositorio.findAll();
         List<Producto> productos = new ArrayList();
 
+        Collections.shuffle(productosT);
         for (Producto producto : productosT) {
             if (producto.isAlta() && producto.getProductor().isAlta()) {
-
+                
                 if (productos.size() < 3) {
                     productos.add(producto);
+                    
                 }
-
+                
             }
         }
         modelo.put("productos", productos);

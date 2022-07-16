@@ -136,8 +136,8 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .disable();
         http.sessionManagement()
                 .maximumSessions(1)
-                .expiredUrl("/?error='Cambió la sesión'");
-
+                .expiredUrl("/logueo/?expiro=expiro")
+;
     }
 
 }
